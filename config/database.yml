@@ -10,7 +10,7 @@ connection: &connection
 
 development:
   <<: *connection
-  database: rails_development
+  database: readr_database
 
 test:
   <<: *connection
