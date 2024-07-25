@@ -1,34 +1,38 @@
 const MiniProfile = (props) => {
+    const { user, toRead, reading, read, loadProfile } = props;
+    const numOfToRead = toRead.length;
+    const numOfReading = reading.length;
+    const numOfRead = read.length;
 
     return (
         <div>
-            <img className="profile_picture" src={} alt={} />
-            <span>{}</span>            {/* user name */}
+            <img className="profile_picture" src={user.profile_photo} alt={user.username} />
+            <span>{user.username}</span>            {/* user name */}
             <div>
                 <div>
                     <span>Following</span>
-                    <span>{}</span>    {/* Number of following */}
+                    <span>{user.following}</span>    {/* Number of following */}
                 </div>
                 <div>
                     <span>Followers</span>
-                    <span>{}</span>    {/* Number of followers */}
+                    <span>{user.followers}</span>    {/* Number of followers */}
                 </div>
             </div>
             <div>
                 <div>
                     <span>To Read</span>
-                    <span>{}</span>    {/* Number of to read */}
+                    <span>{numOfToRead}</span>    {/* Number of to read */}
                 </div>
                 <div>
                     <span>Reading</span>
-                    <span>{}</span>    {/* Number of reading */}
+                    <span>{numOfReading}</span>    {/* Number of reading */}
                 </div>
                 <div>
                     <span>Read</span>
-                    <span>{}</span>    {/* Number of read */}
+                    <span>{numOfRead}</span>    {/* Number of read */}
                 </div>
             </div>
-            <span>Your Profile</span>
+            <span onClick={() => loadProfile()}>Your Profile</span>
         </div>
     );
 };
