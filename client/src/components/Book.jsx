@@ -1,25 +1,54 @@
+import { useState } from "react";
+import CustomRating from "./CustomRating";
+
 // individual book view
 const Book = (props) => {
+    const { book, addWantToRead, addReading, addRead, addFav, removeFav, addPost, avgTimeSpent } = props;
+    const isFavourite = favBooks.includes(book.id);
+    const [status, setStatus] = useState('wantToRead');
+
+    const handleChange = (e) => {
+        setStatus(e.target.value);
+    }
+    const handleClick = () => {
+        if(status === 'wantToRead') {
+            addWantToRead(book);
+        } else if(status === 'reading') {
+            addReading(book);
+        } else if(status === 'read') {
+            addRead(book);
+        }
+    };
 
     return (
         <div>
             {/* img src comes from props */}
-            <img className="book_cover" src={} alt={} />  
+            <img className="book_cover" src={book.cover} alt={book.title} />  
             <div>
                 <div>
                     <div>
-                        <span>{}</span>  {/* Book Name */}
-                        <span>{}</span>  {/* Author Name */}
+                        <span>{book.title}</span>  {/* Book Name */}
+                        <span>{book.author}</span>  {/* Author Name */}
                     </div>
                     <div>
-                        <span>{}</span>  {/* Rating */}
-                        <span>{}</span>  {/* avg time spent */}
+                        <CustomRating />  {/* Rating */}
+                        <span>{avgTimeSpent(book.id)}</span>  {/* avg time spent */}
                     </div>
                 </div>
                 <div>
-                    <button>Add To My Books</button>   {/* Add Onclick events to buttons */}
-                    <button>Want To Read</button>
-                    <button>Comment</button>
+                    {isFavourite ? <button onClick={() => removeFav(book.id)}>Remove From My Books</button>
+                        : <button onClick={() => addFav(book.id)}>Add To My Books</button>}
+                    <div>
+                        <select value={status} onChange={handleChange}>
+                            <option value="wantToRead">Want To Read</option>
+                            <option value="reading">Reading</option>
+                            <option value="read">Read</option>
+                        </select>
+                        <button onClick={() => handleClick}>✅</button>
+                    </div>
+                </div>
+                <div>
+                    <button onClick={() => addPost(book.id)}>Comment</button>
                 </div>
             </div>
         </div>

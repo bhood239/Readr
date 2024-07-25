@@ -6,7 +6,16 @@ const BookList = (props) => {
     return (
         <ul>
             {books && books.map((book) => (
-                <Book key={book.id} data={book} />
+                <Book 
+                key={book.id}
+                book={book}
+                addWantToRead={addWantToRead}
+                addReading={addReading}
+                addRead={addRead}
+                addFav={addFav}
+                removeFav={removeFav}
+                addPost={addPost}
+                avgTimeSpent={avgTimeSpent} />
             ))}
         </ul>
     );

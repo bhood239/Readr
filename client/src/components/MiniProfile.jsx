@@ -1,5 +1,4 @@
 const MiniProfile = (props) => {
-
     return (
         <div>
             <img className="profile_picture" src={} alt={} />
