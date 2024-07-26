@@ -38,3 +38,5 @@ const MiniProfile = (props) => {
         </div>
     );
 };
+
+export default MiniProfile;
