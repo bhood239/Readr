@@ -6,6 +6,7 @@ const SearchResult = (props) => {
     // searchData is the data returned from api
     const [searchResult, setSearchResult] = useState([]);
 
+    // handleClick function is used so that result is displayed only when the search button is clicked
     const handleClick = () => {
         setSearchResult(searchData);
     };
