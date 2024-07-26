@@ -2,20 +2,23 @@
 import Book from "./Book"
 
 const BookList = (props) => {
-    const {books} = props;
+    const { books } = props;
+    
     return (
         <ul>
             {books && books.map((book) => (
                 <Book 
                 key={book.id}
                 book={book}
+                favBooks={favBooks}
                 addWantToRead={addWantToRead}
                 addReading={addReading}
                 addRead={addRead}
                 addFav={addFav}
                 removeFav={removeFav}
                 addPost={addPost}
-                avgTimeSpent={avgTimeSpent} />
+                avgTimeSpent={avgTimeSpent}
+                avgRating={avgRating} />
             ))}
         </ul>
     );
