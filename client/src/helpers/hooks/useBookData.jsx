@@ -1,59 +1,48 @@
-// This file will use axios to make requests to the books api
-import axios from "axios";
+import { useState, useEffect } from "react";
+import { getBookById, getBooksByName } from "./useBookData";
 
-export const getBookById = async (id) => {
-  try {
-    const res = await axios.get(`https://openlibrary.org/works/${id}.json`);
-    const bookData = res.data;
-    const author =
-      bookData.authors && bookData.authors.length > 0
-        ? await getAuthorName(bookData.authors[0].key)
-        : "Unknown Author";
+const useBookById = (id) => {
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    return {
-      title: bookData.title || "No title available",
-      description: bookData.description || "No description available",
-      author: author || "No author available",
-      cover:
-        `https://covers.openlibrary.org/b/id/${bookData.covers[0]}-M.jpg` ||
-        "No cover available",
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const bookData = await getBookById(id);
+        setBook(bookData);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
     };
-  } catch (err) {
-    console.log("Error:", err.message);
-    return null;
-  }
+    fetchBook();
+  }, [id]);
+
+  return { book, loading, error };
 };
 
-const getAuthorName = async (authorKey) => {
-  try {
-    const res = await axios.get(`https://openlibrary.org${authorKey}.json`);
-    return res.data.name;
-  } catch (err) {
-    console.log("Error fetching author:", err.message);
-    return "Unknown Author";
-  }
+const useBooksByName = (name) => {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const bookList = await getBooksByName(name);
+        setBooks(bookList);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBooks();
+  }, [name]);
+
+  return { books, loading, error };
 };
 
-const getBooksByName = async (name) => {
-  try {
-    const res = await axios.get(
-      `https://openlibrary.org/search.json?q=${replaceSpacesWithPlus(name)}`
-    );
-    const bookKeys = res.data.docs.map((doc) => doc.key);
-
-    const books = await Promise.all(
-      bookKeys.map(async (key) => {
-        return await getBookById(key);
-      })
-    );
-
-    return books;
-  } catch (err) {
-    console.log("Error fetching books:", err.message);
-    return "Unknown name";
-  }
-};
-
-const replaceSpacesWithPlus = (name) => {
-  return name.replace(/ /g, "+");
-};
+export { useBookById, useBooksByName };
