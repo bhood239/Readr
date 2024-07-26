@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  namespace :api do
+    # Define routes for the API namespace
+    resources :users, only: [:index, :show, :create, :update, :destroy]
+    resources :posts, only: [:index, :show, :create, :update, :destroy]
+    resources :book_statuses, only: [:index, :show, :create, :update, :destroy]
+    resources :friends, only: [:index, :show, :create, :update, :destroy]
 
-  namespace :api do # /api/data
-
+    # Example of a custom route
     get '/data', to: 'tests#index'
-    
-    resources :dogs
-
   end
 
+  # Catch-all route for React app
   get '*path', to: "static_pages#fallback_index_html", constraints: ->(request) do
     !request.xhr? && request.format.html?
   end
-
 end
