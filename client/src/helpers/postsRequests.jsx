@@ -61,3 +61,11 @@ const deletePostById = async (postId) => {
     return null;
   }
 };
+
+export default {
+  createPost,
+  getPostById,
+  getAllPosts,
+  updatePostById,
+  deletePostById,
+};
