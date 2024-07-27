@@ -5,7 +5,7 @@ const RegisterForm = (props) => {
     const { setIndexPage } = props;
 
     const name = 'username';
-    const email = 'example email';
+    const email = 'example@email.com';
     const password = 'password';
     const confirmPassword = 'password';
     const [message, setMessage] = useState('');

@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./App.css";
-import LoginForm from "./components/LoginForm";
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +30,6 @@ class App extends Component {
       <div className="App">
         <h1>{this.state.message}</h1>
         <button onClick={this.fetchData}>Fetch Data</button>
-        <LoginForm />
       </div>
     );
   }
