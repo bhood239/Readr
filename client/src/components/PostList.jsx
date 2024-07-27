@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Post from './Post';
 
-const PostList = ({ posts }) => {
+const PostList = (props) => {
+  const {posts, editPost, deletePost, isPostByUser} = props 
   return (
+
     <div className="post-list">
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} editPost={editPost} deletePost={deletePost} isPostByUser={isPostByUser} />
       ))}
     </div>
   );
