@@ -534,7 +534,7 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 797.44,
           "top": 487.84,
           "zIndex": 6,
@@ -776,7 +776,7 @@
           "active": false,
           "left": 588.8,
           "top": 18.4,
-          "zIndex": 3,
+          "zIndex": 8,
           "widthName": 60,
           "widthComment": 60
         },

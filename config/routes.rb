@@ -11,12 +11,12 @@ Rails.application.routes.draw do
     get '/data', to: 'tests#index'
 
     # users data
-    get 'friends/:id/followers', to: 'friends#followers'
-    get 'friends/:id/following', to: 'friends#following'
+    get '/friends/:id/followers', to: 'friends#followers'
+    get '/friends/:id/following', to: 'friends#following'
 
-    # login/register
-    post 'api/login', to: 'sessions#create'
-    delete 'api/logout', to: 'sessions#destroy'
+    # login
+    post '/api/login', to: 'sessions#create'
+    delete '/api/logout', to: 'sessions#destroy'
   end
 
   # Catch-all route for React app

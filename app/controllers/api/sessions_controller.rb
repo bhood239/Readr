@@ -1,6 +1,7 @@
 class Api::SessionsController < ApplicationController
     def create
       user = User.authenticate_with_credentials(params[:email], params[:password])
+    user = current_user
       if user
         session[:user_id] = user.id
         render json: { notice: 'Logged in successfully' }, status: :ok
@@ -14,4 +15,3 @@ class Api::SessionsController < ApplicationController
       render json: { notice: 'Logged out successfully' }, status: :ok
     end
 end
-  

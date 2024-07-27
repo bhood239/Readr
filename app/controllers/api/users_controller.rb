@@ -17,6 +17,7 @@ module Api
     def create
       @user = User.new(user_params)
       if @user.save
+        session[:user_id] = @user.id
         render json: @user, status: :created
       else
         render json: @user.errors, status: :unprocessable_entity
@@ -41,7 +42,7 @@ module Api
     private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :awards, :followers, :following)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation) #removed awards, followers and following
     end
   end
 end

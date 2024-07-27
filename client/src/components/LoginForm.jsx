@@ -2,11 +2,10 @@ import { useState } from "react";
 import axios from "axios";
 
 const LoginForm = (props) => {
-    // const { email, setEmail, password, setPassword, login } = props;
-    // email, password are states to store login input, login is a function that is called when login is clicked
+    const { setIndexPage } = props;
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const email = 'user.example.com';
+    const password = 'password';
     const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
@@ -17,7 +16,8 @@ const LoginForm = (props) => {
             password
           }, { withCredentials: true });
           
-          setMessage(response.data.notice);
+        setMessage('Logged in Successfully');
+        setIndexPage('dashboard');  //update index page state to display conditionally
         } catch (error) {
           if (error.response) {
             setMessage(error.response.data.alert);
@@ -32,9 +32,9 @@ const LoginForm = (props) => {
             {message && <p>{message}</p>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                <input type="email" id="email" value={email} />
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                <input type="password" id="password" value={password} />
                 <button type="submit">Login</button>
             </form>
         </div>

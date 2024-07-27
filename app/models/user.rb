@@ -6,6 +6,16 @@ class User < ApplicationRecord
   has_many :following_friends, class_name: 'Friend', foreign_key: 'following_id'
 
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: true
-  validates :password, presence: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  def self.authenticate_with_credentials(email, password)
+      normalized_email = email.strip.downcase
+      user = User.find_by(email: normalized_email)
+      if user
+          user
+      else
+          nil
+      end
+  end
 end
