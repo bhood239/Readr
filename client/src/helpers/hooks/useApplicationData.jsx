@@ -6,3 +6,5 @@
 // functions for HomePage - login, signup, logout
 // states for SearchResults - searchText
 // function for SearchResults - searchData -> returns search result based on searchText
+// states for loginForm - email, password
+// function for loginForm - login
