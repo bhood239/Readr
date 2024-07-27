@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import CustomRating from './CustomRating';
+import PropTypes from 'prop-types';
 
 
 const PostForm = ({onPostCreation}) => {
@@ -10,6 +11,7 @@ const PostForm = ({onPostCreation}) => {
   const [bookId, setBookId] = useState('');
   const [users, setUsers] = useState([]);
   const [books, setBooks] = useState([]);
+  const [hours, setHours] = useState('');
 
 useEffect(() => {
   fetch("/users")
@@ -31,7 +33,7 @@ const handleSubmit = (event) => {
   event.preventDefault();
 
   const post= {
-    id,
+    
     rating,
     time_spent: timeSpent,
     review,
@@ -48,7 +50,7 @@ const handleSubmit = (event) => {
   })
     .then((respose) => respose.json())
     .then((newPost) => {
-      onPostCreation(data);
+      onPostCreation(newPost);
       setRating("");
       setTimeSpent("");
       setReview("");
@@ -63,26 +65,40 @@ const handleSubmit = (event) => {
 
 return (
   <div >
-    <div >
       <CustomRating />
+
+      <form onSubmit={handleSubmit}>
+      <div>
       <textarea
-              type="text"
-              name="review"
-              rows="5"
-              placeholder="Write a post:"
-              value={review}
-              onChange={(event) => setReview(event.target.value)}
-            />
-      <div >
-        <form onSubmit={handleSubmit}>
-            <button > Submit </button>
-          </form>
-        </div>
+        type="text"
+        name="review"
+        rows="5"
+        placeholder="Write a post:"
+        value={review}
+        onChange={(event) => setReview(event.target.value)}
+        />
+      </div >
+      <div>
+    <label>Time Spent (Hours):</label>
+    <input
+      type="number"
+      value={hours}
+      onChange={(e) => setHours(e.target.value)}
+      required
+    />
+  </div>
+ 
+      <div>
+        <button type="submit"> Create My Post </button>
       </div>
+
+      </form>
     </div>
   );
 };
 
-
+PostForm.propTypes = {
+  onPostCreated: PropTypes.func.isRequired,
+};
 
 export default PostForm;
