@@ -4,20 +4,11 @@ import Book from "./Book"
 
 const BookList = (props) => {
     // const { books, favBooks, addWantToRead, addReading, addRead, addFav, removeFav, addPost, avgTimeSpent, avgRating } = props;
-    const [books, setBooks] = useState([]);
+    const { books } = props;
     const [favBooks, setFavBooks] = useState([]);
     const [wantToRead, setWantToRead] = useState([]);
     const [reading, setReading] = useState([]);
     const [read, setRead] = useState([]);
-
-    useEffect(() => {
-        fetch(`/api/books`)
-        .then(res => res.json())
-        .then(data => {
-            setBooks(data)
-        })
-        .catch(error => console.error('Error fetching books:', error));
-    }, []);
 
     useEffect(() => {
         // how should i update book status in the back end
@@ -63,9 +54,10 @@ const BookList = (props) => {
                 addRead={addRead}
                 addFav={addFav}
                 removeFav={removeFav}
-                addPost={addPost}
-                avgTimeSpent={avgTimeSpent}
-                avgRating={avgRating} />
+                // addPost={addPost}
+                // avgTimeSpent={avgTimeSpent}
+                // avgRating={avgRating}
+                 />
             ))}
         </ul>
     );

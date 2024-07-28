@@ -3,7 +3,7 @@ import CustomRating from "./CustomRating";
 
 // individual book view
 const Book = (props) => {
-    const { book, favBooks, addWantToRead, addReading, addRead, addFav, removeFav, addPost, avgTimeSpent, avgRating } = props;
+    const { book, favBooks, addWantToRead, addReading, addRead, addFav, removeFav } = props;
     // addWantToRead, addReading, addRead, addFav etc are functions to add, update or remove data
     // avgTimeSpent and avgRating are the functions that take book_id and return data
     
@@ -33,10 +33,10 @@ const Book = (props) => {
                         <span>{book.title}</span>  {/* Book Name */}
                         <span>{book.author}</span>  {/* Author Name */}
                     </div>
-                    <div>
-                        <span>{avgRating(book.id)}</span>  {/* avg rating */}
-                        <span>{avgTimeSpent(book.id)}</span>  {/* avg time spent */}
-                    </div>
+                    {/* <div>
+                        <span>{avgRating(book.id)}</span>
+                        <span>{avgTimeSpent(book.id)}</span> 
+                    </div> */}
                 </div>
                 <div>
                     {isFavourite ? <button onClick={() => removeFav(book.id)}>Remove From My Books</button>
@@ -51,7 +51,7 @@ const Book = (props) => {
                     </div>
                 </div>
                 <div>
-                    <button onClick={() => addPost(book.id)}>Comment</button>
+                    {/* <button onClick={() => addPost(book.id)}>Comment</button> */}
                 </div>
             </div>
         </div>
