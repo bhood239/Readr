@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
     # Example of a custom route
     get '/data', to: 'tests#index'
+
+    get 'friends/:id/followers', to: 'friends#followers'
+    get 'friends/:id/following', to: 'friends#following'
   end
 
   # Catch-all route for React app
