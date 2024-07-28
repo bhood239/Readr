@@ -1,38 +1,40 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component, useState } from "react";
 import "./App.css";
+import Navbar from 'react-bootstrap/Navbar';
+import TopNavBar from "./components/TopNavBar";
+import Dashboard from './routes/Dashboard.jsx';
+import Profile from './routes/Profile.jsx';
+import HomePage from './routes/Homepage.jsx';
+import Footer from './components/Footer.jsx';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "Click the button to load data!",
-    };
-  }
+const routes = {
+  dashboard: Dashboard,
+  profile: Profile,
+  homepage: HomePage,
+  
+}
+ 
+const App = () => {
 
-  fetchData = () => {
-    axios
-      .get("/api/data") // You can simply make your requests to "/api/whatever you want"
-      .then((response) => {
-        // handle success
-        console.log(response.data); // The entire response from the Rails API
+ const [currentPage, setCurrentPage] = useState('dashboard');
 
-        console.log(response.data.message); // Just the message
-        this.setState({
-          message: response.data.message,
-        });
-      });
-  };
+ const CurrentPage = routes[currentPage];
 
-  render() {
+
     return (
       <div className="App">
-        <h1>{this.state.message}</h1>
-        <button onClick={this.fetchData}>Fetch Data</button>
+        <TopNavBar setCurrentPage={setCurrentPage}/>
+        <CurrentPage />
+        <Footer/>
+
+
+
+        {/* <h1>{this.state.message}</h1>
+        <button onClick={this.fetchData}>Fetch Data</button> */}
       </div>
     );
-  }
-}
+  };
+ 
 
 export default App;
