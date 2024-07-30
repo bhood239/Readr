@@ -1,24 +1,37 @@
-import { useState } from "react";
+
+import React, { useState } from "react";
 import BookList from "./BookList";
+import { useBooksByName } from "../helpers/hooks/useBookData"
 
 const SearchResult = (props) => {
-    const { searchText, setSearchText, searchData } = props;
+    // const { searchText, setSearchText, searchData } = props;
     // searchData is the data returned from api
-    const [searchResult, setSearchResult] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchResults, setSearchResults] = useState('');
+    const [searchData, setSearchData] = useState([]);
 
-    // handleClick function is used so that result is displayed only when the search button is clicked
+    const { books, loading, error } = useBooksByName(searchResults);
+    
+    useEffect(() => {
+        if (books) {
+            setSearchData(books);
+        }
+    }, [books]);
+
     const handleClick = () => {
-        setSearchResult(searchData);
+        setSearchResults(searchText);
     };
+
 
     return(
         <div>
             <div>
                 <input type="text" value={searchText} onChange={e => setSearchText(e.target.value)} placeholder="Search" />
-                <button onClick={() => handleClick()}>Search</button>
+                <button onClick={handleClick}>Search</button>
             </div>
-            
-            <BookList books={searchResult} />
+            {loading && <div>Loading...</div>}
+            {error && <div>Error: {error}</div>}
+            {searchData.length > 0 && <BookList books={searchData} />}
         </div>
     );
 };
