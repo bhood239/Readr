@@ -1,40 +1,52 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
-import React, { Component } from "react";
-import axios from "axios";
+import { useState } from "react";
 import "./App.css";
 import SearchResult from "./components/SearchResults";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "Click the button to load data!",
-    };
-  }
+import TopNavBar from "./components/TopNavBar.jsx";
+import Dashboard from "./routes/Dashboard.jsx";
+import Profile from "./routes/Profile.jsx";
+import Homepage from "./routes/Homepage.jsx";
+import Footer from "./components/Footer.jsx";
+import SearchResult from "./components/SearchResults.jsx";
 
-  fetchData = () => {
-    axios
-      .get("/api/data") // You can simply make your requests to "/api/whatever you want"
-      .then((response) => {
-        // handle success
-        console.log(response.data); // The entire response from the Rails API
+const routes = {
+  dashboard: Dashboard,
+  profile: Profile,
+  homepage: Homepage,
+  search: SearchResult,
+};
 
-        console.log(response.data.message); // Just the message
-        this.setState({
-          message: response.data.message,
-        });
-      });
+const App = () => {
+  const currentUser = { name: "John Doe", email: "johndoe@example.com" };
+  // Simulate a user object
+  const [user, setUser] = useState(currentUser);
+
+  const handleLogout = () => {
+    // Simulate a user logging out
+    setUser(null);
+  
   };
 
-  render() {
-    return (
-      <div className="App">
-        <h1>{this.state.message}</h1>
-        <button onClick={this.fetchData}>Fetch Data</button>
-        <SearchResult />
-      </div>
-    );
-  }
-}
+
+  //loads the Homepage
+  const [currentPage, setCurrentPage] = useState("homepage");
+
+  const CurrentPage = routes[currentPage];
+console.log(CurrentPage)
+
+  return (
+    <div className="App">
+      <TopNavBar
+        setCurrentPage={setCurrentPage}
+        user={user}
+        handleLogout={handleLogout}
+      />
+      <CurrentPage />
+      <Footer />
+    </div>
+  );
+};
+
 
 export default App;
