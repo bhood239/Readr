@@ -1,15 +1,15 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
-import { useState } from "react";
+import React, { useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
+import TopNavBar from "./components/TopNavBar";
+import Footer from "./components/Footer";
+import Dashboard from "./routes/Dashboard";
+import Profile from "./routes/Profile";
+import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 
-import TopNavBar from "./components/TopNavBar.jsx";
-import Dashboard from "./routes/Dashboard.jsx";
-import Profile from "./routes/Profile.jsx";
-import Homepage from "./routes/Homepage.jsx";
-import Footer from "./components/Footer.jsx";
-import SearchResult from "./components/SearchResults.jsx";
-
+// Define your routes
 const routes = {
   dashboard: Dashboard,
   profile: Profile,
@@ -18,35 +18,33 @@ const routes = {
 };
 
 const App = () => {
-  const currentUser = { name: "John Doe", email: "johndoe@example.com" };
   // Simulate a user object
+  const currentUser = { name: "John Doe", email: "johndoe@example.com" };
   const [user, setUser] = useState(currentUser);
 
   const handleLogout = () => {
     // Simulate a user logging out
     setUser(null);
-  
   };
 
-
-  //loads the Homepage
+  // State to keep track of the current page
   const [currentPage, setCurrentPage] = useState("homepage");
 
+  // Get the current page component
   const CurrentPage = routes[currentPage];
-console.log(CurrentPage)
 
   return (
     <div className="App">
-      <TopNavBar
-        setCurrentPage={setCurrentPage}
-        user={user}
-        handleLogout={handleLogout}
-      />
-      <CurrentPage />
+      <TopNavBar setCurrentPage={setCurrentPage} user={user} handleLogout={handleLogout} />
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/search" component={SearchResult} />
+      </Switch>
       <Footer />
     </div>
   );
 };
-
 
 export default App;
