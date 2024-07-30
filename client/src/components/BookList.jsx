@@ -6,7 +6,7 @@ import {
     useAllBookStatuses,
     useUpdateBookStatusById,
     useDeleteBookStatusById,
-  } from "../helpers/hooks/useApiData/useBookStatusData";
+  } from "../helpers/hooks/apiData/useBookStatusdata";
 import Book from "./Book"
 
 const BookList = (props) => {
@@ -17,13 +17,15 @@ const BookList = (props) => {
     const [reading, setReading] = useState([]);
     const [read, setRead] = useState([]);
 
+    const bookStatus = useBookStatusById();
+    const updateStatus = useUpdateBookStatusById();
+    const createStatus = useCreateBookStatus();
 
     const updateBookStatus = (bookId, status) => {
-        const bookStatus = useBookStatusById(bookId);
-        if (bookStatus) {
-            useUpdateBookStatusById(bookId, status);
+        if (bookStatus(bookId)) {
+            updateStatus(bookId, status);
         } else {
-            useCreateBookStatus(bookId, status);
+            createStatus(bookId, status);
         }
     };
 
@@ -32,7 +34,7 @@ const BookList = (props) => {
     };
 
     const removeFav = (book) => {
-        useUpdateBookStatusById(book.id, { favBook: false });
+        updateStatus(book.id, { favBook: false });
     };
 
     const addWantToRead = (book) => {

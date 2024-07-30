@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BookList from "./BookList";
-import { useBooksByName } from "../helpers/hooks/useBookData";
+import { useBooksByName } from "../helpers/hooks/useBookData"
 
 const SearchResult = (props) => {
     // const { searchText, setSearchText, searchData } = props;

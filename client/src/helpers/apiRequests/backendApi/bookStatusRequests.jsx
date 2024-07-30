@@ -17,7 +17,7 @@ const createBookStatus = async (params) => {
 // READ ONE
 const getBookStatusById = async (bookStatusId) => {
   try {
-    const res = await axios.get(`/api/BookStatuses/${BookStatusId}`);
+    const res = await axios.get(`/api/BookStatuses/${bookStatusId}`);
     console.log("response received: ", res.data);
     return res.data;
   } catch (err) {
