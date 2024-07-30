@@ -1,14 +1,13 @@
 import { useState } from "react";
-import CustomRating from "./CustomRating";
 
 // individual book view
 const Book = (props) => {
-    const { book, favBooks, addWantToRead, addReading, addRead, addFav, removeFav } = props;
+    const { book, favBooks, addWantToRead, addReading, addRead, removeStatus, addFav, removeFav } = props;
     // addWantToRead, addReading, addRead, addFav etc are functions to add, update or remove data
     // avgTimeSpent and avgRating are the functions that take book_id and return data
     
     const isFavourite = favBooks.includes(book.id);
-    const [status, setStatus] = useState('wantToRead');
+    const [status, setStatus] = useState('select');
 
     const handleChange = (e) => {
         setStatus(e.target.value);
@@ -20,6 +19,8 @@ const Book = (props) => {
             addReading(book);
         } else if(status === 'read') {
             addRead(book);
+        } else if(status === 'select') {
+            removeStatus(book);
         }
     };
 
@@ -43,6 +44,7 @@ const Book = (props) => {
                         : <button onClick={() => addFav(book.id)}>Add To My Books</button>}
                     <div>
                         <select value={status} onChange={handleChange}>
+                            <option value="select">Select</option>
                             <option value="wantToRead">Want To Read</option>
                             <option value="reading">Reading</option>
                             <option value="read">Read</option>

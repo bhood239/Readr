@@ -1,5 +1,12 @@
 // mapped list of books
 import { useEffect, useState } from "react";
+import {
+    useCreateBookStatus,
+    useBookStatusById,
+    useAllBookStatuses,
+    useUpdateBookStatusById,
+    useDeleteBookStatusById,
+  } from "../helpers/hooks/useApiData/useBookStatusData";
 import Book from "./Book"
 
 const BookList = (props) => {
@@ -10,36 +17,38 @@ const BookList = (props) => {
     const [reading, setReading] = useState([]);
     const [read, setRead] = useState([]);
 
-    useEffect(() => {
-        // how should i update book status in the back end
 
-    }, [favBooks, wantToRead, reading, read]);
+    const updateBookStatus = (bookId, status) => {
+        const bookStatus = useBookStatusById(bookId);
+        if (bookStatus) {
+            useUpdateBookStatusById(bookId, status);
+        } else {
+            useCreateBookStatus(bookId, status);
+        }
+    };
 
     const addFav = (book) => {
-        setFavBooks(prev => [...prev, book]);
+        updateBookStatus(book.id, { favBook: true });
     };
 
     const removeFav = (book) => {
-        setFavBooks(prev => prev.filter(favBook => favBook.id !== book.id));
+        useUpdateBookStatusById(book.id, { favBook: false });
     };
 
-    // adds book to its state and removes the book from other state
     const addWantToRead = (book) => {
-        setWantToRead(prev => [...prev, book]);
-        setReading(prev => prev.filter(readingBook => readingBook.id !== book.id));
-        setRead(prev => prev.filter(readBook => readBook.id !== book.id));
+        updateBookStatus(book.id, { status: 'to_read' });
     };
 
     const addReading = (book) => {
-        setReading(prev => [...prev, book]);
-        setRead(prev => prev.filter(readBook => readBook.id !== book.id));
-        setWantToRead(prev => prev.filter(wantToReadBook => wantToReadBook.id !== book.id));
+        updateBookStatus(book.id, { status: 'reading' });
     };
 
     const addRead = (book) => {
-        setRead(prev => [...prev, book]);
-        setWantToRead(prev => prev.filter(wantToReadBook => wantToReadBook.id !== book.id));
-        setReading(prev => prev.filter(readingBook => readingBook.id !== book.id));
+        updateBookStatus(book.id, { status: 'read' });
+    };
+
+    const removeStatus = (book) => {
+        updateBookStatus(book.id, { status: null })
     };
 
     return (
@@ -52,6 +61,7 @@ const BookList = (props) => {
                 addWantToRead={addWantToRead}
                 addReading={addReading}
                 addRead={addRead}
+                removeStatus={removeStatus}
                 addFav={addFav}
                 removeFav={removeFav}
                 // addPost={addPost}
