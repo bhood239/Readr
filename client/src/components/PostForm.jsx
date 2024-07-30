@@ -48,7 +48,7 @@ const handleSubmit = (event) => {
     },
     body: JSON.stringify(post),
   })
-    .then((respose) => respose.json())
+    .then((response) => response.json())
     .then((newPost) => {
       onPostCreation(newPost);
       setRating("");
