@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getBookById, getBooksByName } from "./useBookData";
+import { getBookById, getBooksByName, getAuthorName } from "../apiRequests/bookApi/bookApiRequests";
 
 const useBookById = (id) => {
   const [book, setBook] = useState(null);

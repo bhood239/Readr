@@ -1,6 +1,7 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
 import { useState } from "react";
 import "./App.css";
+import SearchResult from "./components/SearchResults";
 
 import TopNavBar from "./components/TopNavBar.jsx";
 import Dashboard from "./routes/Dashboard.jsx";
@@ -27,6 +28,7 @@ const App = () => {
   
   };
 
+
   //loads the Homepage
   const [currentPage, setCurrentPage] = useState("homepage");
 
@@ -45,5 +47,6 @@ console.log(CurrentPage)
     </div>
   );
 };
+
 
 export default App;
