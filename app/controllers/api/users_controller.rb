@@ -1,13 +1,13 @@
 module Api
   class UsersController < ApplicationController
     def index
-      @users = User.all
-      render json: @users
+      @users = User.includes(:posts).all
+      render json: @users.to_json(include: :posts)
     end
 
     def show
-      @user = User.find(params[:id])
-      render json: @user
+      @user = User.includes(:posts).find(params[:id])
+      render json: @user.to_json(include: :posts)
     end
 
     def create

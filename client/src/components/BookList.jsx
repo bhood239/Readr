@@ -2,7 +2,7 @@
 import Book from "./Book"
 
 const BookList = (props) => {
-    const { books } = props;
+    const { books, favBooks, addWantToRead, addReading, addRead, addFav, removeFav, addPost, avgTimeSpent, avgRating } = props;
     
     return (
         <ul>

@@ -4,3 +4,5 @@
 // functions for books - addWantToRead, addReading, addRead, addFav, removeFav
 // functions for post - addPost, removePost
 // functions for HomePage - login, signup, logout
+// states for SearchResults - searchText
+// function for SearchResults - searchData -> returns search result based on searchText
