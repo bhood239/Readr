@@ -1,38 +1,28 @@
-// to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
-import React, { Component } from "react";
-import axios from "axios";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import PostList from './components/PostList';
+import PostForm from './components/PostForm';
+const App = () => {
+  const [posts, setPosts] = useState([]);
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "Click the button to load data!",
-    };
-  }
+  useEffect(() => {
+    fetch('/api/posts')
+      .then(response => response.json())
+      .then(data => setPosts(data))
+      .catch(error => console.error('Error fetching posts:', error));
+  }, []);
 
-  fetchData = () => {
-    axios
-      .get("/api/data") // You can simply make your requests to "/api/whatever you want"
-      .then((response) => {
-        // handle success
-        console.log(response.data); // The entire response from the Rails API
-
-        console.log(response.data.message); // Just the message
-        this.setState({
-          message: response.data.message,
-        });
-      });
+  const handleNewPostCreated = (newPost) => {
+    setPosts([...posts, newPost]);
   };
 
-  render() {
-    return (
-      <div className="App">
-        <h1>{this.state.message}</h1>
-        <button onClick={this.fetchData}>Fetch Data</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="app">
+      <h1>Book Reading Tracking App</h1>
+      <PostForm onPostCreation={handleNewPostCreated} />
+      <PostList posts={posts} />
+
+    </div>
+  );
+};
 
 export default App;
