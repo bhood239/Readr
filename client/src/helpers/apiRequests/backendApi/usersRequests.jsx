@@ -3,7 +3,7 @@ import axios from "axios";
 // USERS CRUD
 
 // CREATE
-const createUser = async (params) => {
+export const createUser = async (params) => {
   try {
     const res = await axios.post(`/api/users`, params);
     console.log("user created:", res.data);
@@ -15,7 +15,7 @@ const createUser = async (params) => {
 };
 
 // READ ONE
-const getUserById = async (userId) => {
+export const getUserById = async (userId) => {
   try {
     const res = await axios.get(`/api/users/${userId}`);
     console.log("response received: ", res.data);
@@ -27,7 +27,7 @@ const getUserById = async (userId) => {
 };
 
 // READ ALL
-const getAllUsers = async () => {
+export const getAllUsers = async () => {
   try {
     const res = await axios.get("/api/users");
     console.log("response received: ", res.data);
@@ -39,7 +39,7 @@ const getAllUsers = async () => {
 };
 
 // UPDATE
-const updateUserById = async (userId, params) => {
+export const updateUserById = async (userId, params) => {
   try {
     const res = await axios.put(`/api/users/${userId}`, params);
     console.log("user updated: ", res.data);
@@ -51,7 +51,7 @@ const updateUserById = async (userId, params) => {
 };
 
 // DELETE
-const deleteUserById = async (userId) => {
+export const deleteUserById = async (userId) => {
   try {
     const res = await axios.delete(`/api/users/${userId}`);
     console.log("user deleted: ", res.data);

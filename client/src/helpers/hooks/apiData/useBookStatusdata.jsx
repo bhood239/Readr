@@ -8,7 +8,7 @@ import {
 } from "../../apiRequests/backendApi/bookStatusRequests";
 
 // Create Book Status
-const useCreateBookStatus = () => {
+export const useCreateBookStatus = () => {
   const [bookStatus, setBookStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ const useCreateBookStatus = () => {
 };
 
 // Read Book Status by Id
-const useBookStatusById = (id) => {
+export const useBookStatusById = (id) => {
   const [bookStatus, setBookStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -53,7 +53,7 @@ const useBookStatusById = (id) => {
 };
 
 // Read All Book Statuses
-const useAllBookStatuses = () => {
+export const useAllBookStatuses = () => {
   const [bookStatuses, setBookStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,7 +76,7 @@ const useAllBookStatuses = () => {
 };
 
 // Update Book Status by Id
-const useUpdateBookStatusById = () => {
+export const useUpdateBookStatusById = () => {
   const [bookStatus, setBookStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -97,7 +97,7 @@ const useUpdateBookStatusById = () => {
 };
 
 // Delete Book Status by Id
-const useDeleteBookStatusById = () => {
+export const useDeleteBookStatusById = () => {
   const [deleted, setDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -117,7 +117,7 @@ const useDeleteBookStatusById = () => {
   return { deleted, loading, error, deleteBookStatus };
 };
 
-export {
+export default {
   useCreateBookStatus,
   useBookStatusById,
   useAllBookStatuses,

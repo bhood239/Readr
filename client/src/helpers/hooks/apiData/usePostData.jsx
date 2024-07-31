@@ -8,7 +8,7 @@ import {
 } from "../../apiRequests/backendApi/postsRequests";
 
 // Create Post
-const useCreatePost = () => {
+export const useCreatePost = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ const useCreatePost = () => {
 };
 
 // Read Post by Id
-const usePostById = (id) => {
+export const usePostById = (id) => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -53,7 +53,7 @@ const usePostById = (id) => {
 };
 
 // Read All Posts
-const useAllPosts = () => {
+export const useAllPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,7 +76,7 @@ const useAllPosts = () => {
 };
 
 // Update Post by Id
-const useUpdatePostById = () => {
+export const useUpdatePostById = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -97,7 +97,7 @@ const useUpdatePostById = () => {
 };
 
 // Delete Post by Id
-const useDeletePostById = () => {
+export const useDeletePostById = () => {
   const [deleted, setDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -117,7 +117,7 @@ const useDeletePostById = () => {
   return { deleted, loading, error, deletePost };
 };
 
-export {
+export default {
   useCreatePost,
   usePostById,
   useAllPosts,
