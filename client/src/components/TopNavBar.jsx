@@ -10,13 +10,13 @@ const TopNavBar = ({ user, handleLogout }) => {
       <Nav className="mr-auto">
         {user ? (
           <>
-            <LinkContainer to="/dashboard">
+            <LinkContainer to="/Dashboard">
               <Nav.Link>Dashboard</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/profile">
+            <LinkContainer to="/Profile">
               <Nav.Link>Profile</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/search">
+            <LinkContainer to="/Search">
               <Nav.Link>Search <FaSearch /></Nav.Link>
             </LinkContainer>
             <Nav.Item>

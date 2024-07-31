@@ -9,13 +9,7 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 
-// Define your routes
-const routes = {
-  dashboard: Dashboard,
-  profile: Profile,
-  homepage: Homepage,
-  search: SearchResult,
-};
+
 
 const App = () => {
   // Simulate a user object
@@ -27,24 +21,17 @@ const App = () => {
     setUser(null);
   };
 
-  // State to keep track of the current page
-  const [currentPage, setCurrentPage] = useState("homepage");
-
-  // Get the current page component
-  const CurrentPage = routes[currentPage];
-
   return (
     <div className="App">
       <TopNavBar
-        setCurrentPage={setCurrentPage}
         user={user}
         handleLogout={handleLogout}
       />
       <Routes>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/search" component={SearchResult} />
+        <Route exact path="/" element={<Homepage/>} />
+        <Route path="/Dashboard" element={<Dashboard/>} />
+        <Route path="/Profile" element={<Profile/>} />
+        <Route path="/Search" element={<SearchResult/>} />
       </Routes>
       <Footer />
     </div>

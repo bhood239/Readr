@@ -13,7 +13,7 @@ const Footer = () => {
           <Col md={4} className="d-flex justify-content-center">
             <Nav>
               <Nav.Item>
-                <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link href="/">Home</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link href="/about">About</Nav.Link>
