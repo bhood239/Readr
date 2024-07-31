@@ -3,7 +3,7 @@ import axios from "axios";
 // POSTS CRUD
 
 // CREATE
-const createPost = async (params) => {
+export const createPost = async (params) => {
   try {
     const res = await axios.post(`/api/posts`, params);
     console.log("post created:", res.data);
@@ -15,7 +15,7 @@ const createPost = async (params) => {
 };
 
 // READ ONE
-const getPostById = async (postId) => {
+export const getPostById = async (postId) => {
   try {
     const res = await axios.get(`/api/posts/${postId}`);
     console.log("response received: ", res.data);
@@ -27,7 +27,7 @@ const getPostById = async (postId) => {
 };
 
 // READ ALL
-const getAllPosts = async () => {
+export const getAllPosts = async () => {
   try {
     const res = await axios.get("/api/posts");
     console.log("response received: ", res.data);
@@ -39,7 +39,7 @@ const getAllPosts = async () => {
 };
 
 // UPDATE
-const updatePostById = async (postId, params) => {
+export const updatePostById = async (postId, params) => {
   try {
     const res = await axios.put(`/api/posts/${postId}`, params);
     console.log("post updated: ", res.data);
@@ -51,7 +51,7 @@ const updatePostById = async (postId, params) => {
 };
 
 // DELETE
-const deletePostById = async (postId) => {
+export const deletePostById = async (postId) => {
   try {
     const res = await axios.delete(`/api/posts/${postId}`);
     console.log("post deleted: ", res.data);

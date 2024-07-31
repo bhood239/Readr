@@ -3,7 +3,7 @@ import axios from "axios";
 // POSTS CRUD
 
 // CREATE
-const createBookStatus = async (params) => {
+export const createBookStatus = async (params) => {
   try {
     const res = await axios.post(`/api/bookStatuses`, params);
     console.log("book status created:", res.data);
@@ -15,7 +15,7 @@ const createBookStatus = async (params) => {
 };
 
 // READ ONE
-const getBookStatusById = async (bookStatusId) => {
+export const getBookStatusById = async (bookStatusId) => {
   try {
     const res = await axios.get(`/api/BookStatuses/${bookStatusId}`);
     console.log("response received: ", res.data);
@@ -27,7 +27,7 @@ const getBookStatusById = async (bookStatusId) => {
 };
 
 // READ ALL
-const getAllBookStatuses = async () => {
+export const getAllBookStatuses = async () => {
   try {
     const res = await axios.get("/api/bookStatuses");
     console.log("response received: ", res.data);
@@ -39,7 +39,7 @@ const getAllBookStatuses = async () => {
 };
 
 // UPDATE
-const updateBookStatusById = async (bookStatusId, params) => {
+export const updateBookStatusById = async (bookStatusId, params) => {
   try {
     const res = await axios.put(`/api/bookStatuses/${bookStatusId}`, params);
     console.log("bookStatus updated: ", res.data);
@@ -51,7 +51,7 @@ const updateBookStatusById = async (bookStatusId, params) => {
 };
 
 // DELETE
-const deleteBookStatusById = async (bookStatusId) => {
+export const deleteBookStatusById = async (bookStatusId) => {
   try {
     const res = await axios.delete(`/api/bookStatuses/${bookStatusId}`);
     console.log("bookStatus deleted: ", res.data);

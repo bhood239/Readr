@@ -9,7 +9,7 @@ import {
 
 // CRUD
 // Create
-const useCreateUser = () => {
+export const useCreateUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,7 +31,7 @@ const useCreateUser = () => {
 };
 
 // Read one
-const useUserById = (id) => {
+export const useUserById = (id) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,7 +54,7 @@ const useUserById = (id) => {
 };
 
 // Read all
-const useAllUsers = () => {
+export const useAllUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -77,7 +77,7 @@ const useAllUsers = () => {
 };
 
 // Update by Id
-const useUpdateUserById = () => {
+export const useUpdateUserById = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -98,7 +98,7 @@ const useUpdateUserById = () => {
 };
 
 // Delete by Id
-const useDeleteUserById = () => {
+export const useDeleteUserById = () => {
   const [deleted, setDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -118,7 +118,7 @@ const useDeleteUserById = () => {
   return { deleted, loading, error, deleteUser };
 };
 
-export {
+export default {
   useUserById,
   useAllUsers,
   useCreateUser,

@@ -1,6 +1,6 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
 import React, { useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -35,13 +35,17 @@ const App = () => {
 
   return (
     <div className="App">
-      <TopNavBar setCurrentPage={setCurrentPage} user={user} handleLogout={handleLogout} />
-      <Switch>
+      <TopNavBar
+        setCurrentPage={setCurrentPage}
+        user={user}
+        handleLogout={handleLogout}
+      />
+      <Routes>
         <Route exact path="/" component={Homepage} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/profile" component={Profile} />
         <Route path="/search" component={SearchResult} />
-      </Switch>
+      </Routes>
       <Footer />
     </div>
   );
