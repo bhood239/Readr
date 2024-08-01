@@ -1,12 +1,18 @@
-import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa';
-import { LinkContainer } from 'react-router-bootstrap';
+import React from "react";
+import { Nav, Navbar } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
+import { LinkContainer } from "react-router-bootstrap";
 
-const TopNavBar = ({ user, handleLogout }) => {
+const TopNavBar = ({
+  user,
+  handleLogout,
+  setLoginselected,
+  setRegisterSelected,
+  navigate,
+}) => {
   return (
     <Navbar bg="light" variant="light" className="navbar-underline">
-      <Navbar.Brand>Readr</Navbar.Brand>
+      <Navbar.Brand onClick={() => navigate("/")}>Readr</Navbar.Brand>
       <Nav className="mr-auto">
         {user ? (
           <>
@@ -16,8 +22,10 @@ const TopNavBar = ({ user, handleLogout }) => {
             <LinkContainer to="/Profile">
               <Nav.Link>Profile</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/Search">
-              <Nav.Link>Search <FaSearch /></Nav.Link>
+            <LinkContainer to="/search">
+              <Nav.Link>
+                Search <FaSearch />
+              </Nav.Link>
             </LinkContainer>
             <Nav.Item>
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
@@ -25,12 +33,22 @@ const TopNavBar = ({ user, handleLogout }) => {
           </>
         ) : (
           <>
-            <LinkContainer to="/">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/">
-              <Nav.Link>Register</Nav.Link>
-            </LinkContainer>
+            <h4
+              onClick={() => {
+                setLoginselected(true);
+                setRegisterSelected(false);
+              }}
+            >
+              Login
+            </h4>
+            <h4
+              onClick={() => {
+                setRegisterSelected(true);
+                setLoginselected(false);
+              }}
+            >
+              Register
+            </h4>
           </>
         )}
       </Nav>
