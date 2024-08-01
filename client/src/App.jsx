@@ -26,6 +26,7 @@ const App = () => {
       <TopNavBar
         user={user}
         handleLogout={handleLogout}
+
       />
       <Routes>
         <Route exact path="/" element={<Homepage/>} />
@@ -33,6 +34,8 @@ const App = () => {
         <Route path="/Profile" element={<Profile/>} />
         <Route path="/Search" element={<SearchResult/>} />
       </Routes>
+
+      <PostForm onPostCreation={handlePostCreation} loggedInUserId={currentUser.id} selectedBookId={selectedBook.id} />
 
       <Footer />
     </div>

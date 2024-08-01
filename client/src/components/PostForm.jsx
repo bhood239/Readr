@@ -2,74 +2,74 @@
 import React, {useState, useEffect} from 'react';
 import CustomRating from './CustomRating';
 import PropTypes from 'prop-types';
+import { useCreatePost } from '../helpers/hooks/apiData/usePostData';
 
 
-const PostForm = ({onPostCreation}) => {
+const PostForm = ({onPostCreation, loggedinUserId, selectedBookId}) => {
   const [rating, setRating] = useState('');
   const [timeSpent, setTimeSpent] = useState('');
   const [review, setReview] = useState('');
-  const [userId, setUserId] = useState('');
-  const [bookId, setBookId] = useState('');
-  const [users, setUsers] = useState([]);
-  const [books, setBooks] = useState([]);
+  // const [userId, setUserId] = useState('');
+  // const [bookId, setBookId] = useState('');
+  // const [users, setUsers] = useState([]);
+  // const [books, setBooks] = useState([]);
   const [hours, setHours] = useState('');
 
-useEffect(() => {
-  fetch("/users")
-    .then((response) => response.json())
-    .then((userinfo) => setUsers(userinfo))
-    .catch((error) => {
-      console.error('Error fetching users:', error);
-    });
+  const { post, loading, error, handleCreatePost} = useCreatePost();
 
-  fetch("/books")
-    .then((response) => response.json())
-    .then((bookinfo) => setBooks(bookinfo))
-    .catch((error) => {
-      console.error('Error fetching books:', error);
-    });
-}, []);
+// useEffect(() => {
+//   fetch("/users")
+//     .then((response) => response.json())
+//     .then((userinfo) => setUsers(userinfo))
+//     .catch((error) => {
+//       console.error('Error fetching users:', error);
+//     });
+
+//   fetch("/books")
+//     .then((response) => response.json())
+//     .then((bookinfo) => setBooks(bookinfo))
+//     .catch((error) => {
+//       console.error('Error fetching books:', error);
+//     });
+// }, []);
+
+useEffect(() => {
+  if (post) {
+    onPostCreation(post);
+    setRating('');
+    setTimeSpent('');
+    setReview('');
+    setUserId('');
+    setBookId('');
+    setHours('');
+  }
+}, [post, onPostCreation]);
+
 
 const handleSubmit = (event) => {
   event.preventDefault();
 
-  const post= {
+  const postData= {
     
     rating,
     time_spent: timeSpent,
     review,
-    user_id: userId,
-    book_id: bookId,
+    user_id: loggedinUserId,
+    book_id: selectedBookId,
   };
 
-  fetch("/posts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "Application/JSON",
-    },
-    body: JSON.stringify(post),
-  })
-    .then((response) => response.json())
-    .then((newPost) => {
-      onPostCreation(newPost);
-      setRating("");
-      setTimeSpent("");
-      setReview("");
-      setUserId("");
-      setBookId("");
-    })
-    .catch((error) => {
-      console.error('Error while creating the new post:', error);
-    });
+  handleCreatePost(postData);
+
 
 };
 
 return (
   <div >
-      <CustomRating />
+      <CustomRating rating={rating} setRating={setRating} />
 
       <form onSubmit={handleSubmit}>
       <div>
+        <label htmlFor='review'>Book Review:</label>
       <textarea
         type="text"
         name="review"
@@ -92,7 +92,10 @@ return (
   </div>
  
       <div>
-        <button type="submit"> Create My Post </button>
+        <button type="submit" disabled={loading}> 
+          {loading ? 'Creating post....' : 'Create My Post' } 
+        </button>
+        {error && <p>Error while creating the post: {error.message}</p>}
       </div>
 
       </form>
@@ -101,7 +104,7 @@ return (
 };
 
 PostForm.propTypes = {
-  onPostCreated: PropTypes.func.isRequired,
+  onPostCreation: PropTypes.func.isRequired,
 };
 
 export default PostForm;
