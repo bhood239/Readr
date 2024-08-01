@@ -13,7 +13,7 @@ import SearchResult from "./components/SearchResults";
 
 const App = () => {
   // Simulate a user object
-  const currentUser = { name: "John Doe", email: "johndoe@example.com" };
+  const currentUser = { id: 1, name: "John Doe", email: "johndoe@example.com" };
   const [user, setUser] = useState(currentUser);
 
   const handleLogout = () => {
@@ -33,6 +33,7 @@ const App = () => {
         <Route path="/Profile" element={<Profile/>} />
         <Route path="/Search" element={<SearchResult/>} />
       </Routes>
+
       <Footer />
     </div>
   );
