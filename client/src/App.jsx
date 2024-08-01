@@ -1,6 +1,6 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -9,44 +9,48 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 
-// Define your routes
-const routes = {
-  dashboard: Dashboard,
-  profile: Profile,
-  homepage: Homepage,
-  search: SearchResult,
-};
-
 const App = () => {
-  // Simulate a user object
+  const navigate = useNavigate();
   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
   const [user, setUser] = useState(currentUser);
+  const [loginSelected, setLoginselected] = useState(false);
+  const [registerSelected, setRegisterSelected] = useState(false);
 
   const handleLogout = () => {
     // Simulate a user logging out
     setUser(null);
+    navigate("/");
   };
-
-  // State to keep track of the current page
-  const [currentPage, setCurrentPage] = useState("homepage");
-
-  // Get the current page component
-  const CurrentPage = routes[currentPage];
 
   return (
     <div className="App">
       <TopNavBar
-        setCurrentPage={setCurrentPage}
         user={user}
         handleLogout={handleLogout}
+        setLoginselected={setLoginselected}
+        setRegisterSelected={setRegisterSelected}
+        navigate={navigate}
       />
       <Routes>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/search" component={SearchResult} />
+        <Route
+          path="/"
+          element={
+            user ? (
+              <Dashboard />
+            ) : (
+              <Homepage
+                loginSelected={loginSelected}
+                registerSelected={registerSelected}
+                setLoginselected={setLoginselected}
+                setRegisterSelected={setRegisterSelected}
+              />
+            )
+          }
+        />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/search" element={<SearchResult />} />
       </Routes>
-      <Footer />
+      <Footer navigate={navigate} />
     </div>
   );
 };
