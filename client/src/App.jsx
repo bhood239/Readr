@@ -9,9 +9,11 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 
+
 const App = () => {
   const navigate = useNavigate();
   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
+
   const [user, setUser] = useState(currentUser);
   const [loginSelected, setLoginselected] = useState(false);
   const [registerSelected, setRegisterSelected] = useState(false);

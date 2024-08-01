@@ -10,6 +10,18 @@ module Api
       render json: @user.to_json(include: :posts)
     end
 
+    def followers
+        @user = User.find(params[:id])
+        @followers = @user.followers
+        render json: @followers
+    end
+
+    def following
+        @user = User.find(params[:id])
+        @following = @user.following
+        render json: @following
+    end
+
     def new
         @user = User.new
     end

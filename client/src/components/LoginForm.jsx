@@ -4,7 +4,7 @@ import axios from "axios";
 const LoginForm = (props) => {
     const { setIndexPage } = props;
 
-    const email = 'user@example.com';
+    const email = 'userone@example.com';
     const password = 'password';
     const [message, setMessage] = useState('');
 
