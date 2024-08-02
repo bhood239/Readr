@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "../styles/Form.css";
 
 const LoginForm = (props) => {
   const { setUser, setLoginSelected } = props;
@@ -34,7 +35,7 @@ const LoginForm = (props) => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
@@ -42,7 +43,13 @@ const LoginForm = (props) => {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" value={password} />
         <button type="submit">Login</button>
-        <button onClick={() => setLoginSelected(false)}>Back</button>
+        <button
+          type="button"
+          className="back-button"
+          onClick={() => setLoginSelected(false)}
+        >
+          Back
+        </button>
       </form>
     </div>
   );
