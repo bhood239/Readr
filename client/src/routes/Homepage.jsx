@@ -1,54 +1,67 @@
 // initial pre-logged in page- children: login, register
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
+import "../styles/Homepage.css";
 
 const Homepage = ({
   loginSelected,
   registerSelected,
-  setLoginselected,
+  setLoginSelected,
   setRegisterSelected,
-  setUser
+  setUser,
 }) => {
   return (
-    <div>
+    <div className="homepage">
       <img
-        src="https://media.gettyimages.com/id/2060039749/photo/cheerful-women-having-fun-while-laughing-at-home.jpg?s=612x612&w=0&k=20&c=Y7SZE2BOglZzEfjYFMXdXM_D6Quam0CV_FooGX3s0DQ="
-        alt="happy friends reading together"
+        className="homepage pic left"
+        src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*42ebJizcUtZBNIZPmmMZ5Q.jpeg"
+        alt="open book"
       />
-      <div>
+
+      <div className="homepage content">
         {!loginSelected && !registerSelected && (
           <>
-            <h1>Discover and share your reading journey with others.</h1>
-            <h2>
-              At Readr, we believe that books have the power to inspire,
-              entertain, and educate. Whether you're a lifelong readr or just
-              getting started, our platform helps you track the books you've
-              read, rate and review them, and explore what others are reading.
+            <h1 className="homepage slogan">
+              Discover and share your reading journey with others.
+            </h1>
+            <h2 className="homepage welcome-text">
               Join our community of book enthusiasts today and start your
               literary adventure with Readr. <br /> Happy reading!
             </h2>
             <h1
+              className="homepage login nav-link"
               onClick={() => {
-                setLoginselected(true);
+                setLoginSelected(true);
+                setRegisterSelected(false);
               }}
             >
               Already a member? Log in
             </h1>
             <h1
+              className="homepage register nav-link"
               onClick={() => {
                 setRegisterSelected(true);
+                setLoginSelected(false);
               }}
             >
               Sign up
             </h1>
           </>
         )}
-        {loginSelected && <LoginForm setUser={setUser} />}
-        {registerSelected && <RegisterForm setUser={setUser} />}
+        {loginSelected && (
+          <LoginForm setUser={setUser} setLoginSelected={setLoginSelected} />
+        )}
+        {registerSelected && (
+          <RegisterForm
+            setUser={setUser}
+            setRegisterSelected={setRegisterSelected}
+          />
+        )}
       </div>
       <img
-        src="https://media.gettyimages.com/id/1398466630/photo/bearded-man-comfortably-sitting-on-a-coach-reading-a-book-and-holding-his-dog.jpg?s=612x612&w=0&k=20&c=UyGpkOSp1ucynHrhJvC2jE1Ura9c2rkHkT03uP2-_54="
-        alt="man reading with his dog"
+        className="homepage pic right"
+        src="https://media.gettyimages.com/id/2060039749/photo/cheerful-women-having-fun-while-laughing-at-home.jpg?s=612x612&w=0&k=20&c=Y7SZE2BOglZzEfjYFMXdXM_D6Quam0CV_FooGX3s0DQ="
+        alt="happy friends reading together"
       />
     </div>
   );

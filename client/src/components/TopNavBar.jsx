@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 const TopNavBar = ({
   user,
   handleLogout,
-  setLoginselected,
+  setLoginSelected,
   setRegisterSelected,
   navigate,
 }) => {
@@ -35,7 +35,7 @@ const TopNavBar = ({
           <>
             <h4
               onClick={() => {
-                setLoginselected(true);
+                setLoginSelected(true);
                 setRegisterSelected(false);
               }}
             >
@@ -44,7 +44,7 @@ const TopNavBar = ({
             <h4
               onClick={() => {
                 setRegisterSelected(true);
-                setLoginselected(false);
+                setLoginSelected(false);
               }}
             >
               Register
