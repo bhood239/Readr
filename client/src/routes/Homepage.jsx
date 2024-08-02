@@ -7,6 +7,7 @@ const Homepage = ({
   registerSelected,
   setLoginselected,
   setRegisterSelected,
+  setUser
 }) => {
   return (
     <div>
@@ -42,8 +43,8 @@ const Homepage = ({
             </h1>
           </>
         )}
-        {loginSelected && <LoginForm />}
-        {registerSelected && <RegisterForm />}
+        {loginSelected && <LoginForm setUser={setUser} />}
+        {registerSelected && <RegisterForm setUser={setUser} />}
       </div>
       <img
         src="https://media.gettyimages.com/id/1398466630/photo/bearded-man-comfortably-sitting-on-a-coach-reading-a-book-and-holding-his-dog.jpg?s=612x612&w=0&k=20&c=UyGpkOSp1ucynHrhJvC2jE1Ura9c2rkHkT03uP2-_54="

@@ -45,6 +45,7 @@ const App = () => {
                 registerSelected={registerSelected}
                 setLoginselected={setLoginselected}
                 setRegisterSelected={setRegisterSelected}
+                setUser={setUser}
               />
             )
           }
