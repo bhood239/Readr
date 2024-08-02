@@ -2,10 +2,10 @@ import { useState } from "react";
 import axios from "axios";
 
 const RegisterForm = (props) => {
-    const { setIndexPage } = props;
+    const { setUser } = props;
 
     const name = 'username';
-    const email = 'example@email.com';
+    const email = 'userone@example.com';
     const password = 'password';
     const confirmPassword = 'password';
     const [message, setMessage] = useState('');
@@ -20,7 +20,7 @@ const RegisterForm = (props) => {
           }, { withCredentials: true });
           
           setMessage(response.data.notice);
-          setIndexPage('dashboard');  //update index page state to display conditionally
+          setUser(response.data.user);
         } catch (error) {
           if (error.response) {
             setMessage(error.response.data.alert);
