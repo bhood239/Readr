@@ -36,6 +36,24 @@ module Api
         @book_status.destroy
         head :no_content
       end
+
+      def user_books_by_status
+        @book_statuses = BookStatus.where(user_id: params[:user_id], status: params[:status])
+
+        # Extract book_ids from book_statuses
+        book_ids = @book_statuses.pluck(:book_id)
+        render json: book_ids
+      end
+
+      def user_fav_books
+        # Get favorite book statuses for the user
+        @fav_book_statuses = BookStatus.where(user_id: params[:user_id], fave_books: true)
+  
+        # Extract book_ids from fav_book_statuses
+        book_ids = @fav_book_statuses.pluck(:book_id)
+  
+        render json: book_ids
+      end
   
       private
   
