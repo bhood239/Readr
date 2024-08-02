@@ -1,10 +1,21 @@
 class Api::SessionsController < ApplicationController
     def create
-      user = User.authenticate_with_credentials(params[:email], params[:password])
-    user = current_user
+      user = User.find_by(email: params[:email])
+    
       if user
         session[:user_id] = user.id
-        render json: { notice: 'Logged in successfully' }, status: :ok
+        render json: { 
+            notice: 'Logged in successfully', 
+            user: {
+                id: user.id,
+                email: user.email,
+                awards: user.awards,
+                followers: user.followers,
+                following: user.following,
+                followers_list: user.followers_list, 
+                following_list: user.following_list 
+            }
+            }, status: :ok
       else
         render json: { alert: 'Invalid email or password' }, status: :unauthorized
       end
