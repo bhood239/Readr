@@ -8,7 +8,13 @@ Rails.application.routes.draw do
         end
     end
     resources :posts, only: [:index, :show, :create, :update, :destroy]
-    resources :book_statuses, only: [:index, :show, :create, :update, :destroy]
+    resources :book_statuses, only: [:index, :create] do
+        collection do
+          get ':user_id/:book_id', to: 'book_statuses#show_by_user_and_book', as: :show_by_user_and_book
+          put ':user_id/:book_id', to: 'book_statuses#update_by_user_and_book', as: :update_by_user_and_book
+          delete ':user_id/:book_id', to: 'book_statuses#destroy_by_user_and_book', as: :destroy_by_user_and_book
+        end
+    end
     resources :friends, only: [:index, :show, :create, :update, :destroy]
     resources :sessions, only: [:create, :destroy]
 
