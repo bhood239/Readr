@@ -29,14 +29,4 @@ class User < ApplicationRecord
       user.update_columns(followers: user.followers_list.size, following: user.following_list.size)
     end
   end
-
-  def self.authenticate_with_credentials(email, password)
-      normalized_email = email.strip.downcase
-      user = User.find_by(email: normalized_email)
-      if user
-          user
-      else
-          nil
-      end
-  end
 end
