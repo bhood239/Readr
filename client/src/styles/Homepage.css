@@ -31,6 +31,7 @@
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
+  background-color: rgb(243, 243, 243);
 }
 
 .homepage .slogan {
@@ -59,5 +60,5 @@
 }
 
 .homepage .nav-link:hover {
-  background-color: rgb(199, 195, 195);
+  background-color: rgb(231, 231, 231);
 }
