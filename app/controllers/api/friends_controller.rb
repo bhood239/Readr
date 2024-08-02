@@ -10,18 +10,6 @@ module Api
         render json: @friend
     end
 
-    def followers
-        @followers = User.joins("JOIN friends ON friends.follower_id = users.id")
-                         .where("friends.following_id = ?", params[:id])
-        render json: @followers
-    end
-
-    def following
-        @following = User.joins("JOIN friends ON friends.following_id = users.id")
-                         .where("friends.following_id = ?", params[:id])
-        render json: @following
-    end
-
     def create
       @friend = Friend.new(friend_params)
       if @friend.save
