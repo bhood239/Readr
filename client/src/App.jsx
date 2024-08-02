@@ -14,7 +14,7 @@ import SearchResult from "./components/SearchResults";
 const App = () => {
   // Simulate a user object
   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
-  const [user, setUser] = useState(currentUser);
+  const [user, setUser] = useState( {name: "John Doe", email: "johndoe@example.com" });
 
   const handleLogout = () => {
     // Simulate a user logging out
@@ -30,7 +30,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Homepage/>} />
         <Route path="/Dashboard" element={<Dashboard/>} />
-        <Route path="/Profile" element={<Profile/>} />
+        <Route path="/Profile" element={<Profile user={user}/>} />
         <Route path="/Search" element={<SearchResult/>} />
       </Routes>
       <Footer />
