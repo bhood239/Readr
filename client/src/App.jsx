@@ -1,6 +1,6 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -10,15 +10,18 @@ import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 
 
-
 const App = () => {
-  // Simulate a user object
+  const navigate = useNavigate();
   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
-  const [user, setUser] = useState( {name: "John Doe", email: "johndoe@example.com" });
+
+  const [user, setUser] = useState(currentUser);
+  const [loginSelected, setLoginselected] = useState(false);
+  const [registerSelected, setRegisterSelected] = useState(false);
 
   const handleLogout = () => {
     // Simulate a user logging out
     setUser(null);
+    navigate("/");
   };
 
   return (
@@ -26,14 +29,31 @@ const App = () => {
       <TopNavBar
         user={user}
         handleLogout={handleLogout}
+        setLoginselected={setLoginselected}
+        setRegisterSelected={setRegisterSelected}
+        navigate={navigate}
       />
       <Routes>
-        <Route exact path="/" element={<Homepage/>} />
-        <Route path="/Dashboard" element={<Dashboard/>} />
-        <Route path="/Profile" element={<Profile user={user}/>} />
-        <Route path="/Search" element={<SearchResult/>} />
+        <Route
+          path="/"
+          element={
+            user ? (
+              <Dashboard />
+            ) : (
+              <Homepage
+                loginSelected={loginSelected}
+                registerSelected={registerSelected}
+                setLoginselected={setLoginselected}
+                setRegisterSelected={setRegisterSelected}
+                setUser={setUser}
+              />
+            )
+          }
+        />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/search" element={<SearchResult />} />
       </Routes>
-      <Footer />
+      <Footer navigate={navigate} />
     </div>
   );
 };

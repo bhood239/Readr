@@ -2,9 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 
 const LoginForm = (props) => {
-    const { setIndexPage } = props;
+    const { setUser } = props;
 
-    const email = 'user@example.com';
+    const email = 'userone@example.com';
     const password = 'password';
     const [message, setMessage] = useState('');
 
@@ -17,10 +17,12 @@ const LoginForm = (props) => {
           }, { withCredentials: true });
           
         setMessage('Logged in Successfully');
-        setIndexPage('dashboard');  //update index page state to display conditionally
+        setUser(response.data.user);
+        // setUser(response);
         } catch (error) {
           if (error.response) {
             setMessage(error.response.data.alert);
+            console.log(error);
           } else {
             setMessage('An error occurred. Please try again.');
           }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
-  createBookStatus,
-  getBookStatusById,
-  getAllBookStatuses,
-  updateBookStatusById,
-  deleteBookStatusById,
+    createBookStatus,
+    getBookStatusByUserAndBook,
+    getAllBookStatuses,
+    updateBookStatusByUserAndBook,
+    deleteBookStatusByUserAndBook,
 } from "../../apiRequests/backendApi/bookStatusRequests";
 
 // Create Book Status
@@ -29,8 +29,8 @@ export const useCreateBookStatus = () => {
   return { bookStatus, loading, error, handleCreateBookStatus };
 };
 
-// Read Book Status by Id
-export const useBookStatusById = (id) => {
+// Read Book Status by User and Book
+export const useBookStatusByUserAndBook = (userId, bookId) => {
   const [bookStatus, setBookStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,7 +38,7 @@ export const useBookStatusById = (id) => {
   useEffect(() => {
     const fetchBookStatus = async () => {
       try {
-        const bookStatusData = await getBookStatusById(id);
+        const bookStatusData = await getBookStatusByUserAndBook(userId, bookId);
         setBookStatus(bookStatusData);
       } catch (err) {
         setError(err);
@@ -47,7 +47,7 @@ export const useBookStatusById = (id) => {
       }
     };
     fetchBookStatus();
-  }, [id]);
+  }, [userId, bookId]);
 
   return { bookStatus, loading, error };
 };
@@ -75,16 +75,16 @@ export const useAllBookStatuses = () => {
   return { bookStatuses, loading, error };
 };
 
-// Update Book Status by Id
-export const useUpdateBookStatusById = () => {
+// Update Book Status by User and Book
+export const useUpdateBookStatusByUserAndBook = () => {
   const [bookStatus, setBookStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const updateBookStatus = async (id, updatedData) => {
+  const updateBookStatus = async (userId, bookId, updatedData) => {
     setLoading(true);
     try {
-      const bookStatusData = await updateBookStatusById(id, updatedData);
+      const bookStatusData = await updateBookStatusByUserAndBook(userId, bookId, updatedData);
       setBookStatus(bookStatusData);
     } catch (err) {
       setError(err);
@@ -96,16 +96,16 @@ export const useUpdateBookStatusById = () => {
   return { bookStatus, loading, error, updateBookStatus };
 };
 
-// Delete Book Status by Id
-export const useDeleteBookStatusById = () => {
+// Delete Book Status by User and Book
+export const useDeleteBookStatusByUserAndBook = () => {
   const [deleted, setDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const deleteBookStatus = async (id) => {
+  const deleteBookStatus = async (userId, bookId) => {
     setLoading(true);
     try {
-      await deleteBookStatusById(id);
+      await deleteBookStatusByUserAndBook(userId, bookId);
       setDeleted(true);
     } catch (err) {
       setError(err);
@@ -119,8 +119,8 @@ export const useDeleteBookStatusById = () => {
 
 export default {
   useCreateBookStatus,
-  useBookStatusById,
+  useBookStatusByUserAndBook,
   useAllBookStatuses,
-  useUpdateBookStatusById,
-  useDeleteBookStatusById,
+  useUpdateBookStatusByUserAndBook,
+  useDeleteBookStatusByUserAndBook,
 };

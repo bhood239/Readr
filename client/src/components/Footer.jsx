@@ -1,8 +1,8 @@
-import React from 'react';
-import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import React from "react";
+import { Container, Row, Col, Nav, Navbar } from "react-bootstrap";
+import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 
-const Footer = () => {
+const Footer = ({ navigate }) => {
   return (
     <Navbar bg="light" variant="light" className="mt-auto">
       <Container>
@@ -13,7 +13,7 @@ const Footer = () => {
           <Col md={4} className="d-flex justify-content-center">
             <Nav>
               <Nav.Item>
-                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link href="/about">About</Nav.Link>
