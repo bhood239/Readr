@@ -13,8 +13,8 @@ Rails.application.routes.draw do
           get ':user_id/:book_id', to: 'book_statuses#show_by_user_and_book', as: :show_by_user_and_book
           put ':user_id/:book_id', to: 'book_statuses#update_by_user_and_book', as: :update_by_user_and_book
           delete ':user_id/:book_id', to: 'book_statuses#destroy_by_user_and_book', as: :destroy_by_user_and_book
-          get 'user_books/:user_id/:status', to: 'book_statuses#user_books_by_status'
           get 'user_books/:user_id/fav_books', to: 'book_statuses#user_fav_books'
+          get 'user_books/:user_id/:status', to: 'book_statuses#user_books_by_status'
         end
     end
     resources :friends, only: [:index, :show, :create, :update, :destroy]

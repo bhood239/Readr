@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 const LoginForm = (props) => {
-    const { setUser } = props;
+    const { setCurrentUser } = props;
 
     const email = 'userone@example.com';
     const password = 'password';
@@ -17,14 +17,13 @@ const LoginForm = (props) => {
           }, { withCredentials: true });
           
         setMessage('Logged in Successfully');
-        setUser(response.data.user);
-        // setUser(response);
+        setCurrentUser(response.data.user);
         } catch (error) {
           if (error.response) {
             setMessage(error.response.data.alert);
-            console.log(error);
           } else {
             setMessage('An error occurred. Please try again.');
+            console.log(error);
           }
         }
     };

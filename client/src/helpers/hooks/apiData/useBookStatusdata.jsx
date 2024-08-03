@@ -33,7 +33,7 @@ export const useCreateBookStatus = () => {
 
 // Read Book Status by User and Book
 export const useBookStatusByUserAndBook = (userId, bookId) => {
-    const [bookIds, setBookIds] = useState([]);
+    const [books, setBookIds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -55,7 +55,7 @@ export const useBookStatusByUserAndBook = (userId, bookId) => {
 };
 
 export const useFavoriteBooksByUser = (userId) => {
-    const [bookIds, setBookIds] = useState([]);
+    const [books, setBookIds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -167,6 +167,7 @@ export const useDeleteBookStatusByUserAndBook = () => {
 export default {
     useCreateBookStatus,
     useBookStatusByUserAndBook,
+    useFavoriteBooksByUser,
     useAllBookStatuses,
     useUpdateBookStatusByUserAndBook,
     useDeleteBookStatusByUserAndBook,

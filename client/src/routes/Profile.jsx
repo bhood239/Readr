@@ -1,11 +1,19 @@
 
 import React, { useState } from 'react';
+import BookList from '../components/BookList';
 import { Container, Col, Image, Row } from 'react-bootstrap';
+
 // import { useUserById } from '../helpers/hooks/apiData/useUserData'; //uncomment when user info is setup properly
 
-const Profile = ({ user }) => { // userId, replace user once properly set up.
+const Profile = (props) => { // userId, replace user once properly set up.
   // const { user, loading, error } = useUserById(userId);
+  const {currentUser, wantToRead, reading, read, favBooks } = props
   const [selectedOption, setSelectedOption] = useState('To Be Read');
+
+  console.log('want to read:', wantToRead);
+  console.log('reading:', reading);
+  console.log('read:', read);
+  console.log('fav:', favBooks);
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
@@ -14,13 +22,13 @@ const Profile = ({ user }) => { // userId, replace user once properly set up.
   const renderBookList = () => {
     switch (selectedOption) {
       case 'To Be Read':
-        return <div>List of books to be read</div>; // Replace with actual list
+        return <div><BookList books={wantToRead} /></div>; // Replace with actual list
       case 'Reading':
-        return <div>List of books currently reading</div>; // Replace with actual list
+        return <div><BookList books={reading} /></div>; // Replace with actual list
       case 'Read':
-        return <div>List of books read</div>; // Replace with actual list
+        return <div><BookList books={read} /></div>; // Replace with actual list
       case 'My Books':
-        return <div>List of my books</div>; // Replace with actual list
+        return <div><BookList books={favBooks} /></div>; // Replace with actual list
       default:
         return null;
     }
@@ -40,12 +48,12 @@ const Profile = ({ user }) => { // userId, replace user once properly set up.
 {/* Left side of page */}
       <Col xs={6} md={4}>
         <Image src="holder.js/171x180" thumbnail />
-        <h2>{user.name}</h2>
+        <h2>{currentUser?.name}</h2>
         <div className="follow">
           <h3>Followers</h3>
-          <span>{user.followers}</span>
+          <span>{currentUser?.followers}</span>
           <h3>Following</h3>
-          <span>{user.following}</span>
+          <span>{currentUser?.following}</span>
         </div>
         <div className="row">
           <div className="list-group">
