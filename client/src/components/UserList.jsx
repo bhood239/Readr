@@ -6,7 +6,7 @@ const UserList = (props) => {
         return currentUser.following_list?.some(followingUser => followingUser.id === userId);
     };
     const isFollower = (userId) => {
-        return currentUser.follower_list?.some(follower => follower.id === userId);
+        return currentUser.followers_list?.some(follower => follower.id === userId);
     };
 
     const follow = (userId) => {
