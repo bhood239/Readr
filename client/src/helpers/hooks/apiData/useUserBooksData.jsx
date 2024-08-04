@@ -2,17 +2,6 @@ import { useEffect, useState } from "react";
 import { useBooksByUserAndStatus, useFavoriteBooksByUser } from "./useBookStatusdata"
 import { getBookById } from "../../apiRequests/bookApi/bookApiRequests";
 
-// in-app states
-// states for toRead, reading, read and favBooks (array of book details objects)
-// loadProfile (function to render profile on App.jsx) -> This may go in App.jsx
-// functions for books - addWantToRead, addReading, addRead, addFav, removeFav
-// functions for post - addPost, removePost
-// functions for HomePage - login, signup, logout
-// states for SearchResults - searchText
-// function for SearchResults - searchData -> returns search result based on searchText
-// states for loginForm - email, password
-// function for loginForm - login
-
 //   states for bookStates
 const useUserBooks = () => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -56,7 +45,6 @@ const useUserBooks = () => {
                 const booksDetails = await Promise.all(
                     bookIds.map(async (bookId) => {
                         const book = await getBookById(bookId);
-                        console.log('book:', book);
                         return book;
                     })
                 );

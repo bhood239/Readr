@@ -8,13 +8,8 @@ import { Container, Col, Image, Row } from 'react-bootstrap';
 
 const Profile = (props) => { // userId, replace user once properly set up.
     // const { user, loading, error } = useUserById(userId);
-    const { currentUser, wantToRead, reading, read, favBooks } = props
+    const { currentUser, wantToRead, reading, read, favBooks, handleCreateFriend, handleDeleteFriend } = props
     const [selectedOption, setSelectedOption] = useState('To Be Read');
-
-    console.log('want to read:', wantToRead);
-    console.log('reading:', reading);
-    console.log('read:', read);
-    console.log('fav:', favBooks);
 
     const handleSelectOption = (option) => {
         setSelectedOption(option);
@@ -49,14 +44,14 @@ const Profile = (props) => { // userId, replace user once properly set up.
             case 'Followers List':
                 const followersList = currentUser.followers_list;
                 return followersList.length > 0 ? (
-                    <div><UserList users={followersList} currentUser={currentUser} /></div>
+                    <div><UserList users={followersList} currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} /></div>
                 ) : (
                     <div>No followers</div>
                 );
             case 'Following List':
                 const followingList = currentUser.following_list;
                 return followingList.length > 0 ? (
-                    <div><UserList users={followingList} currentUser={currentUser} /></div>
+                    <div><UserList users={followingList} currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} /></div>
                 ) : (
                     <div>No followers</div>
                 );

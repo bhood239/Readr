@@ -2,7 +2,6 @@
 import axios from "axios";
 
 const getBookById = async (id) => {
-    console.log('id:', id);
   try {
     const res = await axios.get(`https://openlibrary.org/books/${id}.json`);
     const bookData = res.data;
