@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "../styles/Form.css";
 
 const RegisterForm = (props) => {
   const { setUser, setRegisterSelected } = props;
@@ -35,7 +36,7 @@ const RegisterForm = (props) => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label>
@@ -47,7 +48,13 @@ const RegisterForm = (props) => {
         <label htmlFor="confirm_password">Confirm Password</label>
         <input type="password" id="confirm_password" value={confirmPassword} />
         <button type="submit">Register</button>
-        <button onClick={() => setRegisterSelected(false)}>Back</button>
+        <button
+          type="button"
+          className="back-button"
+          onClick={() => setRegisterSelected(false)}
+        >
+          Back
+        </button>
       </form>
     </div>
   );

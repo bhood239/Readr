@@ -11,9 +11,13 @@ import SearchResult from "./components/SearchResults";
 
 const App = () => {
   const navigate = useNavigate();
-  const currentUser = { name: "John Doe", email: "johndoe@example.com" };
+  const currentUser = {
+    name: "User One",
+    email: "userone@example.com",
+    password: "password",
+  };
 
-  const [user, setUser] = useState(currentUser);
+  const [user, setUser] = useState(null);
   const [loginSelected, setLoginSelected] = useState(false);
   const [registerSelected, setRegisterSelected] = useState(false);
 
@@ -45,6 +49,7 @@ const App = () => {
                 setLoginSelected={setLoginSelected}
                 setRegisterSelected={setRegisterSelected}
                 setUser={setUser}
+                currentUser={currentUser}
               />
             )
           }
