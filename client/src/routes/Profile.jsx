@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import BookList from '../components/BookList';
 import UserList from '../components/UserList';
 import { Container, Col, Image, Row } from 'react-bootstrap';
+import SearchUsers from '../components/SearchUsers';
+import '../styles/Profile.css'
 
 // import { useUserById } from '../helpers/hooks/apiData/useUserData'; //uncomment when user info is setup properly
 
 const Profile = (props) => { // userId, replace user once properly set up.
     // const { user, loading, error } = useUserById(userId);
-    const { currentUser, wantToRead, reading, read, favBooks, handleCreateFriend, handleDeleteFriend } = props
+    const { currentUser, wantToRead, reading, read, favBooks, popularBooks, handleCreateFriend, handleDeleteFriend } = props
     const [selectedOption, setSelectedOption] = useState('To Be Read');
 
     const handleSelectOption = (option) => {
@@ -55,6 +57,16 @@ const Profile = (props) => { // userId, replace user once properly set up.
                 ) : (
                     <div>No followers</div>
                 );
+            case 'Popular Books':
+                return popularBooks.length > 0 ? (
+                    <div><BookList books={popularBooks} currentUser={currentUser} /></div>
+                ) : (
+                    <div>No popular books</div>
+                );
+            case 'Search Users':
+                return (
+                    <div><SearchUsers currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} /></div>
+                );
             default:
                 return null;
         }
@@ -65,23 +77,33 @@ const Profile = (props) => { // userId, replace user once properly set up.
     // if (error) return <div>Error: {error.message}</div>;
 
     return (
-        <Container>
-            <Row>
-                <Image src="holder.js/100px250" fluid />;
-                <h1>Profile</h1>
+        <Container className="container">
+            <Row className="profile-header">
+                <Col xs={12} className="profile-image-section">
+                    <Image src="holder.js/100px250" fluid className="profile-image" />
+                    <h1 className="profile-name">{currentUser?.name}</h1>
+                </Col>
             </Row>
 
-            {/* Left side of page */}
-            <Col xs={6} md={4}>
-                <Image src="holder.js/171x180" thumbnail />
-                <h2>{currentUser?.name}</h2>
-                <div className="follow">
-                    <h3>Followers</h3>
-                    <span>{currentUser?.followers}</span>
-                    <h3>Following</h3>
-                    <span>{currentUser?.following}</span>
-                </div>
-                <div className="row">
+            <Row className="profile-info-section">
+                <Col xs={12} className="profile-details">
+                    <div className="follow">
+                        <h3><a href="#" className="link" onClick={() => handleSelectOption('Followers List')}>
+                            Followers
+                        </a></h3>
+                        <span>{currentUser?.followers}</span>
+                    </div>
+                    <div className="follow">
+                        <h3><a href="#" className="link" onClick={() => handleSelectOption('Following List')}>
+                            Following
+                        </a></h3>
+                        <span>{currentUser?.following}</span>
+                    </div>
+                </Col>
+            </Row>
+
+            <Row className="profile-content">
+                <Col xs={12} md={3} className="list-group-section">
                     <div className="list-group">
                         <a href="#" className="list-group-item list-group-item-action" onClick={() => handleSelectOption('To Be Read')}>
                             To Be Read
@@ -96,25 +118,18 @@ const Profile = (props) => { // userId, replace user once properly set up.
                             My Books
                         </a>
                     </div>
-                </div>
-            </Col>
-
-            {/* Middle of page */}
-            <Col>
-                {renderBookList()}
-            </Col>
-
-            {/* Right side of page  */}
-            <Row>
-                <Col>
-                    Popular Books
                 </Col>
-                <Col>
-                    <a href="#" onClick={() => handleSelectOption('Followers List')}>
-                        Followers List
+
+                <Col xs={12} md={6} className="book-list-section">
+                    {renderBookList()}
+                </Col>
+
+                <Col xs={12} md={3} className="right-side">
+                    <a href="#" className="link" onClick={() => handleSelectOption('Popular Books')}>
+                        Popular Books
                     </a>
-                    <a href="#" onClick={() => handleSelectOption('Following List')}>
-                        Following List
+                    <a href="#" className="link" onClick={() => handleSelectOption('Search Users')}>
+                        Find People
                     </a>
                 </Col>
             </Row>

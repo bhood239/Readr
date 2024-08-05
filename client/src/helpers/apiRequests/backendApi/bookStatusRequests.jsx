@@ -61,6 +61,17 @@ export const getFavoriteBooksByUser = async (userId) => {
     }
 };
 
+// READ POPULAR BOOKS
+export const getPopularBooks = async () => {
+    try {
+        const res = await axios.get(`/api/book_statuses/popular_books`);
+        return res.data;
+    } catch (err) {
+        console.error("Error getting books by user and status:", err.message);
+        return null;
+    }
+};
+
 // UPDATE
 export const updateBookStatusByUserAndBook = async (userId, bookId, params) => {
     try {
@@ -91,6 +102,7 @@ export default {
     getAllBookStatuses,
     getBooksByUserAndStatus,
     getFavoriteBooksByUser,
+    getPopularBooks,
     updateBookStatusByUserAndBook,
     deleteBookStatusByUserAndBook,
 };

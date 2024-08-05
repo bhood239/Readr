@@ -38,6 +38,18 @@ export const getAllUsers = async () => {
   }
 };
 
+// SEARCH BY NAME
+export const getUsersByName = async (name) => {
+    try {
+      const res = await axios.get(`/api/users/search`, { params: { name } });
+      console.log("Users found: ", res.data);
+      return res.data;
+    } catch (err) {
+        console.log("error searching users: ", err.message);
+      return null;
+    }
+};
+
 // UPDATE
 export const updateUserById = async (userId, params) => {
   try {
@@ -66,6 +78,7 @@ export default {
   createUser,
   getUserById,
   getAllUsers,
+  getUsersByName,
   updateUserById,
   deleteUserById,
 };

@@ -52,6 +52,19 @@ module Api
   
         render json: book_ids
       end
+
+      # GET /popular_books
+      def popular_books
+      # Assuming you have a BookStatus model that tracks reading status
+        top_books = BookStatus
+                 .where(status: 'reading')
+                 .group(:book_id)
+                 .order('COUNT(book_id) DESC')
+                 .limit(5)
+                 .pluck(:book_id)
+
+        render json: top_books, include: :book
+      end
   
       private
   
