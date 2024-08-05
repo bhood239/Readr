@@ -10,6 +10,11 @@ module Api
       render json: @post.to_json(include: :user)
     end
 
+    def post_by_user_and_book
+        @post = Post.find_by(user_id: params[:user_id], book_id: params[:book_id])
+        render json: @post.to_json(include: :user)
+    end
+
     def create
       @post = Post.new(post_params)
       if @post.save
