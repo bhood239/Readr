@@ -4,7 +4,7 @@ import BookList from "./BookList";
 import { useBooksByName } from "../helpers/hooks/useBookData";
 
 const SearchResult = (props) => {
-  // const { searchText, setSearchText, searchData } = props;
+  const { currentUser } = props;
   // searchData is the data returned from api
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState("");
@@ -35,7 +35,7 @@ const SearchResult = (props) => {
       </div>
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      {searchData.length > 0 && <BookList books={searchData} />}
+      {searchData.length > 0 && <BookList books={searchData} currentUser={currentUser} />}
     </div>
   );
 };

@@ -29,9 +29,15 @@ module Api
     end
 
     def destroy
-      @friend = Friend.find(params[:id])
-      @friend.destroy
-      head :no_content
+        # Find the friend relationship using follower_id and following_id
+        @friend = Friend.find_by(follower_id: params[:follower_id], following_id: params[:following_id])
+        
+        if @friend
+          @friend.destroy
+          head :no_content
+        else
+          render json: { error: 'Friendship not found' }, status: :not_found
+        end
     end
 
     private

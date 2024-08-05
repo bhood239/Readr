@@ -8,7 +8,7 @@ const Homepage = ({
   registerSelected,
   setLoginSelected,
   setRegisterSelected,
-  setUser,
+  setCurrentUser
 }) => {
   return (
     <div className="homepage">
@@ -48,15 +48,8 @@ const Homepage = ({
             </h1>
           </>
         )}
-        {loginSelected && (
-          <LoginForm setUser={setUser} setLoginSelected={setLoginSelected} />
-        )}
-        {registerSelected && (
-          <RegisterForm
-            setUser={setUser}
-            setRegisterSelected={setRegisterSelected}
-          />
-        )}
+        {loginSelected && <LoginForm setCurrentUser={setCurrentUser} setLoginSelected={setLoginSelected} />}
+        {registerSelected && <RegisterForm setCurrentUser={setCurrentUser} setRegisterSelected={setRegisterSelected} />}
       </div>
       <img
         className="homepage pic right"

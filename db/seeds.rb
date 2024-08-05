@@ -15,8 +15,8 @@ user1 = User.create!(name: "User One", email: "userone@example.com", password: "
 user2 = User.create!(name: "User Two", email: "usertwo@example.com", password: "password")
 
 # Create book statuses
-BookStatus.create!(status: "Read", fave_books: true, book_id: "OL43140390M", user_id: user1.id)
-BookStatus.create!(status: "Reading", fave_books: false, book_id: "OL31403985M", user_id: user2.id)
+BookStatus.create!(status: "read", fave_books: true, book_id: "OL43140390M", user_id: user1.id)
+BookStatus.create!(status: "reading", fave_books: false, book_id: "OL31403985M", user_id: user2.id)
 
 # Create posts
 Post.create!(rating: 5, review: "Great book!", time_spent: 120, book_id: "OL47181069M", user_id: user1.id)

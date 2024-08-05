@@ -49,11 +49,11 @@ const BookList = (props) => {
     };
 
     const addFav = (book) => {
-        updateBookStatusHandler(book.id, { favBook: true });
+        updateBookStatusHandler(book.id, { fave_books: true });
     };
 
     const removeFav = (book) => {
-        updateBookStatusHandler(book.id, { favBook: false });
+        updateBookStatusHandler(book.id, { fave_books: false });
     };
 
     const addWantToRead = (book) => {

@@ -3,36 +3,31 @@ import axios from "axios";
 import "../styles/Form.css";
 
 const LoginForm = (props) => {
-  const { setUser, setLoginSelected } = props;
+    const { setCurrentUser, setLoginSelected } = props;
 
   const email = "userone@example.com";
   const password = "password";
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/login",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
-
-      setMessage("Logged in Successfully");
-      setUser(response.data.user);
-      // setUser(response);
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.alert);
-        console.log(error);
-      } else {
-        setMessage("An error occurred. Please try again.");
-      }
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post('http://localhost:3001/api/login', {
+            email,
+            password
+          }, { withCredentials: true });
+          
+        setMessage('Logged in Successfully');
+        setCurrentUser(response.data.user);
+        } catch (error) {
+          if (error.response) {
+            setMessage(error.response.data.alert);
+          } else {
+            setMessage('An error occurred. Please try again.');
+            console.log(error);
+          }
+        }
+    };
 
   return (
     <div className="form-container">

@@ -8,58 +8,69 @@ import Dashboard from "./routes/Dashboard";
 import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
+import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
+import { useCreateFriend, useDeleteFriend } from "./helpers/hooks/apiData/useFriends";
 
 const App = () => {
-  const navigate = useNavigate();
-  const currentUser = {
-    name: "User One",
-    email: "userone@example.com",
-    password: "password",
-  };
+    const navigate = useNavigate();
+    //   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
 
-  const [user, setUser] = useState(null);
-  const [loginSelected, setLoginSelected] = useState(false);
-  const [registerSelected, setRegisterSelected] = useState(false);
+    const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks } = useUserBooks();
+    const { handleCreateFriend } = useCreateFriend();
+    const { handleDeleteFriend } = useDeleteFriend();
+    const [loginSelected, setLoginselected] = useState(false);
+    const [registerSelected, setRegisterSelected] = useState(false);
 
-  const handleLogout = () => {
-    // Simulate a user logging out
-    setUser(null);
-    navigate("/");
-  };
+    const handleLogout = () => {
+        // Simulate a user logging out
+        setCurrentUser(null);
+        navigate("/");
+    };
 
-  return (
-    <div className="App">
-      <TopNavBar
-        user={user}
-        handleLogout={handleLogout}
-        setLoginSelected={setLoginSelected}
-        setRegisterSelected={setRegisterSelected}
-        navigate={navigate}
-      />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            user ? (
-              <Dashboard />
-            ) : (
-              <Homepage
-                loginSelected={loginSelected}
-                registerSelected={registerSelected}
-                setLoginSelected={setLoginSelected}
-                setRegisterSelected={setRegisterSelected}
-                setUser={setUser}
+    return (
+        <div className="App">
+            <TopNavBar
                 currentUser={currentUser}
-              />
-            )
-          }
-        />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/search" element={<SearchResult />} />
-      </Routes>
-      <Footer navigate={navigate} />
-    </div>
-  );
+                handleLogout={handleLogout}
+                setLoginselected={setLoginselected}
+                setRegisterSelected={setRegisterSelected}
+                navigate={navigate}
+            />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        currentUser ? (
+                            <Dashboard />
+                        ) : (
+                            <Homepage
+                                loginSelected={loginSelected}
+                                registerSelected={registerSelected}
+                                setLoginselected={setLoginselected}
+                                setRegisterSelected={setRegisterSelected}
+                                setCurrentUser={setCurrentUser}
+                                currentUser={currentUser}
+                            />
+                        )
+                    }
+                />
+                <Route
+                    path="/profile"
+                    element={currentUser &&
+                        <Profile
+                            currentUser={currentUser}
+                            wantToRead={wantToRead}
+                            reading={reading}
+                            read={read}
+                            favBooks={favBooks}
+                            handleCreateFriend={handleCreateFriend}
+                            handleDeleteFriend={handleDeleteFriend}
+                        />} />
+                <Route path="/search" element={currentUser && <SearchResult currentUser={currentUser} />} />
+            </Routes>
+            <Footer navigate={navigate} />
+        </div>
+    );
 };
 
 export default App;

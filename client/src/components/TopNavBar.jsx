@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 
 const TopNavBar = ({
-  user,
+  currentUser,
   handleLogout,
   setLoginSelected,
   setRegisterSelected,
@@ -14,7 +14,7 @@ const TopNavBar = ({
     <Navbar bg="light" variant="light" className="navbar-underline">
       <Navbar.Brand onClick={() => navigate("/")}>Readr</Navbar.Brand>
       <Nav className="mr-auto">
-        {user ? (
+        {currentUser ? (
           <>
             <LinkContainer to="/Dashboard">
               <Nav.Link>Dashboard</Nav.Link>
