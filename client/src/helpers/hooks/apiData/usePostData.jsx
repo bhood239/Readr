@@ -58,21 +58,21 @@ export const usePostByUserIdAndBookId = (userId, bookId) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
   
-    useEffect(() => {
-      const fetchPost = async () => {
+    const handlePostByUserIdAndBookId = async (userId, bookId) => {
+        setLoading(true);
+        setError(null);
         try {
-          const postData = await getPostByUserIdAndBookId(userId, bookId);
-          setPost(postData);
+          const post = await getPostByUserIdAndBookId(userId, bookId);
+          setPost(post);
         } catch (err) {
           setError(err);
         } finally {
           setLoading(false);
         }
       };
-      fetchPost();
-    }, [userId, bookId]);
+    
   
-    return { post, loading, error };
+    return { post, loading, error, handlePostByUserIdAndBookId };
 };
 
 // Read All Posts

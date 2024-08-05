@@ -22,7 +22,7 @@ const App = () => {
     const { handleDeleteFriend } = useDeleteFriend();
     const { handleCreateBookStatus } = useCreateBookStatus();
     const { updateBookStatus } = useUpdateBookStatusByUserAndBook();
-    const { getPostByUserIdAndBookId } = usePostByUserIdAndBookId();
+    const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
     const { bookStatuses: allBookStatuses, loading, error } = useAllBookStatuses();
     const [loginSelected, setLoginSelected] = useState(false);
     const [registerSelected, setRegisterSelected] = useState(false);
@@ -33,7 +33,7 @@ const App = () => {
 
     const addPost = (bookId) => {
         setPostFormBookId(bookId);
-        const post = getPostByUserIdAndBookId(currentUser.id, bookId);
+        const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
         post ? setEditPostSelected(true) : setPostFormSelected(true);
     }
 
