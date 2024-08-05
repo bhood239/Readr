@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-const CustomRating = ({ totalStars = 5 }) => {
-  const [rating, setRating] = useState(0);
+const CustomRating = ({ totalStars = 5, rating, setRating }) => {
 
   const handleRating = (rate) => {
     setRating(rate);
+
     console.log(rate);
   };
 

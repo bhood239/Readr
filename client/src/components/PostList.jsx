@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Post from './Post';
 import { useAllPosts } from '../helpers/hooks/apiData/usePostData';
 
@@ -26,20 +26,5 @@ const PostList = () => {
   );
 };
 
-PostList.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      user: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      }).isRequired,
-      book: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired,
-      }).isRequired,
-      review: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
 
 export default PostList;

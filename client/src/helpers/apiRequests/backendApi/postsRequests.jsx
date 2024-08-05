@@ -9,7 +9,7 @@ export const createPost = async (params) => {
     console.log("post created:", res.data);
     return res.data;
   } catch (err) {
-    console.log("error creating post: ", err.message);
+    console.log("error creating post: ", err.response ? err.response.data : err.message);    
     return null;
   }
 };

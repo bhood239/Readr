@@ -3,35 +3,16 @@ import React, {useState, useEffect} from 'react';
 import CustomRating from './CustomRating';
 import PropTypes from 'prop-types';
 import { useCreatePost } from '../helpers/hooks/apiData/usePostData';
+import './PostForm.scss';
 
-
-const PostForm = ({onPostCreation, loggedinUserId, selectedBookId}) => {
+const PostForm = ({onPostCreation, user, selectedBook}) => {
   const [rating, setRating] = useState('');
   const [timeSpent, setTimeSpent] = useState('');
   const [review, setReview] = useState('');
-  // const [userId, setUserId] = useState('');
-  // const [bookId, setBookId] = useState('');
-  // const [users, setUsers] = useState([]);
-  // const [books, setBooks] = useState([]);
   const [hours, setHours] = useState('');
 
   const { post, loading, error, handleCreatePost} = useCreatePost();
 
-// useEffect(() => {
-//   fetch("/users")
-//     .then((response) => response.json())
-//     .then((userinfo) => setUsers(userinfo))
-//     .catch((error) => {
-//       console.error('Error fetching users:', error);
-//     });
-
-//   fetch("/books")
-//     .then((response) => response.json())
-//     .then((bookinfo) => setBooks(bookinfo))
-//     .catch((error) => {
-//       console.error('Error fetching books:', error);
-//     });
-// }, []);
 
 useEffect(() => {
   if (post) {
@@ -39,8 +20,6 @@ useEffect(() => {
     setRating('');
     setTimeSpent('');
     setReview('');
-    setUserId('');
-    setBookId('');
     setHours('');
   }
 }, [post, onPostCreation]);
@@ -49,14 +28,36 @@ useEffect(() => {
 const handleSubmit = (event) => {
   event.preventDefault();
 
-  const postData= {
+    const numericRating = Number(rating);
+    if (rating === "" || isNaN(numericRating) || numericRating < 1 || numericRating > 5) {
+      console.error('Invalid rating value');
+      return;
+    }
+
+    // if (!user) {
+    //   console.error('User ID is required');
+    //   return;
+    // }
+
+    if (!selectedBook) {
+      console.error('Book ID is required');
+      return;
+    }
+
     
-    rating,
-    time_spent: timeSpent,
+    const timeSpentNumber = hours ? parseFloat(hours) : null;
+
+    const postData= {
+    
+    rating: numericRating,    
+    time_spent: timeSpentNumber,
     review,
-    user_id: loggedinUserId,
-    book_id: selectedBookId,
+    user_id: user,
+    book_id: selectedBook,
   };
+
+  console.log('Submitting post data:', postData); 
+
 
   handleCreatePost(postData);
 
@@ -64,41 +65,51 @@ const handleSubmit = (event) => {
 };
 
 return (
-  <div >
+  <div className='post-form-container'>
+    <div className='post-form-card card'>
+      <h2> Create a Post:</h2>
+   
       <CustomRating rating={rating} setRating={setRating} />
 
       <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor='review'>Book Review:</label>
+      <div className='mb-3'>
+        <label htmlFor='review' className='form-label'>Book Review:</label>
       <textarea
+        id="review"
         type="text"
         name="review"
         rows="5"
         placeholder="Write a post:"
+        className='form-control'
         value={review}
         onChange={(event) => setReview(event.target.value)}
+        required
         />
       </div >
 
       
-      <div>
-    <label>Time Spent (Hours):</label>
+    <div className='col-md-2'>
+    <label htmlFor='hours' className='form-label'>Time Spent (Hours):</label>
     <input
+      id="hours"
       type="number"
+      className='form-control'
+      placeholder='0'
       value={hours}
-      onChange={(e) => setHours(e.target.value)}
+      onChange={(event) => setHours(event.target.value)}
       required
     />
   </div>
  
       <div>
-        <button type="submit" disabled={loading}> 
+        <button type="submit" className='btn btn-primary' disabled={loading}> 
           {loading ? 'Creating post....' : 'Create My Post' } 
         </button>
-        {error && <p>Error while creating the post: {error.message}</p>}
+        {error && <p className='text-danger mt-2'>Error while creating the post: {error.message}</p>}
       </div>
 
       </form>
+    </div>
     </div>
   );
 };

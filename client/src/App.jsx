@@ -8,18 +8,24 @@ import Dashboard from "./routes/Dashboard";
 import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
-
-
+import PostForm from "./components/PostForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/main.scss';
 
 const App = () => {
   // Simulate a user object
-  const currentUser = { id: 1, name: "John Doe", email: "johndoe@example.com" };
+  const currentUser = { id: 1, name: "User One", email: "userone@example.com", password: "password"};
   const [user, setUser] = useState(currentUser);
+  const [selectedBook, setSelectedBook] = useState({id: 1, title:"Book Name", author: "Author Name"})
 
   const handleLogout = () => {
     // Simulate a user logging out
     setUser(null);
   };
+
+  const handlePostCreation = (newPost) => {
+    console.log("New post created: ", newPost);
+  }
 
   return (
     <div className="App">
@@ -35,7 +41,10 @@ const App = () => {
         <Route path="/Search" element={<SearchResult/>} />
       </Routes>
 
-      <PostForm onPostCreation={handlePostCreation} loggedInUserId={currentUser.id} selectedBookId={selectedBook.id} />
+    {user && selectedBook && ( 
+      <PostForm onPostCreation={handlePostCreation} user={user.id} selectedBook={selectedBook.id} />
+
+      )}
 
       <Footer />
     </div>
