@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   createPost,
   getPostById,
+  getPostByUserIdAndBookId,
   getAllPosts,
   updatePostById,
   deletePostById,
@@ -50,6 +51,28 @@ export const usePostById = (id) => {
   }, [id]);
 
   return { post, loading, error };
+};
+
+export const usePostByUserIdAndBookId = (userId, bookId) => {
+    const [post, setPost] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
+    useEffect(() => {
+      const fetchPost = async () => {
+        try {
+          const postData = await getPostByUserIdAndBookId(userId, bookId);
+          setPost(postData);
+        } catch (err) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchPost();
+    }, [userId, bookId]);
+  
+    return { post, loading, error };
 };
 
 // Read All Posts

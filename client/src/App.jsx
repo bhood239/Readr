@@ -11,6 +11,7 @@ import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
 import { useCreateFriend, useDeleteFriend } from "./helpers/hooks/apiData/useFriends";
 import { useAllBookStatuses, useCreateBookStatus, useUpdateBookStatusByUserAndBook } from "./helpers/hooks/apiData/useBookStatusdata";
+import { usePostByUserIdAndBookId } from "./helpers/hooks/apiData/usePostData";
 
 const App = () => {
     const navigate = useNavigate();
@@ -21,9 +22,20 @@ const App = () => {
     const { handleDeleteFriend } = useDeleteFriend();
     const { handleCreateBookStatus } = useCreateBookStatus();
     const { updateBookStatus } = useUpdateBookStatusByUserAndBook();
+    const { getPostByUserIdAndBookId } = usePostByUserIdAndBookId();
     const { bookStatuses: allBookStatuses, loading, error } = useAllBookStatuses();
     const [loginSelected, setLoginSelected] = useState(false);
     const [registerSelected, setRegisterSelected] = useState(false);
+
+    const [postFormBookId, setPostFormBookId] = useState();
+    const [postFormSelected, setPostFormSelected] = useState(false);
+    const [editPostSelected, setEditPostSelected] = useState(false);
+
+    const addPost = (bookId) => {
+        setPostFormBookId(bookId);
+        const post = getPostByUserIdAndBookId(currentUser.id, bookId);
+        post ? setEditPostSelected(true) : setPostFormSelected(true);
+    }
 
     const handleLogout = () => {
         // Simulate a user logging out
