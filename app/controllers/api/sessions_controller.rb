@@ -8,6 +8,7 @@ class Api::SessionsController < ApplicationController
             notice: 'Logged in successfully', 
             user: {
                 id: user.id,
+                name: user.name,
                 email: user.email,
                 awards: user.awards,
                 followers: user.followers,

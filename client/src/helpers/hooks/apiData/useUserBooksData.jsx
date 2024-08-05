@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useBooksByUserAndStatus, useFavoriteBooksByUser } from "./useBookStatusdata"
+import { useBooksByUserAndStatus, useFavoriteBooksByUser, usePopularBooks } from "./useBookStatusdata"
 import { getBookById } from "../../apiRequests/bookApi/bookApiRequests";
 
 //   states for bookStates
@@ -9,6 +9,7 @@ const useUserBooks = () => {
     const [reading, setReading] = useState([]);
     const [read, setRead] = useState([]);
     const [favBooks, setFavBooks] = useState([]);
+    const [popularBooks, setPopularBooks] = useState([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -36,6 +37,12 @@ const useUserBooks = () => {
         error: favBookError,
     } = useFavoriteBooksByUser(currentUser?.id);
 
+    const {
+        books: popularBookIds,
+        loading: popularBookLoading,
+        error: popularBookError,
+    } = usePopularBooks();
+
     useEffect(() => {
         if (!currentUser) return;
 
@@ -60,7 +67,8 @@ const useUserBooks = () => {
         if (readingBookIds.length) fetchBooksDetails(readingBookIds, setReading);
         if (readBookIds.length) fetchBooksDetails(readBookIds, setRead);
         if (favBookIds.length) fetchBooksDetails(favBookIds, setFavBooks);
-    }, [currentUser, toReadBookIds, readingBookIds, readBookIds, favBookIds]);
+        if (popularBookIds.length) fetchBooksDetails(popularBookIds, setPopularBooks);
+    }, [currentUser, toReadBookIds, readingBookIds, readBookIds, favBookIds, popularBookIds]);
 
     return {
         currentUser,
@@ -69,6 +77,7 @@ const useUserBooks = () => {
         reading,
         read,
         favBooks,
+        popularBooks,
         loading: toReadLoading || readingLoading || readLoading || favBookLoading,
         errors: {
             toReadError,

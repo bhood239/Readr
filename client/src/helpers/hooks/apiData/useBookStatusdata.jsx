@@ -5,6 +5,7 @@ import {
     getAllBookStatuses,
     getBooksByUserAndStatus,
     getFavoriteBooksByUser,
+    getPopularBooks,
     updateBookStatusByUserAndBook,
     deleteBookStatusByUserAndBook,
 } from "../../apiRequests/backendApi/bookStatusRequests";
@@ -72,6 +73,28 @@ export const useFavoriteBooksByUser = (userId) => {
         };
         fetchFavoriteBooks();
     }, [userId]);
+
+    return { books, loading, error };
+};
+
+export const usePopularBooks = () => {
+    const [books, setBookIds] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchPopularBooks = async () => {
+            try {
+                const bookIdsData = await getPopularBooks();
+                setBookIds(bookIdsData);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPopularBooks();
+    }, []);
 
     return { books, loading, error };
 };

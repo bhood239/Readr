@@ -16,7 +16,7 @@ const TopNavBar = ({
       <Nav className="mr-auto">
         {currentUser ? (
           <>
-            <LinkContainer to="/Dashboard">
+            <LinkContainer to="/">
               <Nav.Link>Dashboard</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/Profile">

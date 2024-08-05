@@ -14,7 +14,7 @@ export const createFriend = async (params) => {
 export const deleteFriend = async (params) => {
     try {
         const res = await axios.delete(`/api/friends`, { params });
-        console.log("friend deleted:", res.data);
+        console.log("friend deleted", res.data);
         return res.data;
     } catch (err) {
         console.log(err);

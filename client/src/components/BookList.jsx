@@ -1,26 +1,12 @@
 // mapped list of books
 import { useEffect, useState } from "react";
-import {
-    useCreateBookStatus,
-    useBookStatusByUserAndBook,
-    useAllBookStatuses,
-    useUpdateBookStatusByUserAndBook,
-    useDeleteBookStatusByUserAndBook,
-  } from "../helpers/hooks/apiData/useBookStatusdata";
 import Book from "./Book"
 
 const BookList = (props) => {
     // const { books, favBooks, addWantToRead, addReading, addRead, addFav, removeFav, addPost, avgTimeSpent, avgRating } = props;
-    const { books, currentUser } = props;
-    const [bookStatuses, setBookStatuses] = useState({});
-    const [favBooks, setFavBooks] = useState([]);
-    const [wantToRead, setWantToRead] = useState([]);
-    const [reading, setReading] = useState([]);
-    const [read, setRead] = useState([]);
+    const { books, currentUser, wantToRead, reading, read, favBooks, handleCreateBookStatus, updateBookStatus, allBookStatuses } = props;
 
-    const { handleCreateBookStatus } = useCreateBookStatus();
-    const { updateBookStatus } = useUpdateBookStatusByUserAndBook();
-    const { bookStatuses: allBookStatuses, loading, error } = useAllBookStatuses();
+    const [bookStatuses, setBookStatuses] = useState({});
 
     useEffect(() => {
         if (allBookStatuses) {
@@ -32,45 +18,31 @@ const BookList = (props) => {
             }, {});
             setBookStatuses(statusesMap);
         }
-    }, [allBookStatuses, currentUser.id]);
+    }, [allBookStatuses, currentUser]);
 
     const updateBookStatusHandler = async (bookId, statusData) => {
         const bookStatus = bookStatuses[bookId];
-        if (bookStatus) {
-            await updateBookStatus(currentUser.id, bookId, statusData);
-        } else {
-            await handleCreateBookStatus({ user_id: currentUser.id, book_id: bookId, ...statusData });
+        try {
+            if (bookStatus) {
+                await updateBookStatus(currentUser.id, bookId, statusData);
+            } else {
+                await handleCreateBookStatus({ user_id: currentUser.id, book_id: bookId, ...statusData });
+            }
+            setBookStatuses(prevStatuses => ({
+                ...prevStatuses,
+                [bookId]: { ...prevStatuses[bookId], ...statusData }
+            }));
+        } catch (error) {
+            console.error("Failed to update book status:", error);
         }
-        // Optionally update the local state to reflect the change
-        setBookStatuses(prevStatuses => ({
-            ...prevStatuses,
-            [bookId]: { ...prevStatuses[bookId], ...statusData }
-        }));
     };
 
-    const addFav = (book) => {
-        updateBookStatusHandler(book.id, { fave_books: true });
-    };
-
-    const removeFav = (book) => {
-        updateBookStatusHandler(book.id, { fave_books: false });
-    };
-
-    const addWantToRead = (book) => {
-        updateBookStatusHandler(book.id, { status: 'to_read' });
-    };
-
-    const addReading = (book) => {
-        updateBookStatusHandler(book.id, { status: 'reading' });
-    };
-
-    const addRead = (book) => {
-        updateBookStatusHandler(book.id, { status: 'read' });
-    };
-
-    const removeStatus = (book) => {
-        updateBookStatusHandler(book.id, { status: null })
-    };
+    const addFav = (book) => updateBookStatusHandler(book.id, { fave_books: true });
+    const removeFav = (book) => updateBookStatusHandler(book.id, { fave_books: false });
+    const addWantToRead = (book) => updateBookStatusHandler(book.id, { status: 'to_read' });
+    const addReading = (book) => updateBookStatusHandler(book.id, { status: 'reading' });
+    const addRead = (book) => updateBookStatusHandler(book.id, { status: 'read' });
+    const removeStatus = (book) => updateBookStatusHandler(book.id, { status: null });
 
     return (
         <ul>

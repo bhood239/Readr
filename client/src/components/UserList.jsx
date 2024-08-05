@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 
 const UserList = (props) => {
     const { users, currentUser, handleCreateFriend, handleDeleteFriend } = props;
+
+    const [buttonStates, setButtonStates] = useState({});
 
     const isFollowing = (userId) => {
         return currentUser.following_list?.some(followingUser => followingUser.id === userId);
@@ -9,33 +12,60 @@ const UserList = (props) => {
         return currentUser.followers_list?.some(follower => follower.id === userId);
     };
 
-    const follow = (userId) => {
-        handleCreateFriend({follower_id: currentUser.id, following_id: userId});
+    const updateButtonState = (userId, type, action) => {
+        setButtonStates(prevState => ({
+            ...prevState,
+            [userId]: {
+                ...prevState[userId],
+                [type]: action
+            }
+        }));
     };
 
-    const unFollow = (userId) => {
-        handleDeleteFriend({follower_id: currentUser.id, following_id: userId});
+    const follow = async (userId) => {
+        await handleCreateFriend({ follower_id: currentUser.id, following_id: userId });
+        updateButtonState(userId, 'follow', 'Unfollow');
     };
 
-    const removeFollower = (userId) => {
-        handleDeleteFriend({follower_id: userId, following_id: currentUser.id});
+    const unFollow = async (userId) => {
+        await handleDeleteFriend({ follower_id: currentUser.id, following_id: userId });
+        updateButtonState(userId, 'follow', 'Follow');
+    };
+
+    const removeFollower = async (userId) => {
+        await handleDeleteFriend({ follower_id: userId, following_id: currentUser.id });
+        updateButtonState(userId, 'removeFollower', 'Removed');
     };
 
     return (
-        <ul>
-            {users && users.map((user) => (
-                <li key={user.id}>
-                    <div>{user.name}</div>
-                    {isFollowing(user.id) ? (
-                        <button onClick={() => unFollow(user.id)}>Unfollow</button>
-                    ) : (
-                        <button onClick={() => follow(user.id)}>Follow</button>
-                    )}
-                    {isFollower(user.id) && (
-                        <button onClick={() => removeFollower(user.id)}>Remove Follower</button>
-                    )}
-                </li>
-            ))}
+        <ul className="user-list">
+            {users && users.map((user) => {
+                const followButtonText = buttonStates[user.id]?.follow ?? (isFollowing(user.id) ? 'Unfollow' : 'Follow');
+                const removeFollowerButtonText = buttonStates[user.id]?.removeFollower ?? (isFollower(user.id) ? 'Remove Follower' : null);
+
+                return (
+                    <li key={user.id}>
+                        <div>{user.name}</div>
+                        {user.id !== currentUser.id && (
+                            <>
+                                <button
+                                    onClick={() => followButtonText === 'Follow' ? follow(user.id) : unFollow(user.id)}
+                                >
+                                    {followButtonText}
+                                </button>
+                                {removeFollowerButtonText && (
+                                    <button
+                                        onClick={() => removeFollower(user.id)}
+                                        disabled={removeFollowerButtonText === 'Removed'}
+                                    >
+                                        {removeFollowerButtonText}
+                                    </button>
+                                )}
+                            </>
+                        )}
+                    </li>
+                );
+            })}
         </ul>
     );
 };

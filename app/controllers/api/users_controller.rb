@@ -10,6 +10,15 @@ module Api
       render json: @user.to_json(include: :posts)
     end
 
+    def search
+        if params[:name].present?
+          @users = User.where("name ILIKE ?", "%#{params[:name]}%")
+          render json: @users
+        else
+          render json: { error: "Name parameter is missing" }, status: :bad_request
+        end
+    end
+
     def followers
         @user = User.find(params[:id])
         @followers = @user.followers
