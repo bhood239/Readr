@@ -1,7 +1,7 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
 import React, { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import "./App.css";
+import "./styles/App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
 import Dashboard from "./routes/Dashboard";
@@ -10,7 +10,6 @@ import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
 import { useCreateFriend, useDeleteFriend } from "./helpers/hooks/apiData/useFriends";
-
 
 const App = () => {
     const navigate = useNavigate();
@@ -50,6 +49,7 @@ const App = () => {
                                 setLoginselected={setLoginselected}
                                 setRegisterSelected={setRegisterSelected}
                                 setCurrentUser={setCurrentUser}
+                                currentUser={currentUser}
                             />
                         )
                     }

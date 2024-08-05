@@ -1,12 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import "../styles/Form.css";
 
 const LoginForm = (props) => {
-    const { setCurrentUser } = props;
+    const { setCurrentUser, setLoginSelected } = props;
 
-    const email = 'userone@example.com';
-    const password = 'password';
-    const [message, setMessage] = useState('');
+  const email = "userone@example.com";
+  const password = "password";
+  const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,18 +29,25 @@ const LoginForm = (props) => {
         }
     };
 
-    return(
-        <div>
-            {message && <p>{message}</p>}
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" value={email} />
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" value={password} />
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    );
+  return (
+    <div className="form-container">
+      {message && <p>{message}</p>}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email</label>
+        <input type="email" id="email" value={email} />
+        <label htmlFor="password">Password</label>
+        <input type="password" id="password" value={password} />
+        <button type="submit">Login</button>
+        <button
+          type="button"
+          className="back-button"
+          onClick={() => setLoginSelected(false)}
+        >
+          Back
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default LoginForm;
