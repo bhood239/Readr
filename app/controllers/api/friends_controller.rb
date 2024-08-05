@@ -10,18 +10,6 @@ module Api
         render json: @friend
     end
 
-    def followers
-        @followers = User.joins("JOIN friends ON friends.follower_id = users.id")
-                         .where("friends.following_id = ?", params[:id])
-        render json: @followers
-    end
-
-    def following
-        @following = User.joins("JOIN friends ON friends.following_id = users.id")
-                         .where("friends.following_id = ?", params[:id])
-        render json: @following
-    end
-
     def create
       @friend = Friend.new(friend_params)
       if @friend.save
@@ -41,9 +29,15 @@ module Api
     end
 
     def destroy
-      @friend = Friend.find(params[:id])
-      @friend.destroy
-      head :no_content
+        # Find the friend relationship using follower_id and following_id
+        @friend = Friend.find_by(follower_id: params[:follower_id], following_id: params[:following_id])
+        
+        if @friend
+          @friend.destroy
+          head :no_content
+        else
+          render json: { error: 'Friendship not found' }, status: :not_found
+        end
     end
 
     private

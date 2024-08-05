@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useCreatePost } from '../helpers/hooks/apiData/usePostData';
 import './PostForm.scss';
 
-const PostForm = ({onPostCreation, user, selectedBook}) => {
+const PostForm = ({currentUser, bookId}) => {
   const [rating, setRating] = useState('');
   const [timeSpent, setTimeSpent] = useState('');
   const [review, setReview] = useState('');
@@ -16,13 +16,15 @@ const PostForm = ({onPostCreation, user, selectedBook}) => {
 
 useEffect(() => {
   if (post) {
-    onPostCreation(post);
+    // handlePostCreation(post);
     setRating('');
     setTimeSpent('');
     setReview('');
     setHours('');
   }
-}, [post, onPostCreation]);
+}, [post 
+  // ,handlePostCreation
+]);
 
 
 const handleSubmit = (event) => {
@@ -34,12 +36,8 @@ const handleSubmit = (event) => {
       return;
     }
 
-    // if (!user) {
-    //   console.error('User ID is required');
-    //   return;
-    // }
 
-    if (!selectedBook) {
+    if (!bookId) {
       console.error('Book ID is required');
       return;
     }
@@ -52,8 +50,8 @@ const handleSubmit = (event) => {
     rating: numericRating,    
     time_spent: timeSpentNumber,
     review,
-    user_id: user,
-    book_id: selectedBook,
+    user_id: currentUser,
+    book_id: bookId,
   };
 
   console.log('Submitting post data:', postData); 

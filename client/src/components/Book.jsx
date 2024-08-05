@@ -49,7 +49,7 @@ const Book = (props) => {
                             <option value="reading">Reading</option>
                             <option value="read">Read</option>
                         </select>
-                        <button onClick={() => handleClick}>✅</button>
+                        <button onClick={handleClick}>✅</button>
                     </div>
                 </div>
                 <div>
