@@ -10,10 +10,11 @@ Rails.application.routes.draw do
             get :search
         end
     end
-    resources :posts, only: [:index, :show, :create, :update, :destroy]
+    resources :posts, only: [:index, :show, :create, :update, :destroy] do
         collection do 
             get '/:user_id/:book_id', to: 'posts#post_by_user_and_book'
         end
+    end
     resources :book_statuses, only: [:index, :create] do
         collection do
           get '/:user_id/:book_id', to: 'book_statuses#show_by_user_and_book', as: :show_by_user_and_book

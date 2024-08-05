@@ -53,7 +53,7 @@ const Book = (props) => {
                     </div>
                 </div>
                 <div>
-                    {/* <button onClick={() => addPost(book.id)}>Comment</button> */}
+                    {/* <button onClick={() => addPost(book.id)}>Edit</button> */}
                 </div>
             </div>
         </div>
