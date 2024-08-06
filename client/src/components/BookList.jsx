@@ -1,5 +1,6 @@
 // mapped list of books
 import { useEffect, useState } from "react";
+import '../styles/BookList.css'
 import Book from "./Book"
 
 const BookList = (props) => {
@@ -45,22 +46,23 @@ const BookList = (props) => {
     const removeStatus = (book) => updateBookStatusHandler(book.id, { status: null });
 
     return (
-        <ul>
+        <ul className="book-list">
             {books && books.map((book) => (
-                <Book 
-                key={book.id}
-                book={book}
-                favBooks={favBooks}
-                addWantToRead={addWantToRead}
-                addReading={addReading}
-                addRead={addRead}
-                removeStatus={removeStatus}
-                addFav={addFav}
-                removeFav={removeFav}
-                // addPost={addPost}
-                // avgTimeSpent={avgTimeSpent}
-                // avgRating={avgRating}
-                 />
+                <li key={book.id} className="book-list-item">
+                    <Book
+                        book={book}
+                        favBooks={favBooks}
+                        addWantToRead={addWantToRead}
+                        addReading={addReading}
+                        addRead={addRead}
+                        removeStatus={removeStatus}
+                        addFav={addFav}
+                        removeFav={removeFav}
+                    // addPost={addPost}
+                    // avgTimeSpent={avgTimeSpent}
+                    // avgRating={avgRating}
+                    />
+                </li>
             ))}
         </ul>
     );

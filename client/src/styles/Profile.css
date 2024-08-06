@@ -49,6 +49,7 @@
 
 .list-group-section {
     margin-bottom: 20px;
+    flex: 1 1 15%; /* Reduced width to 15% of the container */
 }
 
 .list-group {
@@ -100,7 +101,7 @@
 }
 
 .book-list-section {
-    flex: 2;
+    flex: 1 1 60%; /* Increased width to 60% */
 }
 
 .right-side {
@@ -109,4 +110,5 @@
     align-items: center;
     padding: 1rem;
     border-left: 1px solid #f7d7aa;
+    flex: 1 1 15%; /* Reduced width to 15% of the container */
 }

@@ -10,18 +10,52 @@ import '../styles/Dashboard.css'
 // children: MiniProfile, PostList, Search results, popular books (booklist), Postform
 const Dashboard = (props) => {
     const [selectedView, setSelectedView] = useState('postList');
-    const { currentUser, wantToRead, reading, read, favBooks, handleCreateFriend, handleDeleteFriend } = props;
+    const {
+        currentUser,
+        wantToRead,
+        reading,
+        read,
+        favBooks,
+        popularBooks,
+        handleCreateFriend,
+        handleDeleteFriend,
+        handleCreateBookStatus,
+        updateBookStatus,
+        allBookStatuses
+    } = props;
 
     const renderContent = () => {
         switch (selectedView) {
             case 'postList':
                 return <PostList />;
             case 'searchResults':
-                return <SearchResult />;
+                return <SearchResult
+                    currentUser={currentUser}
+                    wantToRead={wantToRead}
+                    reading={reading}
+                    read={read}
+                    favBooks={favBooks}
+                    handleCreateBookStatus={handleCreateBookStatus}
+                    updateBookStatus={updateBookStatus}
+                    allBookStatuses={allBookStatuses} />;
             case 'postForm':
                 return <PostForm />;
             case 'findPeople':
-                return <SearchUsers />;
+                return <SearchUsers
+                    currentUser={currentUser}
+                    handleCreateFriend={handleCreateFriend}
+                    handleDeleteFriend={handleDeleteFriend} />;
+            case 'popularBooks':
+                return <BookList
+                    books={popularBooks}
+                    currentUser={currentUser}
+                    wantToRead={wantToRead}
+                    reading={reading}
+                    read={read}
+                    favBooks={favBooks}
+                    handleCreateBookStatus={handleCreateBookStatus}
+                    updateBookStatus={updateBookStatus}
+                    allBookStatuses={allBookStatuses} />;
             default:
                 return <PostList />;
         }
@@ -58,11 +92,8 @@ const Dashboard = (props) => {
 
                 {/* FindPeople and PopularBooks on the right */}
                 <div className="right-sidebar">
+                    <button className="btn btn-primary" onClick={() => setSelectedView('popularBooks')}>Popular Books</button>
                     <button className="btn btn-primary" onClick={() => setSelectedView('findPeople')}>Find People</button>
-                    <div className="popular-books mt-4">
-                        <h5>Popular Books</h5>
-                        <BookList /> {/* Assuming you want to show PopularBooks here as well */}
-                    </div>
                 </div>
             </div>
         </div>

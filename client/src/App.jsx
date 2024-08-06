@@ -1,6 +1,6 @@
-// to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
+
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import "./styles/App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -9,6 +9,7 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
+
 import { useCreateFriend, useDeleteFriend } from "./helpers/hooks/apiData/useFriends";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
@@ -20,7 +21,7 @@ import { usePostByUserIdAndBookId, useAllPosts } from "./helpers/hooks/apiData/u
 const App = () => {
     const navigate = useNavigate();
 
-    const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks } = useUserBooks();
+    const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks, popularBooks } = useUserBooks();
     const { handleCreateFriend } = useCreateFriend();
     const { handleDeleteFriend } = useDeleteFriend();
     const { handleCreateBookStatus } = useCreateBookStatus();
@@ -38,13 +39,20 @@ const App = () => {
 
 
 
-    const addPost = (bookId) => {
-        setPostFormBookId(bookId);
-        setPostFormSelected(true);
+    useEffect(() => {
+        // Redirect to homepage if not logged in
+        if (!currentUser) {
+            navigate("/");
+        }
+    }, [currentUser, navigate]);
 
-        // const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
-        // post ? setEditPostSelected(true) : setPostFormSelected(true);
-    }
+    const addPost = (bookId) => {
+        if (currentUser) {
+            setPostFormBookId(bookId);
+            const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
+            post ? setEditPostSelected(true) : setPostFormSelected(true);
+        }
+    };
 
     const handleLogout = () => {
         // Simulate a user logging out
@@ -87,46 +95,66 @@ const App = () => {
                                 reading={reading}
                                 read={read}
                                 favBooks={favBooks}
+                                popularBooks={popularBooks}
                                 handleCreateFriend={handleCreateFriend}
                                 handleDeleteFriend={handleDeleteFriend}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={allBookStatuses}
                             />
                         ) : (
                             <Homepage
+                                setCurrentUser={setCurrentUser}
                                 loginSelected={loginSelected}
                                 registerSelected={registerSelected}
                                 setLoginSelected={setLoginSelected}
                                 setRegisterSelected={setRegisterSelected}
-                                setCurrentUser={setCurrentUser}
-                                currentUser={currentUser}
+                                navigate={navigate}
                             />
                         )
                     }
                 />
                 <Route
                     path="/profile"
-                    element={currentUser &&
-                        <Profile
-                            currentUser={currentUser}
-                            wantToRead={wantToRead}
-                            reading={reading}
-                            read={read}
-                            favBooks={favBooks}
-                            handleCreateFriend={handleCreateFriend}
-                            handleDeleteFriend={handleDeleteFriend}
-                        />} />
+                    element={
+                        currentUser ? (
+                            <Profile
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                popularBooks={popularBooks}
+                                handleCreateFriend={handleCreateFriend}
+                                handleDeleteFriend={handleDeleteFriend}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={allBookStatuses}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
+                />
                 <Route
                     path="/search"
-                    element={currentUser &&
-                        <SearchResult
-                            currentUser={currentUser}
-                            wantToRead={wantToRead}
-                            reading={reading}
-                            read={read}
-                            favBooks={favBooks}
-                            handleCreateBookStatus={handleCreateBookStatus}
-                            updateBookStatus={updateBookStatus}
-                            allBookStatuses={allBookStatuses}
-                        />} />
+                    element={
+                        currentUser ? (
+                            <SearchResult
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={allBookStatuses}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
+                />
             </Routes>
           {postFormSelected && ( 
             <PostForm currentUser={currentUser.id} bookId={postFormBookId} onPostCreation={handlePostCreation} />
