@@ -2,6 +2,7 @@ import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
+import logo from "../assets/logo.png";
 
 const TopNavBar = ({
   currentUser,
@@ -12,7 +13,13 @@ const TopNavBar = ({
 }) => {
   return (
     <Navbar bg="light" variant="light" className="navbar-underline">
-      <Navbar.Brand onClick={() => navigate("/")}>Readr</Navbar.Brand>
+      <Navbar.Brand onClick={() => navigate("/")}>
+        <img
+          src={logo}
+          alt="Readr"
+          style={{ height: "50px", cursor: "pointer" }}
+        />
+      </Navbar.Brand>
       <Nav className="mr-auto">
         {currentUser ? (
           <>
