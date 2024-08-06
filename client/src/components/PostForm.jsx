@@ -6,7 +6,7 @@ import { useCreatePost } from '../helpers/hooks/apiData/usePostData';
 import './PostForm.scss';
 import { useNavigate } from 'react-router-dom';
 
-const PostForm = ({currentUser, bookId, onPostCreation}) => {
+const PostForm = ({currentUser, bookId, onPostCreation, setPostFormSelected}) => {
   const [rating, setRating] = useState('');
   const [timeSpent, setTimeSpent] = useState('');
   const [review, setReview] = useState('');
@@ -106,6 +106,7 @@ return (
         </button>
         {error && <p className='text-danger mt-2'>Error while creating the post: {error.message}</p>}
       </div>
+      <button onClick={() => setPostFormSelected(false)}>Back</button>
 
       </form>
     </div>
