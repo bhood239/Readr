@@ -2,106 +2,119 @@
 import React, {useState, useEffect} from 'react';
 import CustomRating from './CustomRating';
 import PropTypes from 'prop-types';
+import { useCreatePost } from '../helpers/hooks/apiData/usePostData';
+import './PostForm.scss';
+import { useNavigate } from 'react-router-dom';
 
-
-const PostForm = ({onPostCreation}) => {
+const PostForm = ({currentUser, bookId, onPostCreation}) => {
   const [rating, setRating] = useState('');
   const [timeSpent, setTimeSpent] = useState('');
   const [review, setReview] = useState('');
-  const [userId, setUserId] = useState('');
-  const [bookId, setBookId] = useState('');
-  const [users, setUsers] = useState([]);
-  const [books, setBooks] = useState([]);
   const [hours, setHours] = useState('');
 
-useEffect(() => {
-  fetch("/users")
-    .then((response) => response.json())
-    .then((userinfo) => setUsers(userinfo))
-    .catch((error) => {
-      console.error('Error fetching users:', error);
-    });
+  const { post, loading, error, handleCreatePost} = useCreatePost();
+  const navigate = useNavigate();
 
-  fetch("/books")
-    .then((response) => response.json())
-    .then((bookinfo) => setBooks(bookinfo))
-    .catch((error) => {
-      console.error('Error fetching books:', error);
-    });
-}, []);
+useEffect(() => {
+  if (post) {
+    onPostCreation(post); // Notify parent about the new post
+    setRating('');
+    setTimeSpent('');
+    setReview('');
+    setHours('');
+
+  }
+}, [post, onPostCreation]);
+
+
 
 const handleSubmit = (event) => {
   event.preventDefault();
 
-  const post= {
+    const numericRating = Number(rating);
+    if (rating === "" || isNaN(numericRating) || numericRating < 1 || numericRating > 5) {
+      console.error('Invalid rating value');
+      return;
+    }
+
+
+    if (!bookId) {
+      console.error('Book ID is required');
+      return;
+    }
+
     
-    rating,
-    time_spent: timeSpent,
+    const timeSpentNumber = hours ? parseFloat(hours) : null;
+
+    const postData= {
+    
+    rating: numericRating,    
+    time_spent: timeSpentNumber,
     review,
-    user_id: userId,
+    user_id: currentUser,
     book_id: bookId,
   };
 
-  fetch("/posts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "Application/JSON",
-    },
-    body: JSON.stringify(post),
-  })
-    .then((response) => response.json())
-    .then((newPost) => {
-      onPostCreation(newPost);
-      setRating("");
-      setTimeSpent("");
-      setReview("");
-      setUserId("");
-      setBookId("");
-    })
-    .catch((error) => {
-      console.error('Error while creating the new post:', error);
-    });
+  console.log('Submitting post data:', postData); 
+
+
+  handleCreatePost(postData);
+
 
 };
 
 return (
-  <div >
-      <CustomRating />
+  <div className='post-form-container'>
+    <div className='post-form-card card'>
+      <h2> Create a Post:</h2>
+   
+      <CustomRating rating={rating} setRating={setRating} />
 
       <form onSubmit={handleSubmit}>
-      <div>
+      <div className='mb-3'>
+        <label htmlFor='review' className='form-label'>Book Review:</label>
       <textarea
+        id="review"
         type="text"
         name="review"
         rows="5"
         placeholder="Write a post:"
+        className='form-control'
         value={review}
         onChange={(event) => setReview(event.target.value)}
+        required
         />
       </div >
 
       
-      <div>
-    <label>Time Spent (Hours):</label>
+    <div className='col-md-2'>
+    <label htmlFor='hours' className='form-label'>Time Spent (Hours):</label>
     <input
+      id="hours"
       type="number"
+      className='form-control'
+      placeholder='0'
       value={hours}
-      onChange={(e) => setHours(e.target.value)}
+      onChange={(event) => setHours(event.target.value)}
       required
     />
   </div>
  
       <div>
-        <button type="submit"> Create My Post </button>
+        <button type="submit" className='btn btn-primary' disabled={loading}> 
+          {loading ? 'Creating post....' : 'Create My Post' } 
+        </button>
+        {error && <p className='text-danger mt-2'>Error while creating the post: {error.message}</p>}
       </div>
 
       </form>
+    </div>
     </div>
   );
 };
 
 PostForm.propTypes = {
-  onPostCreated: PropTypes.func.isRequired,
+  onPostCreation: PropTypes.func.isRequired,
 };
 
 export default PostForm;

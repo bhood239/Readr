@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   createPost,
   getPostById,
@@ -54,35 +54,57 @@ export const usePostById = (id) => {
 };
 
 export const usePostByUserIdAndBookId = (userId, bookId) => {
-    const [post, setPost] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+const handlePostByUserIdAndBookId = useCallback(async (userId, bookId) => {
+  setLoading(true);
+  setError(null);
+  try {
+    const post = await getPostByUserIdAndBookId(userId, bookId);
+    setPost(post);
+  } catch (err) {
+    setError(err);
+  } finally {
+    setLoading(false);
+  }
+}, []);
+
+return { post, loading, error, handlePostByUserIdAndBookId };
+};
+
+// export const usePostByUserIdAndBookId = (userId, bookId) => {
+//     const [post, setPost] = useState(null);
+//     const [loading, setLoading] = useState(true);
+//     const [error, setError] = useState(null);
   
-    const handlePostByUserIdAndBookId = async (userId, bookId) => {
-        setLoading(true);
-        setError(null);
-        try {
-          const post = await getPostByUserIdAndBookId(userId, bookId);
-          setPost(post);
-        } catch (err) {
-          setError(err);
-        } finally {
-          setLoading(false);
-        }
-      };
+//     const handlePostByUserIdAndBookId = useCallback(async (userId, bookId) => {
+//         setLoading(true);
+//         setError(null);
+//         try {
+//           const post = await getPostByUserIdAndBookId(userId, bookId);
+//           setPost(post);
+//         } catch (err) {
+//           setError(err);
+//         } finally {
+//           setLoading(false);
+//         }
+//       }, []);;
     
   
-    return { post, loading, error, handlePostByUserIdAndBookId };
-};
+//     return { post, loading, error, handlePostByUserIdAndBookId };
+// };
 
 // Read All Posts
 export const useAllPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const postData = await getAllPosts();
         setPosts(postData);
@@ -92,6 +114,8 @@ export const useAllPosts = () => {
         setLoading(false);
       }
     };
+
+  
     fetchPosts();
   }, []);
 
@@ -143,6 +167,7 @@ export const useDeletePostById = () => {
 export default {
   useCreatePost,
   usePostById,
+  usePostByUserIdAndBookId,
   useAllPosts,
   useUpdatePostById,
   useDeletePostById,

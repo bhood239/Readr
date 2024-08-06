@@ -10,7 +10,19 @@ import '../styles/Profile.css'
 
 const Profile = (props) => { // userId, replace user once properly set up.
     // const { user, loading, error } = useUserById(userId);
-    const { currentUser, wantToRead, reading, read, favBooks, popularBooks, handleCreateFriend, handleDeleteFriend } = props
+    const {
+        currentUser,
+        wantToRead,
+        reading,
+        read,
+        favBooks,
+        popularBooks,
+        handleCreateFriend,
+        handleDeleteFriend,
+        handleCreateBookStatus,
+        updateBookStatus,
+        allBookStatuses
+    } = props
     const [selectedOption, setSelectedOption] = useState('To Be Read');
 
     const handleSelectOption = (option) => {
@@ -21,25 +33,61 @@ const Profile = (props) => { // userId, replace user once properly set up.
         switch (selectedOption) {
             case 'To Be Read':
                 return wantToRead.length > 0 ? (
-                    <div><BookList books={wantToRead} currentUser={currentUser} /></div>
+                    <div><BookList
+                        books={wantToRead}
+                        currentUser={currentUser}
+                        wantToRead={wantToRead}
+                        reading={reading}
+                        read={read}
+                        favBooks={favBooks}
+                        handleCreateBookStatus={handleCreateBookStatus}
+                        updateBookStatus={updateBookStatus}
+                        allBookStatuses={allBookStatuses} /></div>
                 ) : (
                     <div>No books to be read</div>
                 );
             case 'Reading':
                 return reading.length > 0 ? (
-                    <div><BookList books={reading} currentUser={currentUser} /></div>
+                    <div><BookList
+                        books={reading}
+                        currentUser={currentUser}
+                        wantToRead={wantToRead}
+                        reading={reading}
+                        read={read}
+                        favBooks={favBooks}
+                        handleCreateBookStatus={handleCreateBookStatus}
+                        updateBookStatus={updateBookStatus}
+                        allBookStatuses={allBookStatuses} /></div>
                 ) : (
                     <div>No books currently being read</div>
                 );
             case 'Read':
                 return read.length > 0 ? (
-                    <div><BookList books={read} currentUser={currentUser} /></div>
+                    <div><BookList
+                        books={read}
+                        currentUser={currentUser}
+                        wantToRead={wantToRead}
+                        reading={reading}
+                        read={read}
+                        favBooks={favBooks}
+                        handleCreateBookStatus={handleCreateBookStatus}
+                        updateBookStatus={updateBookStatus}
+                        allBookStatuses={allBookStatuses} /></div>
                 ) : (
                     <div>No books read</div>
                 );
             case 'My Books':
                 return favBooks.length > 0 ? (
-                    <div><BookList books={favBooks} currentUser={currentUser} /></div>
+                    <div><BookList
+                        books={favBooks}
+                        currentUser={currentUser}
+                        wantToRead={wantToRead}
+                        reading={reading}
+                        read={read}
+                        favBooks={favBooks}
+                        handleCreateBookStatus={handleCreateBookStatus}
+                        updateBookStatus={updateBookStatus}
+                        allBookStatuses={allBookStatuses} /></div>
                 ) : (
                     <div>No favorite books</div>
                 );
@@ -59,7 +107,16 @@ const Profile = (props) => { // userId, replace user once properly set up.
                 );
             case 'Popular Books':
                 return popularBooks.length > 0 ? (
-                    <div><BookList books={popularBooks} currentUser={currentUser} /></div>
+                    <div><BookList
+                        books={popularBooks}
+                        currentUser={currentUser}
+                        wantToRead={wantToRead}
+                        reading={reading}
+                        read={read}
+                        favBooks={favBooks}
+                        handleCreateBookStatus={handleCreateBookStatus}
+                        updateBookStatus={updateBookStatus}
+                        allBookStatuses={allBookStatuses} /></div>
                 ) : (
                     <div>No popular books</div>
                 );
