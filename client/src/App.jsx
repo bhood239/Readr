@@ -9,13 +9,24 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
-import { useCreateFriend, useDeleteFriend } from "./helpers/hooks/apiData/useFriends";
-import { useAllBookStatuses, useCreateBookStatus, useUpdateBookStatusByUserAndBook } from "./helpers/hooks/apiData/useBookStatusdata";
+import {
+  useCreateFriend,
+  useDeleteFriend,
+} from "./helpers/hooks/apiData/useFriends";
+import {
+  useCreateFriend,
+  useDeleteFriend,
+} from "./helpers/hooks/apiData/useFriends";
+import {
+  useAllBookStatuses,
+  useCreateBookStatus,
+  useUpdateBookStatusByUserAndBook,
+} from "./helpers/hooks/apiData/useBookStatusdata";
 import { usePostByUserIdAndBookId } from "./helpers/hooks/apiData/usePostData";
 
 const App = () => {
-    const navigate = useNavigate();
-    //   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
+  const navigate = useNavigate();
+  //   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
 
     const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks, popularBooks } = useUserBooks();
     const { handleCreateFriend } = useCreateFriend();
@@ -27,27 +38,49 @@ const App = () => {
     const [loginSelected, setLoginSelected] = useState(false);
     const [registerSelected, setRegisterSelected] = useState(false);
 
-    const [postFormBookId, setPostFormBookId] = useState();
-    const [postFormSelected, setPostFormSelected] = useState(false);
-    const [editPostSelected, setEditPostSelected] = useState(false);
+  const [postFormBookId, setPostFormBookId] = useState();
+  const [postFormSelected, setPostFormSelected] = useState(false);
+  const [editPostSelected, setEditPostSelected] = useState(false);
 
-    const addPost = (bookId) => {
-        setPostFormBookId(bookId);
-        const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
-        post ? setEditPostSelected(true) : setPostFormSelected(true);
-    }
+  const addPost = (bookId) => {
+    setPostFormBookId(bookId);
+    const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
+    post ? setEditPostSelected(true) : setPostFormSelected(true);
+  };
 
-    const handleLogout = () => {
-        // Simulate a user logging out
-        setCurrentUser(null);
-        navigate("/");
-    };
+  const handleLogout = () => {
+    // Simulate a user logging out
+    setCurrentUser(null);
+    navigate("/");
+  };
 
-    return (
-        <div className="App">
-            <TopNavBar
+  return (
+    <div className="App">
+      <TopNavBar
+        currentUser={currentUser}
+        handleLogout={handleLogout}
+        setLoginSelected={setLoginSelected}
+        setRegisterSelected={setRegisterSelected}
+        navigate={navigate}
+      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            currentUser ? (
+              <Dashboard
                 currentUser={currentUser}
-                handleLogout={handleLogout}
+                wantToRead={wantToRead}
+                reading={reading}
+                read={read}
+                favBooks={favBooks}
+                handleCreateFriend={handleCreateFriend}
+                handleDeleteFriend={handleDeleteFriend}
+              />
+            ) : (
+              <Homepage
+                loginSelected={loginSelected}
+                registerSelected={registerSelected}
                 setLoginSelected={setLoginSelected}
                 setRegisterSelected={setRegisterSelected}
                 navigate={navigate}
