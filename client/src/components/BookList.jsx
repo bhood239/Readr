@@ -46,7 +46,7 @@ const BookList = (props) => {
             ...prevStatuses,
             [bookId]: { ...prevStatuses[bookId], ...statusData }
         }));
-        setBookStatuses(statusesMap);
+        // setBookStatuses(statusesMap);
     };
 
     const addFav = (book) => {

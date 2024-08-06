@@ -1,7 +1,7 @@
 // to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
 import React, { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
 import Dashboard from "./routes/Dashboard";

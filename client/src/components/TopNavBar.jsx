@@ -2,6 +2,7 @@ import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
+import "../styles/TopNavBar.scss";
 
 const TopNavBar = ({
   user,
@@ -11,11 +12,11 @@ const TopNavBar = ({
   navigate,
 }) => {
   return (
-    <Navbar bg="light" variant="light" className="navbar-underline">
+    <Navbar bg="light" variant="light" className="navbar">
       <Navbar.Brand onClick={() => navigate("/")}>Readr</Navbar.Brand>
-      <Nav className="mr-auto">
         {user ? (
           <>
+          <Nav class="middle-nav">
             <LinkContainer to="/Dashboard">
               <Nav.Link>Dashboard</Nav.Link>
             </LinkContainer>
@@ -27,12 +28,15 @@ const TopNavBar = ({
                 Search <FaSearch />
               </Nav.Link>
             </LinkContainer>
+            </Nav>
+            <Nav className="rightNav">
             <Nav.Item>
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </Nav.Item>
+            </Nav>
           </>
         ) : (
-          <>
+          <Nav class="homepage-nav">
             <h4
               onClick={() => {
                 setLoginselected(true);
@@ -47,11 +51,11 @@ const TopNavBar = ({
                 setLoginselected(false);
               }}
             >
-              Register
+              Register 
             </h4>
-          </>
+          </Nav>
         )}
-      </Nav>
+    
     </Navbar>
   );
 };
