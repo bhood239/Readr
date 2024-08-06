@@ -12,10 +12,10 @@ Friend.delete_all
 User.delete_all
 
 # Create users
-user1 = User.create!(name: "Alice Johnson", email: "alice.johnson@example.com", password: "password")
-user2 = User.create!(name: "Bob Smith", email: "bob.smith@example.com", password: "password")
-user3 = User.create!(name: "Charlie Brown", email: "charlie.brown@example.com", password: "password")
-user4 = User.create!(name: "Diana Prince", email: "diana.prince@example.com", password: "password")
+user1 = User.create!(name: "Alice Johnson", email: "alice.johnson@example.com", password: "password", profile_pic: "https://img.freepik.com/free-vector/happy-woman-with-black-hair_1308-171592.jpg?ga=GA1.1.1593446154.1722974176&semt=ais_hybrid")
+user2 = User.create!(name: "Bob Smith", email: "bob.smith@example.com", password: "password", profile_pic: "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-171058.jpg?ga=GA1.1.1593446154.1722974176&semt=ais_hybrid")
+user3 = User.create!(name: "Charlie Brown", email: "charlie.brown@example.com", password: "password", profile_pic: "https://img.freepik.com/free-vector/worried-young-man-illustration_1308-171118.jpg?ga=GA1.1.1593446154.1722974176&semt=ais_hybrid")
+user4 = User.create!(name: "Diana Prince", email: "diana.prince@example.com", password: "password", profile_pic: "https://img.freepik.com/free-vector/surprised-girl-with-brown-hair_1308-171496.jpg?ga=GA1.1.1593446154.1722974176&semt=ais_hybrid")
 
 # Create book statuses
 BookStatus.create!(status: "read", fave_books: true, book_id: "OL8193465W", user_id: user1.id)
