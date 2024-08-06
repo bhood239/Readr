@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import BookList from "../components/BookList";
 import UserList from "../components/UserList";
-import { Container, Col, Image, Row } from "react-bootstrap";
-import SearchUsers from "../components/SearchUsers";
-import "../styles/Profile.css";
-import React, { useState } from "react";
-import BookList from "../components/BookList";
-import UserList from "../components/UserList";
 import SearchUsers from "../components/SearchUsers";
 import "../styles/Profile.css";
 import PostForm from "../components/PostForm";
