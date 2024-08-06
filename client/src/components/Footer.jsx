@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Nav, Navbar } from "react-bootstrap";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import "../styles/Footer.scss"
+import logo from "../assets/logo.png";
 
 const Footer = ({ navigate }) => {
   return (
@@ -9,7 +10,13 @@ const Footer = ({ navigate }) => {
       <Container fluid>
         <Row className="justify-content-md-center">
           <Col className="left-nav">
-            <Navbar.Brand>Readr</Navbar.Brand>
+            <Navbar.Brand>
+              <img
+                src={logo}
+                alt="Readr"
+                style={{ height: "30px", cursor: "pointer" }}
+              />
+            </Navbar.Brand>
           </Col>
           <Col className="center-nav">
             <Nav>

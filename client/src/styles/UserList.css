@@ -1,0 +1,48 @@
+/* UserList.css */
+.user-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-list li {
+    background-color: #ffe5d9; /* Light warm color */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensure space between name and buttons */
+}
+
+.user-list li div {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff4500; /* Warm orange-red color */
+    text-align: left; /* Ensure text is left aligned */
+    flex: 1; /* Allows the name to take up available space */
+}
+
+.user-list button {
+    background-color: #ff7f50; /* Warm coral color */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    margin-left: 5px; /* Space between buttons */
+}
+
+.user-list button:hover {
+    background-color: #ff6347; /* Tomato color for hover effect */
+}
+
+.user-list button:disabled {
+    background-color: #ccc; /* Disabled button color */
+    cursor: not-allowed;
+}

@@ -9,7 +9,7 @@ export const createPost = async (params) => {
     console.log("post created:", res.data);
     return res.data;
   } catch (err) {
-    console.log("error creating post: ", err.message);
+    console.log("error creating post: ", err.response ? err.response.data : err.message);    
     return null;
   }
 };
@@ -24,6 +24,17 @@ export const getPostById = async (postId) => {
     console.log("error getting post: ", err.message);
     return null;
   }
+};
+
+export const getPostByUserIdAndBookId = async (userId, bookId) => {
+    try {
+      const res = await axios.get(`/api/posts/${userId}/${bookId}`);
+      console.log("response received: ", res.data);
+      return res.data;
+    } catch (err) {
+      console.log("error getting post: ", err.message);
+      return null;
+    }
 };
 
 // READ ALL

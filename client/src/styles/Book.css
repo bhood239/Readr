@@ -1,0 +1,82 @@
+/* Book.css */
+.book-container {
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff4e6; /* Light warm color for background */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+    width: 100%; /* Make the container take up 100% width */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.book_cover {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.book-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Allow this section to take up remaining space */
+    height: 100%; /* Ensure the container height is full */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space between top and bottom content */
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Space between book info and actions */
+}
+
+.book-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff4500; /* Warm orange-red color */
+    margin-bottom: 5px;
+    text-align: left; /* Align text to the left */
+}
+
+.book-author {
+    font-size: 16px;
+    color: #ff6347; /* Warm tomato color */
+    margin-bottom: 10px;
+    text-align: left; /* Align text to the left */
+}
+
+.book-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto; /* Pushes actions to the bottom */
+}
+
+.book-actions button {
+    background-color: #ff7f50; /* Warm coral color */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    min-width: 150px; /* Fixed width for consistency */
+    text-align: center; /* Center text inside button */
+}
+
+.book-actions button:hover {
+    background-color: #ff6347; /* Tomato color for hover effect */
+}
+
+.book-actions select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ff7f50; /* Match with button color */
+    font-size: 14px;
+    margin-right: 10px; /* Space between select and button */
+}

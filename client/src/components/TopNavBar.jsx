@@ -3,18 +3,25 @@ import { Nav, Navbar } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import "../styles/TopNavBar.scss";
+import logo from "../assets/logo.png";
 
 const TopNavBar = ({
-  user,
+  currentUser,
   handleLogout,
-  setLoginselected,
+  setLoginSelected,
   setRegisterSelected,
   navigate,
 }) => {
   return (
     <Navbar bg="light" variant="light" className="navbar">
-      <Navbar.Brand onClick={() => navigate("/")}>Readr</Navbar.Brand>
-        {user ? (
+      <Navbar.Brand onClick={() => navigate("/")}>
+        <img
+          src={logo}
+          alt="Readr"
+          style={{ height: "50px", cursor: "pointer" }}
+        />
+      </Navbar.Brand>
+        {currentUser ? (
           <>
           <Nav class="middle-nav">
             <LinkContainer to="/Dashboard">
@@ -39,7 +46,7 @@ const TopNavBar = ({
           <Nav class="homepage-nav">
             <h4
               onClick={() => {
-                setLoginselected(true);
+                setLoginSelected(true);
                 setRegisterSelected(false);
               }}
             >
@@ -48,7 +55,7 @@ const TopNavBar = ({
             <h4
               onClick={() => {
                 setRegisterSelected(true);
-                setLoginselected(false);
+                setLoginSelected(false);
               }}
             >
               Register 

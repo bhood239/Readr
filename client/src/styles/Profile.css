@@ -1,0 +1,114 @@
+/* Profile.css */
+.container {
+    background-color: #fff8f0; /* Light warm background */
+    color: #5a2a1d; /* Dark warm text color */
+    padding: 20px;
+}
+
+.profile-header, .profile-info-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-image-section {
+    text-align: center;
+}
+
+.profile-image {
+    border-radius: 50%;
+}
+
+.profile-info-section {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+.profile-details {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.follow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.follow h3 {
+    color: #ff6f61; /* Warm accent color */
+    margin: 0;
+}
+
+.follow span {
+    font-size: 1.2em;
+}
+
+.list-group-section {
+    margin-bottom: 20px;
+    flex: 1 1 15%; /* Reduced width to 15% of the container */
+}
+
+.list-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1rem;
+    border-right: 1px solid #f7d7aa;
+}
+
+.list-group-item {
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Add padding for a better click area */
+    margin-bottom: 5px; /* Space between items */
+    background-color: #ffccbc; /* Light warm button background */
+    color: #d84315; /* Warm text color */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions for hover effect */
+}
+
+.list-group-item:hover, .list-group-item:focus {
+    background-color: #ff5722; /* Highlight color on hover/focus */
+    color: white; /* Change text color to white */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.list-group-item.active {
+    background-color: #ff5722; /* Active state color */
+    color: white; /* Active state text color */
+    border: none; /* Remove border */
+}
+
+.link {
+    color: #ff6f61; /* Warm link color */
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.profile-content {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 15px;
+    gap: 20px;
+}
+
+.book-list-section {
+    flex: 1 1 60%; /* Increased width to 60% */
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-left: 1px solid #f7d7aa;
+    flex: 1 1 15%; /* Reduced width to 15% of the container */
+}

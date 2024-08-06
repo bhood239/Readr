@@ -36,6 +36,35 @@ module Api
         @book_status.destroy
         head :no_content
       end
+
+      def user_books_by_status
+        @book_statuses = BookStatus.where(user_id: params[:user_id], status: params[:status])
+
+        # Extract book_ids from book_statuses
+        book_ids = @book_statuses.pluck(:book_id)
+        render json: book_ids
+      end
+
+      def user_fav_books
+        @fav_book_statuses = BookStatus.where(user_id: params[:user_id], fave_books: true)
+  
+        book_ids = @fav_book_statuses.pluck(:book_id)
+  
+        render json: book_ids
+      end
+
+      # GET /popular_books
+      def popular_books
+      # Assuming you have a BookStatus model that tracks reading status
+        top_books = BookStatus
+                 .where(status: 'reading')
+                 .group(:book_id)
+                 .order('COUNT(book_id) DESC')
+                 .limit(5)
+                 .pluck(:book_id)
+
+        render json: top_books, include: :book
+      end
   
       private
   
