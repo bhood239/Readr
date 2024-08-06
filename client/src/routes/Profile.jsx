@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import BookList from "../components/BookList";
 import UserList from "../components/UserList";
+import { Container, Col, Image, Row } from "react-bootstrap";
 import SearchUsers from "../components/SearchUsers";
 import "../styles/Profile.css";
-import PostForm from "../components/PostForm";
 import React, { useState } from "react";
 import BookList from "../components/BookList";
 import UserList from "../components/UserList";
@@ -177,7 +177,7 @@ const Profile = (props) => {
       <div className="profile-header">
         <div className="profile-image-section">
           <img
-            src={currentUser?.profile_pic}
+            src="holder.js/100px250"
             alt="Profile"
             className="profile-image"
           />
