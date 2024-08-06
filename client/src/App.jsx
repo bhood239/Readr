@@ -13,6 +13,7 @@ import { useCreateFriend, useDeleteFriend } from "./helpers/hooks/apiData/useFri
 import PostForm from "./components/PostForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.scss';
+import { useAllBookStatuses, useCreateBookStatus, useUpdateBookStatusByUserAndBook } from "./helpers/hooks/apiData/useBookStatusdata";
 
 const App = () => {
     const navigate = useNavigate();
@@ -20,7 +21,10 @@ const App = () => {
     const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks } = useUserBooks();
     const { handleCreateFriend } = useCreateFriend();
     const { handleDeleteFriend } = useDeleteFriend();
-    const [loginSelected, setLoginselected] = useState(false);
+    const { handleCreateBookStatus } = useCreateBookStatus();
+    const { updateBookStatus } = useUpdateBookStatusByUserAndBook();
+    const { bookStatuses: allBookStatuses, loading, error } = useAllBookStatuses();
+    const [loginSelected, setLoginSelected] = useState(false);
     const [registerSelected, setRegisterSelected] = useState(false);
     const [postFormBookId, setPostFormBookId] = useState();
     const [postFormSelected, setPostFormSelected] = useState(false);
@@ -45,7 +49,7 @@ const App = () => {
             <TopNavBar
                 currentUser={currentUser}
                 handleLogout={handleLogout}
-                setLoginselected={setLoginselected}
+                setLoginSelected={setLoginSelected}
                 setRegisterSelected={setRegisterSelected}
                 navigate={navigate}
       
@@ -55,12 +59,20 @@ const App = () => {
                     path="/"
                     element={
                         currentUser ? (
-                            <Dashboard />
+                            <Dashboard
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                handleCreateFriend={handleCreateFriend}
+                                handleDeleteFriend={handleDeleteFriend}
+                            />
                         ) : (
                             <Homepage
                                 loginSelected={loginSelected}
                                 registerSelected={registerSelected}
-                                setLoginselected={setLoginselected}
+                                setLoginSelected={setLoginSelected}
                                 setRegisterSelected={setRegisterSelected}
                                 setCurrentUser={setCurrentUser}
                                 currentUser={currentUser}
@@ -80,7 +92,19 @@ const App = () => {
                             handleCreateFriend={handleCreateFriend}
                             handleDeleteFriend={handleDeleteFriend}
                         />} />
-                <Route path="/search" element={currentUser && <SearchResult currentUser={currentUser} />} />
+                <Route
+                    path="/search"
+                    element={currentUser &&
+                        <SearchResult
+                            currentUser={currentUser}
+                            wantToRead={wantToRead}
+                            reading={reading}
+                            read={read}
+                            favBooks={favBooks}
+                            handleCreateBookStatus={handleCreateBookStatus}
+                            updateBookStatus={updateBookStatus}
+                            allBookStatuses={allBookStatuses}
+                        />} />
             </Routes>
           {postFormSelected && ( 
       <PostForm currentUser={currentUser.id} bookId={postFormBookId} />

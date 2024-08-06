@@ -1,0 +1,65 @@
+/* Dashboard.css */
+
+.dashboard-container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+    background-color: #fbeec1; /* Warm, light beige background */
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    flex: 1;
+}
+
+.mini-profile {
+    flex: 1;
+    padding: 1rem;
+    background-color: #ffffff; /* White background for MiniProfile */
+    border-right: 1px solid #f7d7aa; /* Warm, soft border for separation */
+    height: 100%; /* Full height */
+}
+
+.main-content {
+    flex: 3;
+    padding: 1rem;
+    background-color: #ffffff; /* White background for Main Content */
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-header {
+    margin-bottom: 1rem;
+    color: #6f4f28; /* Warm, dark brown for header text */
+}
+
+.dashboard-buttons {
+    margin-bottom: 1rem;
+}
+
+.right-sidebar {
+    flex: 1;
+    padding: 1rem;
+    background-color: #ffffff; /* White background for Right Sidebar */
+    border-left: 1px solid #f7d7aa; /* Warm, soft border for separation */
+    height: 100%; /* Full height */
+}
+
+.popular-books {
+    margin-top: 1rem;
+}
+
+.btn {
+    margin: 0.5rem;
+    background-color: #e07b39; /* Darker warm orange color for buttons */
+    color: #ffffff; /* White text on buttons */
+    border: none;
+    border-radius: 4px; /* Rounded corners for buttons */
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn:hover {
+    background-color: #d65a29; /* Even darker orange for hover effect */
+}
