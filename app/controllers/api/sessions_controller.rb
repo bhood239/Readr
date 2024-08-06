@@ -14,7 +14,8 @@ class Api::SessionsController < ApplicationController
                 followers: user.followers,
                 following: user.following,
                 followers_list: user.followers_list, 
-                following_list: user.following_list 
+                following_list: user.following_list,
+                profile_pic: user.profile_pic
             }
             }, status: :ok
       else
