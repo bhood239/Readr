@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import "./styles/App.css";
@@ -8,16 +9,14 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
-import {
-    useCreateFriend,
-    useDeleteFriend,
-} from "./helpers/hooks/apiData/useFriends";
-import {
-    useAllBookStatuses,
-    useCreateBookStatus,
-    useUpdateBookStatusByUserAndBook,
-} from "./helpers/hooks/apiData/useBookStatusdata";
-import { usePostByUserIdAndBookId } from "./helpers/hooks/apiData/usePostData";
+
+import { useCreateFriend, useDeleteFriend } from "./helpers/hooks/apiData/useFriends";
+import PostForm from "./components/PostForm";
+import PostList from "./components/PostList";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/main.scss';
+import { useAllBookStatuses, useCreateBookStatus, useUpdateBookStatusByUserAndBook } from "./helpers/hooks/apiData/useBookStatusdata";
+import { usePostByUserIdAndBookId, useAllPosts } from "./helpers/hooks/apiData/usePostData";
 
 const App = () => {
     const navigate = useNavigate();
@@ -31,10 +30,14 @@ const App = () => {
     const { bookStatuses: allBookStatuses, loading, error } = useAllBookStatuses();
     const [loginSelected, setLoginSelected] = useState(false);
     const [registerSelected, setRegisterSelected] = useState(false);
-
+    const { posts: initialPosts, loading: postsLoading, error: postsError } = useAllPosts(); // Fetch initial posts
+    const [posts, setPosts] = useState([]);
     const [postFormBookId, setPostFormBookId] = useState();
     const [postFormSelected, setPostFormSelected] = useState(false);
     const [editPostSelected, setEditPostSelected] = useState(false);
+    const [viewPostList, setViewPostList] = useState(false);
+
+
 
     useEffect(() => {
         // Redirect to homepage if not logged in
@@ -57,6 +60,20 @@ const App = () => {
         navigate("/");
     };
 
+    const handlePostCreation = (newPost) => {
+      console.log("New post created: ", newPost);
+      setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
+
+      setPostFormSelected(false); // Hide PostForm
+      setViewPostList(true);   // Show PostList
+  }
+  
+  useEffect(() => {
+    if (!postsLoading && !postsError) {
+        setPosts(initialPosts); // Update local posts state with initial data
+    }
+}, [initialPosts, postsLoading, postsError]);
+
     return (
         <div className="App">
             <TopNavBar
@@ -65,7 +82,8 @@ const App = () => {
                 setLoginSelected={setLoginSelected}
                 setRegisterSelected={setRegisterSelected}
                 navigate={navigate}
-            />
+      
+      />
             <Routes>
                 <Route
                     path="/"
@@ -138,9 +156,15 @@ const App = () => {
                     }
                 />
             </Routes>
-            <Footer navigate={navigate} />
-        </div>
-    );
-};
+          {postFormSelected && ( 
+            <PostForm currentUser={currentUser.id} bookId={postFormBookId} onPostCreation={handlePostCreation} />
+          )}
+          {viewPostList && <PostList posts={posts} />} {/* Render PostList when state is set */}
 
+
+      <Footer navigate={navigate} />
+      </div>
+    );
+
+  };
 export default App;

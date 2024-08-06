@@ -4,8 +4,8 @@ connection: &connection
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: finals
-  password: password
+  username: labber
+  password: labber
   timeout: 5000
 
 development:
