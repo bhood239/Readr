@@ -1,15 +1,11 @@
-
 import React, { useState } from 'react';
 import BookList from '../components/BookList';
 import UserList from '../components/UserList';
-import { Container, Col, Image, Row } from 'react-bootstrap';
 import SearchUsers from '../components/SearchUsers';
-import '../styles/Profile.css'
+import '../styles/Profile.css';
+import PostForm from '../components/PostForm';
 
-// import { useUserById } from '../helpers/hooks/apiData/useUserData'; //uncomment when user info is setup properly
-
-const Profile = (props) => { // userId, replace user once properly set up.
-    // const { user, loading, error } = useUserById(userId);
+const Profile = (props) => {
     const {
         currentUser,
         wantToRead,
@@ -21,8 +17,13 @@ const Profile = (props) => { // userId, replace user once properly set up.
         handleDeleteFriend,
         handleCreateBookStatus,
         updateBookStatus,
-        allBookStatuses
-    } = props
+        allBookStatuses,
+        addPost,
+        postFormSelected,
+        setPostFormSelected,
+        postFormBookId,
+        onPostCreation
+    } = props;
     const [selectedOption, setSelectedOption] = useState('To Be Read');
 
     const handleSelectOption = (option) => {
@@ -30,10 +31,21 @@ const Profile = (props) => { // userId, replace user once properly set up.
     };
 
     const renderBookList = () => {
+        if (postFormSelected) {
+            return (
+                <PostForm
+                    currentUser={currentUser.id}
+                    postFormBookId={postFormBookId}
+                    onPostCreation={onPostCreation}
+                    setPostFormSelected={setPostFormSelected}
+                />
+            );
+        }
+
         switch (selectedOption) {
             case 'To Be Read':
                 return wantToRead.length > 0 ? (
-                    <div><BookList
+                    <BookList
                         books={wantToRead}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
@@ -42,13 +54,14 @@ const Profile = (props) => { // userId, replace user once properly set up.
                         favBooks={favBooks}
                         handleCreateBookStatus={handleCreateBookStatus}
                         updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses} /></div>
+                        allBookStatuses={allBookStatuses}
+                        addPost={addPost} />
                 ) : (
                     <div>No books to be read</div>
                 );
             case 'Reading':
                 return reading.length > 0 ? (
-                    <div><BookList
+                    <BookList
                         books={reading}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
@@ -57,13 +70,14 @@ const Profile = (props) => { // userId, replace user once properly set up.
                         favBooks={favBooks}
                         handleCreateBookStatus={handleCreateBookStatus}
                         updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses} /></div>
+                        allBookStatuses={allBookStatuses}
+                        addPost={addPost} />
                 ) : (
                     <div>No books currently being read</div>
                 );
             case 'Read':
                 return read.length > 0 ? (
-                    <div><BookList
+                    <BookList
                         books={read}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
@@ -72,13 +86,14 @@ const Profile = (props) => { // userId, replace user once properly set up.
                         favBooks={favBooks}
                         handleCreateBookStatus={handleCreateBookStatus}
                         updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses} /></div>
+                        allBookStatuses={allBookStatuses}
+                        addPost={addPost} />
                 ) : (
                     <div>No books read</div>
                 );
             case 'My Books':
                 return favBooks.length > 0 ? (
-                    <div><BookList
+                    <BookList
                         books={favBooks}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
@@ -87,27 +102,28 @@ const Profile = (props) => { // userId, replace user once properly set up.
                         favBooks={favBooks}
                         handleCreateBookStatus={handleCreateBookStatus}
                         updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses} /></div>
+                        allBookStatuses={allBookStatuses}
+                        addPost={addPost} />
                 ) : (
                     <div>No favorite books</div>
                 );
             case 'Followers List':
                 const followersList = currentUser.followers_list;
                 return followersList.length > 0 ? (
-                    <div><UserList users={followersList} currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} /></div>
+                    <UserList users={followersList} currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} />
                 ) : (
                     <div>No followers</div>
                 );
             case 'Following List':
                 const followingList = currentUser.following_list;
                 return followingList.length > 0 ? (
-                    <div><UserList users={followingList} currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} /></div>
+                    <UserList users={followingList} currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} />
                 ) : (
-                    <div>No followers</div>
+                    <div>No following</div>
                 );
             case 'Popular Books':
                 return popularBooks.length > 0 ? (
-                    <div><BookList
+                    <BookList
                         books={popularBooks}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
@@ -116,34 +132,31 @@ const Profile = (props) => { // userId, replace user once properly set up.
                         favBooks={favBooks}
                         handleCreateBookStatus={handleCreateBookStatus}
                         updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses} /></div>
+                        allBookStatuses={allBookStatuses}
+                        addPost={addPost} />
                 ) : (
                     <div>No popular books</div>
                 );
             case 'Search Users':
                 return (
-                    <div><SearchUsers currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} /></div>
+                    <SearchUsers currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} addPost={addPost} />
                 );
             default:
                 return null;
         }
     };
 
-    //uncomment when user info is properly setup
-    // if (loading) return <div>Loading...</div>;
-    // if (error) return <div>Error: {error.message}</div>;
-
     return (
-        <Container className="container">
-            <Row className="profile-header">
-                <Col xs={12} className="profile-image-section">
-                    <Image src="holder.js/100px250" fluid className="profile-image" />
+        <div className="container">
+            <div className="profile-header">
+                <div className="profile-image-section">
+                    <img src="holder.js/100px250" alt="Profile" className="profile-image" />
                     <h1 className="profile-name">{currentUser?.name}</h1>
-                </Col>
-            </Row>
+                </div>
+            </div>
 
-            <Row className="profile-info-section">
-                <Col xs={12} className="profile-details">
+            <div className="profile-info-section">
+                <div className="profile-details">
                     <div className="follow">
                         <h3><a href="#" className="link" onClick={() => handleSelectOption('Followers List')}>
                             Followers
@@ -156,11 +169,11 @@ const Profile = (props) => { // userId, replace user once properly set up.
                         </a></h3>
                         <span>{currentUser?.following}</span>
                     </div>
-                </Col>
-            </Row>
+                </div>
+            </div>
 
-            <Row className="profile-content">
-                <Col xs={12} md={3} className="list-group-section">
+            <div className="profile-content">
+                <div className="list-group-section">
                     <div className="list-group">
                         <a href="#" className="list-group-item list-group-item-action" onClick={() => handleSelectOption('To Be Read')}>
                             To Be Read
@@ -175,22 +188,22 @@ const Profile = (props) => { // userId, replace user once properly set up.
                             My Books
                         </a>
                     </div>
-                </Col>
+                </div>
 
-                <Col xs={12} md={6} className="book-list-section">
+                <div className="book-list-section">
                     {renderBookList()}
-                </Col>
+                </div>
 
-                <Col xs={12} md={3} className="right-side">
+                <div className="right-side">
                     <a href="#" className="link" onClick={() => handleSelectOption('Popular Books')}>
                         Popular Books
                     </a>
                     <a href="#" className="link" onClick={() => handleSelectOption('Search Users')}>
                         Find People
                     </a>
-                </Col>
-            </Row>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 };
 

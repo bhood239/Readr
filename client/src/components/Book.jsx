@@ -1,14 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/Book.css'
 
 // individual book view
 const Book = (props) => {
-    const { book, favBooks, addWantToRead, addReading, addRead, removeStatus, addFav, removeFav } = props;
+    const { book, favBooks, wantToRead, reading, read, addWantToRead, addReading, addRead, removeStatus, addFav, removeFav, addPost } = props;
     // addWantToRead, addReading, addRead, addFav etc are functions to add, update or remove data
     // avgTimeSpent and avgRating are the functions that take book_id and return data
 
     const isFavourite = favBooks.includes(book.id);
+    
     const [status, setStatus] = useState('select');
+
+    const isPresent = (bookStatus, bookId) => {
+        switch (bookStatus) {
+            case 'wantToRead':
+                return wantToRead.includes(bookId);
+            case 'reading':
+                return reading.includes(bookId);
+            case 'read':
+                return read.includes(bookId);
+            default:
+                return false;
+        }
+    };
+
+    useEffect(() => {
+        if (isPresent('wantToRead', book.id)) {
+            setStatus('wantToRead');
+        } else if (isPresent('reading', book.id)) {
+            setStatus('reading');
+        } else if (isPresent('read', book.id)) {
+            setStatus('read');
+        } else {
+            setStatus('select');
+        }
+    }, [book.id, wantToRead, reading, read]);
 
     const handleChange = (e) => {
         setStatus(e.target.value);
@@ -52,7 +78,7 @@ const Book = (props) => {
                     </div>
                 </div>
                 <div>
-                    {/* <button onClick={() => addPost(book.id)}>Edit</button> */}
+                    <button onClick={() => addPost(book.id)}>Review</button>
                 </div>
             </div>
         </div>
