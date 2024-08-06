@@ -17,7 +17,7 @@ const App = () => {
     const navigate = useNavigate();
     //   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
 
-    const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks } = useUserBooks();
+    const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks, popularBooks } = useUserBooks();
     const { handleCreateFriend } = useCreateFriend();
     const { handleDeleteFriend } = useDeleteFriend();
     const { handleCreateBookStatus } = useCreateBookStatus();
@@ -63,8 +63,12 @@ const App = () => {
                                 reading={reading}
                                 read={read}
                                 favBooks={favBooks}
+                                popularBooks={popularBooks}
                                 handleCreateFriend={handleCreateFriend}
                                 handleDeleteFriend={handleDeleteFriend}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={allBookStatuses}
                             />
                         ) : (
                             <Homepage
@@ -87,8 +91,12 @@ const App = () => {
                             reading={reading}
                             read={read}
                             favBooks={favBooks}
+                            popularBooks={popularBooks}
                             handleCreateFriend={handleCreateFriend}
                             handleDeleteFriend={handleDeleteFriend}
+                            handleCreateBookStatus={handleCreateBookStatus}
+                            updateBookStatus={updateBookStatus}
+                            allBookStatuses={allBookStatuses}
                         />} />
                 <Route
                     path="/search"
