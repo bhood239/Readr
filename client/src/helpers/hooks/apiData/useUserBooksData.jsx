@@ -68,7 +68,14 @@ const useUserBooks = () => {
         if (readBookIds.length) fetchBooksDetails(readBookIds, setRead);
         if (favBookIds.length) fetchBooksDetails(favBookIds, setFavBooks);
         if (popularBookIds.length) fetchBooksDetails(popularBookIds, setPopularBooks);
-    }, [currentUser, toReadBookIds, readingBookIds, readBookIds, favBookIds, popularBookIds]);
+    }, [toReadBookIds, readingBookIds, readBookIds, favBookIds, popularBookIds]);
+
+    useEffect(() => {
+        // Trigger fetching when currentUser is set
+        if (currentUser) {
+            setLoading(true); // Set loading to true when currentUser changes
+        }
+    }, [currentUser]);
 
     return {
         currentUser,
@@ -78,12 +85,13 @@ const useUserBooks = () => {
         read,
         favBooks,
         popularBooks,
-        loading: toReadLoading || readingLoading || readLoading || favBookLoading,
+        loading: toReadLoading || readingLoading || readLoading || favBookLoading || popularBookLoading,
         errors: {
             toReadError,
             readingError,
             readError,
-            favBookError
+            favBookError,
+            popularBookError
         }
     };
 };

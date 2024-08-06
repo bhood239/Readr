@@ -28,20 +28,15 @@ const App = () => {
   const navigate = useNavigate();
   //   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
 
-  const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks } =
-    useUserBooks();
-  const { handleCreateFriend } = useCreateFriend();
-  const { handleDeleteFriend } = useDeleteFriend();
-  const { handleCreateBookStatus } = useCreateBookStatus();
-  const { updateBookStatus } = useUpdateBookStatusByUserAndBook();
-  const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
-  const {
-    bookStatuses: allBookStatuses,
-    loading,
-    error,
-  } = useAllBookStatuses();
-  const [loginSelected, setLoginSelected] = useState(false);
-  const [registerSelected, setRegisterSelected] = useState(false);
+    const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks, popularBooks } = useUserBooks();
+    const { handleCreateFriend } = useCreateFriend();
+    const { handleDeleteFriend } = useDeleteFriend();
+    const { handleCreateBookStatus } = useCreateBookStatus();
+    const { updateBookStatus } = useUpdateBookStatusByUserAndBook();
+    const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
+    const { bookStatuses: allBookStatuses, loading, error } = useAllBookStatuses();
+    const [loginSelected, setLoginSelected] = useState(false);
+    const [registerSelected, setRegisterSelected] = useState(false);
 
   const [postFormBookId, setPostFormBookId] = useState();
   const [postFormSelected, setPostFormSelected] = useState(false);
@@ -88,49 +83,71 @@ const App = () => {
                 registerSelected={registerSelected}
                 setLoginSelected={setLoginSelected}
                 setRegisterSelected={setRegisterSelected}
-                setCurrentUser={setCurrentUser}
-                currentUser={currentUser}
-              />
-            )
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            currentUser && (
-              <Profile
-                currentUser={currentUser}
-                wantToRead={wantToRead}
-                reading={reading}
-                read={read}
-                favBooks={favBooks}
-                handleCreateFriend={handleCreateFriend}
-                handleDeleteFriend={handleDeleteFriend}
-              />
-            )
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            currentUser && (
-              <SearchResult
-                currentUser={currentUser}
-                wantToRead={wantToRead}
-                reading={reading}
-                read={read}
-                favBooks={favBooks}
-                handleCreateBookStatus={handleCreateBookStatus}
-                updateBookStatus={updateBookStatus}
-                allBookStatuses={allBookStatuses}
-              />
-            )
-          }
-        />
-      </Routes>
-      <Footer navigate={navigate} />
-    </div>
-  );
+                navigate={navigate}
+            />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        currentUser ? (
+                            <Dashboard
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                popularBooks={popularBooks}
+                                handleCreateFriend={handleCreateFriend}
+                                handleDeleteFriend={handleDeleteFriend}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={allBookStatuses}
+                            />
+                        ) : (
+                            <Homepage
+                                loginSelected={loginSelected}
+                                registerSelected={registerSelected}
+                                setLoginSelected={setLoginSelected}
+                                setRegisterSelected={setRegisterSelected}
+                                setCurrentUser={setCurrentUser}
+                                currentUser={currentUser}
+                            />
+                        )
+                    }
+                />
+                <Route
+                    path="/profile"
+                    element={currentUser &&
+                        <Profile
+                            currentUser={currentUser}
+                            wantToRead={wantToRead}
+                            reading={reading}
+                            read={read}
+                            favBooks={favBooks}
+                            popularBooks={popularBooks}
+                            handleCreateFriend={handleCreateFriend}
+                            handleDeleteFriend={handleDeleteFriend}
+                            handleCreateBookStatus={handleCreateBookStatus}
+                            updateBookStatus={updateBookStatus}
+                            allBookStatuses={allBookStatuses}
+                        />} />
+                <Route
+                    path="/search"
+                    element={currentUser &&
+                        <SearchResult
+                            currentUser={currentUser}
+                            wantToRead={wantToRead}
+                            reading={reading}
+                            read={read}
+                            favBooks={favBooks}
+                            handleCreateBookStatus={handleCreateBookStatus}
+                            updateBookStatus={updateBookStatus}
+                            allBookStatuses={allBookStatuses}
+                        />} />
+            </Routes>
+            <Footer navigate={navigate} />
+        </div>
+    );
 };
 
 export default App;
