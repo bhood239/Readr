@@ -21,10 +21,26 @@ const Dashboard = (props) => {
         handleDeleteFriend,
         handleCreateBookStatus,
         updateBookStatus,
-        allBookStatuses
+        allBookStatuses,
+        addPost,
+        postFormSelected,
+        setPostFormSelected,
+        postFormBookId,
+        onPostCreation
     } = props;
 
     const renderContent = () => {
+        if (postFormSelected) {
+            return (
+                <PostForm
+                    currentUser={currentUser.id}
+                    postFormBookId={postFormBookId}
+                    onPostCreation={onPostCreation}
+                    setPostFormSelected={setPostFormSelected}
+                />
+            );
+        }
+
         switch (selectedView) {
             case 'postList':
                 return <PostList />;
@@ -37,7 +53,8 @@ const Dashboard = (props) => {
                     favBooks={favBooks}
                     handleCreateBookStatus={handleCreateBookStatus}
                     updateBookStatus={updateBookStatus}
-                    allBookStatuses={allBookStatuses} />;
+                    allBookStatuses={allBookStatuses}
+                    addPost={addPost} />;
             case 'postForm':
                 return <PostForm />;
             case 'findPeople':
@@ -55,7 +72,8 @@ const Dashboard = (props) => {
                     favBooks={favBooks}
                     handleCreateBookStatus={handleCreateBookStatus}
                     updateBookStatus={updateBookStatus}
-                    allBookStatuses={allBookStatuses} />;
+                    allBookStatuses={allBookStatuses}
+                    addPost={addPost} />;
             default:
                 return <PostList />;
         }

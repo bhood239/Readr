@@ -5,7 +5,7 @@ import Book from "./Book"
 
 const BookList = (props) => {
     // const { books, favBooks, addWantToRead, addReading, addRead, addFav, removeFav, addPost, avgTimeSpent, avgRating } = props;
-    const { books, currentUser, wantToRead, reading, read, favBooks, handleCreateBookStatus, updateBookStatus, allBookStatuses } = props;
+    const { books, currentUser, wantToRead, reading, read, favBooks, handleCreateBookStatus, updateBookStatus, allBookStatuses, addPost } = props;
 
     const [bookStatuses, setBookStatuses] = useState({});
 
@@ -23,6 +23,7 @@ const BookList = (props) => {
 
     const updateBookStatusHandler = async (bookId, statusData) => {
         const bookStatus = bookStatuses[bookId];
+        console.log('book id:', bookId);
         try {
             if (bookStatus) {
                 await updateBookStatus(currentUser.id, bookId, statusData);
@@ -38,12 +39,12 @@ const BookList = (props) => {
         }
     };
 
-    const addFav = (book) => updateBookStatusHandler(book.id, { fave_books: true });
-    const removeFav = (book) => updateBookStatusHandler(book.id, { fave_books: false });
-    const addWantToRead = (book) => updateBookStatusHandler(book.id, { status: 'to_read' });
-    const addReading = (book) => updateBookStatusHandler(book.id, { status: 'reading' });
-    const addRead = (book) => updateBookStatusHandler(book.id, { status: 'read' });
-    const removeStatus = (book) => updateBookStatusHandler(book.id, { status: null });
+    const addFav = (book) => updateBookStatusHandler(book, { fave_books: true });
+    const removeFav = (book) => updateBookStatusHandler(book, { fave_books: false });
+    const addWantToRead = (book) => updateBookStatusHandler(book, { status: 'to_read' });
+    const addReading = (book) => updateBookStatusHandler(book, { status: 'reading' });
+    const addRead = (book) => updateBookStatusHandler(book, { status: 'read' });
+    const removeStatus = (book) => updateBookStatusHandler(book, { status: null });
 
     return (
         <ul className="book-list">
@@ -51,6 +52,9 @@ const BookList = (props) => {
                 <li key={book.id} className="book-list-item">
                     <Book
                         book={book}
+                        wantToRead={wantToRead}
+                        reading={reading}
+                        read={read}
                         favBooks={favBooks}
                         addWantToRead={addWantToRead}
                         addReading={addReading}
@@ -58,7 +62,7 @@ const BookList = (props) => {
                         removeStatus={removeStatus}
                         addFav={addFav}
                         removeFav={removeFav}
-                    // addPost={addPost}
+                        addPost={addPost}
                     // avgTimeSpent={avgTimeSpent}
                     // avgRating={avgRating}
                     />
