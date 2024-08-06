@@ -1,6 +1,5 @@
-// to include: TopNavBar, Footer, conditionally render: Homepage, Dashboard
-import React, { useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import "./styles/App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -22,7 +21,6 @@ import { usePostByUserIdAndBookId } from "./helpers/hooks/apiData/usePostData";
 
 const App = () => {
     const navigate = useNavigate();
-    //   const currentUser = { name: "John Doe", email: "johndoe@example.com" };
 
     const { currentUser, setCurrentUser, wantToRead, reading, read, favBooks, popularBooks } = useUserBooks();
     const { handleCreateFriend } = useCreateFriend();
@@ -38,10 +36,19 @@ const App = () => {
     const [postFormSelected, setPostFormSelected] = useState(false);
     const [editPostSelected, setEditPostSelected] = useState(false);
 
+    useEffect(() => {
+        // Redirect to homepage if not logged in
+        if (!currentUser) {
+            navigate("/");
+        }
+    }, [currentUser, navigate]);
+
     const addPost = (bookId) => {
-        setPostFormBookId(bookId);
-        const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
-        post ? setEditPostSelected(true) : setPostFormSelected(true);
+        if (currentUser) {
+            setPostFormBookId(bookId);
+            const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
+            post ? setEditPostSelected(true) : setPostFormSelected(true);
+        }
     };
 
     const handleLogout = () => {
@@ -79,6 +86,7 @@ const App = () => {
                             />
                         ) : (
                             <Homepage
+                                setCurrentUser={setCurrentUser}
                                 loginSelected={loginSelected}
                                 registerSelected={registerSelected}
                                 setLoginSelected={setLoginSelected}
@@ -90,41 +98,43 @@ const App = () => {
                 />
                 <Route
                     path="/profile"
-                    element={currentUser ? (
-                        <Profile
-                            currentUser={currentUser}
-                            wantToRead={wantToRead}
-                            reading={reading}
-                            read={read}
-                            favBooks={favBooks}
-                            popularBooks={popularBooks}
-                            handleCreateFriend={handleCreateFriend}
-                            handleDeleteFriend={handleDeleteFriend}
-                            handleCreateBookStatus={handleCreateBookStatus}
-                            updateBookStatus={updateBookStatus}
-                            allBookStatuses={allBookStatuses}
-                        />
-                    ) : (
-                        navigate("/")
-                    )
+                    element={
+                        currentUser ? (
+                            <Profile
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                popularBooks={popularBooks}
+                                handleCreateFriend={handleCreateFriend}
+                                handleDeleteFriend={handleDeleteFriend}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={allBookStatuses}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
                     }
                 />
                 <Route
                     path="/search"
-                    element={currentUser ? (
-                        <SearchResult
-                            currentUser={currentUser}
-                            wantToRead={wantToRead}
-                            reading={reading}
-                            read={read}
-                            favBooks={favBooks}
-                            handleCreateBookStatus={handleCreateBookStatus}
-                            updateBookStatus={updateBookStatus}
-                            allBookStatuses={allBookStatuses}
-                        />
-                    ) : (
-                        navigate("/")
-                    )
+                    element={
+                        currentUser ? (
+                            <SearchResult
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={allBookStatuses}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
                     }
                 />
             </Routes>
