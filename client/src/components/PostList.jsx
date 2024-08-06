@@ -17,9 +17,13 @@ const PostList = () => {
   if (!posts || posts.length === 0) {
     return <div> No posts to show at this time.</div>;
   }
+
+  // Sort posts by creation date (assuming each post has a `created_at` field)
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
   return (
     <div className="post-list">
-      {posts.map((post) => (
+      {sortedPosts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
     </div>

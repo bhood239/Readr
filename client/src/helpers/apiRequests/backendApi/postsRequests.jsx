@@ -26,6 +26,17 @@ export const getPostById = async (postId) => {
   }
 };
 
+export const getPostByUserIdAndBookId = async (userId, bookId) => {
+    try {
+      const res = await axios.get(`/api/posts/${userId}/${bookId}`);
+      console.log("response received: ", res.data);
+      return res.data;
+    } catch (err) {
+      console.log("error getting post: ", err.message);
+      return null;
+    }
+};
+
 // READ ALL
 export const getAllPosts = async () => {
   try {

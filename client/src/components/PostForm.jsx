@@ -4,27 +4,28 @@ import CustomRating from './CustomRating';
 import PropTypes from 'prop-types';
 import { useCreatePost } from '../helpers/hooks/apiData/usePostData';
 import './PostForm.scss';
+import { useNavigate } from 'react-router-dom';
 
-const PostForm = ({currentUser, bookId}) => {
+const PostForm = ({currentUser, bookId, onPostCreation}) => {
   const [rating, setRating] = useState('');
   const [timeSpent, setTimeSpent] = useState('');
   const [review, setReview] = useState('');
   const [hours, setHours] = useState('');
 
   const { post, loading, error, handleCreatePost} = useCreatePost();
-
+  const navigate = useNavigate();
 
 useEffect(() => {
   if (post) {
-    // handlePostCreation(post);
+    onPostCreation(post); // Notify parent about the new post
     setRating('');
     setTimeSpent('');
     setReview('');
     setHours('');
+
   }
-}, [post 
-  // ,handlePostCreation
-]);
+}, [post, onPostCreation]);
+
 
 
 const handleSubmit = (event) => {
