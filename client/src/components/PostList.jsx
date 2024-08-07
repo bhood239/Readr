@@ -3,8 +3,8 @@ import React from 'react';
 import Post from './Post';
 import { useAllPosts } from '../helpers/hooks/apiData/usePostData';
 
-const PostList = () => {
-  const {posts, loading, error} = useAllPosts();
+const PostList = ({currentUser}) => {
+  const {posts, loading, error} = useAllPosts(currentUser);
 
   if (loading) {
     return <div className="text-center"> Posts Loading...</div>;
