@@ -4,7 +4,16 @@ import axios from "axios";
 const getBookById = async (id) => {
   try {
     let res;
-    res = await axios.get(`https://openlibrary.org/works/${id}.json`);
+    // Determine which endpoint to use based on ID length or format
+    if (id.length > 9) {
+      // Fetch book data from the "books" endpoint
+      res = await axios.get(`https://openlibrary.org/books/${id}.json`);
+    } else if (id.length === 8) {
+      // Fetch book data from the "works" endpoint
+      res = await axios.get(`https://openlibrary.org/works/${id}.json`);
+    } else {
+      throw new Error("Invalid ID length");
+    }
     const bookData = res.data;
     let author = "Unknown Author";
     if (bookData.authors && bookData.authors.length > 0) {
