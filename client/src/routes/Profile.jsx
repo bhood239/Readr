@@ -1,7 +1,3 @@
-// profile details, children: my posts, book list x4(to read, reading, read, favorites), postform
-const Profile = () => {
-  return <h1>Hello Profile</h1>;
-};
 import React, { useState } from 'react';
 import { Container, Col, Image, Row } from 'react-bootstrap';
 // import { useUserById } from '../helpers/hooks/apiData/useUserData'; //uncomment when user info is setup properly
