@@ -42,3 +42,8 @@
 .profile-action {
     margin-top: 15px;
 }
+
+.btn-primary {
+    background-color: #A92929;
+      color: white;
+}
