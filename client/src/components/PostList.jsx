@@ -4,8 +4,11 @@ import Post from './Post';
 import './PostList.scss';
 import { useAllPosts } from '../helpers/hooks/apiData/usePostData';
 
-const PostList = () => {
-  const {posts, loading, error} = useAllPosts();
+const PostList = ({currentUser}) => {
+  const {posts, loading, error} = useAllPosts(currentUser);
+
+  console.log('Posts in PostList:', posts);
+
 
   if (loading) {
     return <div className="text-center"> Posts Loading...</div>;
@@ -20,13 +23,13 @@ const PostList = () => {
   }
 
   // Sort posts by creation date (assuming each post has a `created_at` field)
-  const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  // const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   return (
 
     <div className="container-fluid post-list"> {/* Change to container-fluid if needed */}
       <div className="card-body">
-        {sortedPosts.map((post) => (
+        {posts.map((post) => (
           <div key={post.id} className="mb-3">
             <div className="card post-item">
               <Post post={post} />

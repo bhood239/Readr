@@ -5,6 +5,7 @@ import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
 import SearchResult from "../components/SearchResults";
 import SearchUsers from "../components/SearchUsers";
+import '../components/PostForm.scss'
 import '../styles/Dashboard.css'
 
 // children: MiniProfile, PostList, Search results, popular books (booklist), Postform
@@ -16,7 +17,7 @@ const Dashboard = (props) => {
         reading,
         read,
         favBooks,
-        popularBooks,
+        popularBooks, 
         handleCreateFriend,
         handleDeleteFriend,
         handleCreateBookStatus,
@@ -26,7 +27,8 @@ const Dashboard = (props) => {
         postFormSelected,
         setPostFormSelected,
         postFormBookId,
-        onPostCreation
+        onPostCreation, 
+        posts
     } = props;
 
     const renderContent = () => {
@@ -38,12 +40,14 @@ const Dashboard = (props) => {
                     onPostCreation={onPostCreation}
                     setPostFormSelected={setPostFormSelected}
                 />
+
+                
             );
         }
 
         switch (selectedView) {
             case 'postList':
-                return <PostList />;
+                return <PostList posts={posts} />;
             case 'searchResults':
                 return <SearchResult
                     currentUser={currentUser}
@@ -75,7 +79,7 @@ const Dashboard = (props) => {
                     allBookStatuses={allBookStatuses}
                     addPost={addPost} />;
             default:
-                return <PostList />;
+                return <PostList posts={posts} />;
         }
     };
 
