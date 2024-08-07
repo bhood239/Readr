@@ -43,7 +43,7 @@ const Dashboard = (props) => {
 
     switch (selectedView) {
       case "postList":
-        return <PostList />;
+        return <PostList currentUser={currentUser} />;
       case "searchResults":
         return (
           <SearchResult
