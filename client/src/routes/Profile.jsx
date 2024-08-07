@@ -1,7 +1,3 @@
-
-import { Container, Col, Image, Row } from "react-bootstrap";
-
-import "../styles/Profile.css";
 import React, { useState } from "react";
 import BookList from "../components/BookList";
 import UserList from "../components/UserList";
@@ -175,7 +171,7 @@ const Profile = (props) => {
       <div className="profile-header">
         <div className="profile-image-section">
           <img
-            src="holder.js/100px250"
+            src={currentUser?.profile_pic}
             alt="Profile"
             className="profile-image"
           />

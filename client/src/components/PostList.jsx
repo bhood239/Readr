@@ -1,14 +1,10 @@
 import React from 'react';
-import CustomRating from './CustomRating';
+// import PropTypes from 'prop-types';
 import Post from './Post';
-import './PostList.scss';
 import { useAllPosts } from '../helpers/hooks/apiData/usePostData';
 
-const PostList = ({currentUser}) => {
-  const {posts, loading, error} = useAllPosts(currentUser);
-
-  console.log('Posts in PostList:', posts);
-
+const PostList = () => {
+  const {posts, loading, error} = useAllPosts();
 
   if (loading) {
     return <div className="text-center"> Posts Loading...</div>;
@@ -23,7 +19,7 @@ const PostList = ({currentUser}) => {
   }
 
   // Sort posts by creation date (assuming each post has a `created_at` field)
-  // const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   return (
 
@@ -42,6 +38,5 @@ const PostList = ({currentUser}) => {
   );
 
 };
-
 
 export default PostList;

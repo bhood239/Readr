@@ -104,12 +104,12 @@
 }
 
 .link {
-    color: #ff6f61;
+    color: #A92929;
     text-decoration: none;
     display: block;
     margin: 10px 0;
 }
 
 .link:hover {
-    text-decoration: underline;
+    color: #ca5151;
 }
