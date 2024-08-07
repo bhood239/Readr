@@ -85,18 +85,18 @@ const Book = (props) => {
           ) : (
             <button onClick={() => addFav(book.id)}>Add To My Books</button>
           )}
-          <div>
-            <select value={status} onChange={handleChange}>
-              <option value="select">Select</option>
-              <option value="wantToRead">Want To Read</option>
-              <option value="reading">Reading</option>
-              <option value="read">Read</option>
-            </select>
-            <button onClick={handleClick}>✅</button>
+          <div className="book-bottom">
+            <button onClick={() => addPost(book.id)}>Review</button>
+            <div className="reading-list-buttons">
+              <select value={status} onChange={handleChange}>
+                <option value="select">Select</option>
+                <option value="wantToRead">Want To Read</option>
+                <option value="reading">Reading</option>
+                <option value="read">Read</option>
+              </select>
+              <button onClick={handleClick}>Add</button>
+            </div>
           </div>
-        </div>
-        <div>
-          <button onClick={() => addPost(book.id)}>Review</button>
         </div>
       </div>
     </div>
