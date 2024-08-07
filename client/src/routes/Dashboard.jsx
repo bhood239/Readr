@@ -106,27 +106,18 @@ const Dashboard = (props) => {
 
         {/* Main content in the center */}
         <div className="main-content">
-          <div className="dashboard-header">
-            <h1>Hello Dashboard</h1>
-          </div>
           <div className="dashboard-buttons">
             <button
               className="dashboard-btn"
               onClick={() => setSelectedView("postList")}
             >
-              Post List
+              Posts
             </button>
             <button
               className="dashboard-btn"
               onClick={() => setSelectedView("searchResults")}
             >
               Search Books
-            </button>
-            <button
-              className="dashboard-btn"
-              onClick={() => setSelectedView("postForm")}
-            >
-              Post Form
             </button>
           </div>
           {renderContent()}

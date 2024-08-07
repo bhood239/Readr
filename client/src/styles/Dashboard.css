@@ -42,7 +42,7 @@
     flex: 1;
     padding: 1rem;
     background-color: #ffffff; /* White background for Right Sidebar */
-    border-left: 1px solid #f7d7aa; /* Warm, soft border for separation */
+    border-left: 1px solid #A92929;
     height: 100%; /* Full height */
 }
 
@@ -64,5 +64,5 @@
 }
 
 .dashboard-btn:hover {
-    background-color: #691919;
+    background-color: #d65a29;
 }
