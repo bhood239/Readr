@@ -51,7 +51,7 @@ const MiniProfile = (props) => {
           </ul>
           <div className="profile-action">
             <nav>
-              <Link to="/profile" className="btn">
+              <Link to="/profile" className="profile-btn">
                 Your Profile
               </Link>
             </nav>
