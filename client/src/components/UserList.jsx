@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import '../styles/UserList.css';
 
 const UserList = (props) => {
     const { users, currentUser, handleCreateFriend, handleDeleteFriend } = props;

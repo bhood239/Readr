@@ -42,6 +42,7 @@ export const useBookStatusByUserAndBook = (userId, bookId) => {
         const fetchBookStatus = async () => {
             try {
                 const bookStatusData = await getBookStatusByUserAndBook(userId, bookId);
+                console.log('Fetched book status data:', bookStatusData);
                 setBookIds(bookStatusData);
             } catch (err) {
                 setError(err);
