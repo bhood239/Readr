@@ -1,14 +1,15 @@
 import React from "react";
 import { Container, Row, Col, Nav, Navbar } from "react-bootstrap";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import "../styles/Footer.scss"
 import logo from "../assets/logo.png";
 
 const Footer = ({ navigate }) => {
   return (
-    <Navbar bg="light" variant="light" className="mt-auto">
-      <Container>
-        <Row className="w-100">
-          <Col md={4} className="d-flex align-items-center">
+
+      <Container fluid>
+        <Row className="justify-content-md-center">
+          <Col className="left-nav">
             <Navbar.Brand>
               <img
                 src={logo}
@@ -17,7 +18,7 @@ const Footer = ({ navigate }) => {
               />
             </Navbar.Brand>
           </Col>
-          <Col md={4} className="d-flex justify-content-center">
+          <Col className="center-nav">
             <Nav>
               <Nav.Item>
                 <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
@@ -27,7 +28,7 @@ const Footer = ({ navigate }) => {
               </Nav.Item>
             </Nav>
           </Col>
-          <Col md={4} className="d-flex justify-content-end align-items-center">
+          <Col className="right-nav">
             <Nav>
               <Nav.Link href="https://facebook.com" target="_blank">
                 <FaFacebook />
@@ -42,7 +43,6 @@ const Footer = ({ navigate }) => {
           </Col>
         </Row>
       </Container>
-    </Navbar>
   );
 };
 

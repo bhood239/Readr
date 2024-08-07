@@ -34,27 +34,20 @@ const BookList = (props) => {
     }
   }, [allBookStatuses, currentUser]);
 
-  const updateBookStatusHandler = async (bookId, statusData) => {
-    const bookStatus = bookStatuses[bookId];
-    console.log("book id:", bookId);
-    try {
-      if (bookStatus) {
-        await updateBookStatus(currentUser.id, bookId, statusData);
-      } else {
-        await handleCreateBookStatus({
-          user_id: currentUser.id,
-          book_id: bookId,
-          ...statusData,
-        });
-      }
-      setBookStatuses((prevStatuses) => ({
-        ...prevStatuses,
-        [bookId]: { ...prevStatuses[bookId], ...statusData },
-      }));
-    } catch (error) {
-      console.error("Failed to update book status:", error);
-    }
-  };
+    const updateBookStatusHandler = async (bookId, statusData) => {
+        const bookStatus = bookStatuses[bookId];
+        if (bookStatus) {
+            await updateBookStatus(currentUser.id, bookId, statusData);
+        } else {
+            await handleCreateBookStatus({ user_id: currentUser.id, book_id: bookId, ...statusData });
+        }
+        // Optionally update the local state to reflect the change
+        setBookStatuses(prevStatuses => ({
+            ...prevStatuses,
+            [bookId]: { ...prevStatuses[bookId], ...statusData }
+        }));
+        // setBookStatuses(statusesMap);
+    };
 
   const addFav = (book) => updateBookStatusHandler(book, { fave_books: true });
   const removeFav = (book) =>
