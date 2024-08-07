@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useBookById } from '../helpers/hooks/useBookData';
+import CustomRating from './CustomRating';
+import './PostList.scss';
 
 const Post = ({ post }) => {
   const [bookDetails, setBookDetails] = useState(null);
@@ -17,10 +19,16 @@ const Post = ({ post }) => {
 
   return (
     <div className="post">
-      <h3>Post ID: {post.id}</h3>
-      <h4>Posted By: {post.user.name}</h4>
-      <h5>Book: {bookDetails?.title} by {bookDetails?.author}</h5>
-      <p>Review: {post.review}</p>
+      <h4>Book: {bookDetails?.title} by {bookDetails?.author}</h4>
+    
+
+      <h5>Posted By: {post.user.name}</h5>
+      <CustomRating
+                totalStars={5}
+                rating={post.rating}
+                // setRating={() => {}}
+              />
+      <h6>Review: {post.review}</h6>
     </div>
   );
 };
