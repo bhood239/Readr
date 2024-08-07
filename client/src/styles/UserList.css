@@ -6,10 +6,11 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 .user-list li {
-    background-color: #ffe5d9; /* Light warm color */
+    background-color: #f5f5f5;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -21,13 +22,12 @@
 .user-list li div {
     font-size: 16px;
     font-weight: bold;
-    color: #ff4500; /* Warm orange-red color */
     text-align: left; /* Ensure text is left aligned */
     flex: 1; /* Allows the name to take up available space */
 }
 
 .user-list button {
-    background-color: #ff7f50; /* Warm coral color */
+    background-color: #A92929;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -39,7 +39,7 @@
 }
 
 .user-list button:hover {
-    background-color: #ff6347; /* Tomato color for hover effect */
+    background-color: #d65a29;
 }
 
 .user-list button:disabled {

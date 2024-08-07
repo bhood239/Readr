@@ -42,3 +42,21 @@
 .profile-action {
     margin-top: 15px;
 }
+
+.profile-btn {
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #A92929;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.profile-btn:hover {
+  background-color: #d65a29;
+  color: white;
+}

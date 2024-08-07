@@ -3,7 +3,17 @@ import axios from "axios";
 
 const getBookById = async (id) => {
   try {
-    const res = await axios.get(`https://openlibrary.org/books/${id}.json`);
+    let res;
+    // Determine which endpoint to use based on ID length or format
+    if (id.length > 9) {
+      // Fetch book data from the "books" endpoint
+      res = await axios.get(`https://openlibrary.org/books/${id}.json`);
+    } else if (id.length === 8) {
+      // Fetch book data from the "works" endpoint
+      res = await axios.get(`https://openlibrary.org/works/${id}.json`);
+    } else {
+      throw new Error("Invalid ID length");
+    }
     const bookData = res.data;
     let author = "Unknown Author";
     if (bookData.authors && bookData.authors.length > 0) {
@@ -13,7 +23,8 @@ const getBookById = async (id) => {
       }
     }
 
-    const cover = (bookData.covers && bookData.covers.length > 0)
+    const cover =
+      bookData.covers && bookData.covers.length > 0
         ? `https://covers.openlibrary.org/b/id/${bookData.covers[0]}-M.jpg`
         : `https://via.placeholder.com/128x192.png?text=No+Cover`;
 
@@ -22,7 +33,7 @@ const getBookById = async (id) => {
       title: bookData.title || "No title available",
       description: bookData.description || "No description available",
       author: author || "No author available",
-      cover: cover
+      cover: cover,
     };
   } catch (err) {
     console.log("Error:", err.message);
@@ -39,7 +50,8 @@ const getSearchBookById = async (id) => {
         ? await getAuthorName(bookData.authors[0].author.key)
         : "Unknown Author";
 
-    const cover = (bookData.covers && bookData.covers.length > 0)
+    const cover =
+      bookData.covers && bookData.covers.length > 0
         ? `https://covers.openlibrary.org/b/id/${bookData.covers[0]}-M.jpg`
         : `https://via.placeholder.com/128x192.png?text=No+Cover`;
 
@@ -48,7 +60,7 @@ const getSearchBookById = async (id) => {
       title: bookData.title || "No title available",
       description: bookData.description || "No description available",
       author: author || "No author available",
-      cover: cover
+      cover: cover,
     };
   } catch (err) {
     console.log("Error:", err.message);
@@ -71,7 +83,7 @@ const getBooksByName = async (name) => {
     const res = await axios.get(
       `https://openlibrary.org/search.json?q=${replaceSpacesWithPlus(name)}`
     );
-    const bookKeys = res.data.docs.map((doc) => doc.key.split('/').pop());
+    const bookKeys = res.data.docs.map((doc) => doc.key.split("/").pop());
 
     const books = await Promise.all(
       bookKeys.map((key) => {

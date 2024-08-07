@@ -17,37 +17,36 @@ const useUserBooks = () => {
         books: toReadBookIds,
         loading: toReadLoading,
         error: toReadError,
-    } = useBooksByUserAndStatus(currentUser?.id, 'to_read');
+    } = useBooksByUserAndStatus(currentUser, currentUser?.id, 'to_read');
 
     const {
         books: readingBookIds,
         loading: readingLoading,
         error: readingError,
-    } = useBooksByUserAndStatus(currentUser?.id, 'reading');
+    } = useBooksByUserAndStatus(currentUser, currentUser?.id, 'reading');
 
     const {
         books: readBookIds,
         loading: readLoading,
         error: readError,
-    } = useBooksByUserAndStatus(currentUser?.id, 'read');
+    } = useBooksByUserAndStatus(currentUser, currentUser?.id, 'read');
 
     const {
         books: favBookIds,
         loading: favBookLoading,
         error: favBookError,
-    } = useFavoriteBooksByUser(currentUser?.id);
+    } = useFavoriteBooksByUser(currentUser, currentUser?.id);
 
     const {
         books: popularBookIds,
         loading: popularBookLoading,
         error: popularBookError,
-    } = usePopularBooks();
+    } = usePopularBooks(currentUser);
 
     useEffect(() => {
         if (!currentUser) return;
 
         const fetchBooksDetails = async (bookIds, setter) => {
-            setLoading(true);
             try {
                 const booksDetails = await Promise.all(
                     bookIds.map(async (bookId) => {
@@ -58,24 +57,18 @@ const useUserBooks = () => {
                 setter(booksDetails);
             } catch (err) {
                 console.error(err);
-            } finally {
-                setLoading(false);
             }
         };
 
+        setLoading(true);
         if (toReadBookIds.length) fetchBooksDetails(toReadBookIds, setWantToRead);
         if (readingBookIds.length) fetchBooksDetails(readingBookIds, setReading);
         if (readBookIds.length) fetchBooksDetails(readBookIds, setRead);
         if (favBookIds.length) fetchBooksDetails(favBookIds, setFavBooks);
         if (popularBookIds.length) fetchBooksDetails(popularBookIds, setPopularBooks);
-    }, [toReadBookIds, readingBookIds, readBookIds, favBookIds, popularBookIds]);
+        setLoading(false);
+    }, [currentUser, toReadBookIds, readingBookIds, readBookIds, favBookIds, popularBookIds]);
 
-    useEffect(() => {
-        // Trigger fetching when currentUser is set
-        if (currentUser) {
-            setLoading(true); // Set loading to true when currentUser changes
-        }
-    }, [currentUser]);
 
     return {
         currentUser,
