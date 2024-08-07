@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Nav, Navbar } from "react-bootstrap";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import logo from "../assets/logo.png";
 
 const Footer = ({ navigate }) => {
   return (
@@ -8,7 +9,13 @@ const Footer = ({ navigate }) => {
       <Container>
         <Row className="w-100">
           <Col md={4} className="d-flex align-items-center">
-            <Navbar.Brand>Readr</Navbar.Brand>
+            <Navbar.Brand>
+              <img
+                src={logo}
+                alt="Readr"
+                style={{ height: "30px", cursor: "pointer" }}
+              />
+            </Navbar.Brand>
           </Col>
           <Col md={4} className="d-flex justify-content-center">
             <Nav>

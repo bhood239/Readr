@@ -11,12 +11,14 @@ import {
 } from "../../apiRequests/backendApi/bookStatusRequests";
 
 // Create Book Status
-export const useCreateBookStatus = () => {
+export const useCreateBookStatus = (currentUser) => {
     const [bookStatus, setBookStatus] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const handleCreateBookStatus = async (data) => {
+        console.log('create book status:', data);
+        if (!currentUser) return;
         setLoading(true);
         setError(null);
         try {
@@ -33,13 +35,15 @@ export const useCreateBookStatus = () => {
 };
 
 // Read Book Status by User and Book
-export const useBookStatusByUserAndBook = (userId, bookId) => {
+export const useBookStatusByUserAndBook = (currentUser, userId, bookId) => {
     const [books, setBookIds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchBookStatus = async () => {
+            console.log('useBookStatusByUserAndBook hook called with:', { currentUser, userId, bookId });
+            if (!currentUser) return;
             try {
                 const bookStatusData = await getBookStatusByUserAndBook(userId, bookId);
                 console.log('Fetched book status data:', bookStatusData);
@@ -51,18 +55,19 @@ export const useBookStatusByUserAndBook = (userId, bookId) => {
             }
         };
         fetchBookStatus();
-    }, [userId, bookId]);
+    }, [currentUser, userId, bookId]);
 
     return { books, loading, error };
 };
 
-export const useFavoriteBooksByUser = (userId) => {
+export const useFavoriteBooksByUser = (currentUser, userId) => {
     const [books, setBookIds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchFavoriteBooks = async () => {
+            if (!currentUser) return;
             try {
                 const bookIdsData = await getFavoriteBooksByUser(userId);
                 setBookIds(bookIdsData);
@@ -73,18 +78,19 @@ export const useFavoriteBooksByUser = (userId) => {
             }
         };
         fetchFavoriteBooks();
-    }, [userId]);
+    }, [currentUser, userId]);
 
     return { books, loading, error };
 };
 
-export const usePopularBooks = () => {
+export const usePopularBooks = (currentUser) => {
     const [books, setBookIds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchPopularBooks = async () => {
+            if (!currentUser) return;
             try {
                 const bookIdsData = await getPopularBooks();
                 setBookIds(bookIdsData);
@@ -95,19 +101,20 @@ export const usePopularBooks = () => {
             }
         };
         fetchPopularBooks();
-    }, []);
+    }, [currentUser]);
 
     return { books, loading, error };
 };
 
 // Read All Book Statuses
-export const useAllBookStatuses = () => {
+export const useAllBookStatuses = (currentUser) => {
     const [bookStatuses, setBookStatuses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchBookStatuses = async () => {
+            if (!currentUser) return;
             try {
                 const bookStatusData = await getAllBookStatuses();
                 setBookStatuses(bookStatusData);
@@ -124,13 +131,14 @@ export const useAllBookStatuses = () => {
 };
 
 // Read All Books by User and Status
-export const useBooksByUserAndStatus = (userId, status) => {
+export const useBooksByUserAndStatus = (currentUser, userId, status) => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchBooks = async () => {
+            if (!currentUser) return;
             try {
                 const booksData = await getBooksByUserAndStatus(userId, status);
                 setBooks(booksData);
@@ -147,12 +155,13 @@ export const useBooksByUserAndStatus = (userId, status) => {
 };
 
 // Update Book Status by User and Book
-export const useUpdateBookStatusByUserAndBook = () => {
+export const useUpdateBookStatusByUserAndBook = (currentUser) => {
     const [bookStatus, setBookStatus] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const updateBookStatus = async (userId, bookId, updatedData) => {
+        if (!currentUser) return;
         setLoading(true);
         try {
             const bookStatusData = await updateBookStatusByUserAndBook(userId, bookId, updatedData);
@@ -168,12 +177,13 @@ export const useUpdateBookStatusByUserAndBook = () => {
 };
 
 // Delete Book Status by User and Book
-export const useDeleteBookStatusByUserAndBook = () => {
+export const useDeleteBookStatusByUserAndBook = (currentUser) => {
     const [deleted, setDeleted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const deleteBookStatus = async (userId, bookId) => {
+        if (!currentUser) return;
         setLoading(true);
         try {
             await deleteBookStatusByUserAndBook(userId, bookId);
