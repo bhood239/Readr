@@ -28,12 +28,20 @@ const Post = ({ post }) => {
   }
 
   return (
-    <div className="post">
-      <h4>Book: {bookDetails.title} by {bookDetails.author}</h4>
+    <div className="post row">
+        <div class="col-auto">
       <img src={bookDetails.cover} alt={`Cover of ${bookDetails.title}`} style={{ maxWidth: '128px' }}/>
-      <h5>Posted By: {post.user.name}</h5>
+      </div>
+      <div class="col">
+
+      <h4>Book: {bookDetails.title} </h4>
+      <h4>Author: {bookDetails.author}</h4>
+
+
+      <h5>Reviewed By: {post.user.name}</h5>
       <CustomRating totalStars={5} rating={post.rating} />
-      <h6>Review: {post.review}</h6>
+      <h6>Comments: {post.review}</h6>
+      </div>
     </div>
   );
 };

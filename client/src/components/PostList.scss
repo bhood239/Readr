@@ -39,6 +39,22 @@
 
 }
 
+//style each post using bootstrap
+.post {
+  @media (min-width: 768px) { // Adjust the breakpoint as needed
+    .book-cover {
+      max-width: 128px;
+      height: auto;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; // Center text vertically
+    }
+  }
+}
+
 
 .star {
   font-size: 1.5rem;

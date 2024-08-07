@@ -9,8 +9,7 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
-import PostForm from "./components/PostForm";
-
+import './styles/main.scss'
 import {
     useCreateFriend,
     useDeleteFriend,
