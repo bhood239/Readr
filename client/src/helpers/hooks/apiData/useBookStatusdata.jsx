@@ -36,18 +36,17 @@ export const useCreateBookStatus = (currentUser) => {
 
 // Read Book Status by User and Book
 export const useBookStatusByUserAndBook = (currentUser, userId, bookId) => {
-    const [books, setBookIds] = useState([]);
+    const [bookStatus, setBookStatus] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchBookStatus = async () => {
-            console.log('useBookStatusByUserAndBook hook called with:', { currentUser, userId, bookId });
             if (!currentUser) return;
             try {
                 const bookStatusData = await getBookStatusByUserAndBook(userId, bookId);
                 console.log('Fetched book status data:', bookStatusData);
-                setBookIds(bookStatusData);
+                setBookStatus(bookStatusData);
             } catch (err) {
                 setError(err);
             } finally {
@@ -57,7 +56,7 @@ export const useBookStatusByUserAndBook = (currentUser, userId, bookId) => {
         fetchBookStatus();
     }, [currentUser, userId, bookId]);
 
-    return { books, loading, error };
+    return { bookStatus, loading, error };
 };
 
 export const useFavoriteBooksByUser = (currentUser, userId) => {
