@@ -4,7 +4,8 @@
 // Custom styles for the PostForm component
 .post-form-container {
   margin-top: 2rem;
-text-align: left;
+  text-align: left;
+
   .post-form-card {
     padding: 2rem;
     border-radius: 0.25rem;
@@ -48,6 +49,22 @@ text-align: left;
       transition: background-color 0.2s;
 
       &:hover {
+        background-color: #d65a29; /* Even darker orange for hover effect */
+      }
+    }
+
+    .back-btn-primary {
+      margin: 0.5rem;
+      background-color: #f9f0ea; /* Darker warm orange color for buttons */
+      color: #d65a29; /* White text on buttons */
+      border: none;
+      border-radius: 4px; /* Rounded corners for buttons */
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      transition: background-color 0.2s;
+
+      &:hover {
+        color: #f9f0ea;
         background-color: #d65a29; /* Even darker orange for hover effect */
       }
     }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles/App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -8,12 +9,11 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
-
+import './styles/main.scss'
 import {
     useCreateFriend,
     useDeleteFriend,
 } from "./helpers/hooks/apiData/useFriends";
-import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/main.scss";
@@ -84,7 +84,7 @@ const App = () => {
         if (currentUser) {
             setPostFormBookId(bookId);
             setPostFormSelected(true);
-            const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
+            // const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
             // post ? setEditPostSelected(true) : setPostFormSelected(true);
         }
     };
@@ -96,16 +96,14 @@ const App = () => {
     };
 
     const handlePostCreation = (newPost) => {
-        console.log("New post created: ", newPost);
-        setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
-
-        setPostFormSelected(false); // Hide PostForm
-        setViewPostList(true); // Show PostList
+      setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
+      setPostFormSelected(false); // Hide PostForm
+      setViewPostList(true); // Show PostList
     };
 
     useEffect(() => {
         if (!postsLoading && !postsError) {
-            setPosts(initialPosts); // Update local posts state with initial data
+            setPosts(initialPosts || []); // Update local posts state with initial data
         }
     }, [initialPosts, postsLoading, postsError]);
 
@@ -140,6 +138,7 @@ const App = () => {
                                 setPostFormSelected={setPostFormSelected}
                                 postFormBookId={postFormBookId}
                                 onPostCreation={handlePostCreation}
+                                posts={posts}
                             />
                         ) : (
                             <Homepage
@@ -184,6 +183,7 @@ const App = () => {
                                 setPostFormSelected={setPostFormSelected}
                                 postFormBookId={postFormBookId}
                                 onPostCreation={handlePostCreation}
+                                posts={posts}
                             />
                         ) : (
                             <Navigate to="/" />
@@ -211,8 +211,11 @@ const App = () => {
                     }
                 />
             </Routes>
-            {viewPostList && <PostList posts={posts} />}{" "}
-            {/* Render PostList when state is set */}
+
+
+          {viewPostList && <PostList posts={posts} loading={postsLoading} error={postsError} />} {/* Render PostList when state is set */}
+
+            
             <Footer navigate={navigate} />
         </div>
     );

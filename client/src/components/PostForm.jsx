@@ -105,8 +105,10 @@ return (
           {loading ? 'Creating post....' : 'Create My Post' } 
         </button>
         {error && <p className='text-danger mt-2'>Error while creating the post: {error.message}</p>}
+
+        <button className='back-btn-primary' onClick={() => setPostFormSelected(false)}>Back</button>
       </div>
-      <button onClick={() => setPostFormSelected(false)}>Back</button>
+      
 
       </form>
     </div>
