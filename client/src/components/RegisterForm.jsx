@@ -3,33 +3,37 @@ import axios from "axios";
 import "../styles/Form.css";
 
 const RegisterForm = (props) => {
-    const { setCurrentUser, setRegisterSelected } = props;
+  const { setCurrentUser, setRegisterSelected } = props;
 
-  const name = "username";
-  const email = "userone@example.com";
+  const name = "Alice Johnson";
+  const email = "alice.johnson@example.com";
   const password = "password";
   const confirmPassword = "password";
   const [message, setMessage] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // sending request to backend with existing data to login route
-          const response = await axios.post('http://localhost:3001/api/login', {
-            email,
-            password
-          }, { withCredentials: true });
-          
-          setMessage(response.data.notice);
-          setCurrentUser(response.data.user);
-        } catch (error) {
-          if (error.response) {
-            setMessage(error.response.data.alert);
-          } else {
-            setMessage('An error occurred. Please try again.');
-          }
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // sending request to backend with existing data to login route
+      const response = await axios.post(
+        "http://localhost:3001/api/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+
+      setMessage(response.data.notice);
+      setCurrentUser(response.data.user);
+    } catch (error) {
+      if (error.response) {
+        setMessage(error.response.data.alert);
+      } else {
+        setMessage("An error occurred. Please try again.");
+      }
+    }
+  };
 
   return (
     <div className="form-container">

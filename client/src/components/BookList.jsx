@@ -20,19 +20,21 @@ const BookList = (props) => {
         addPost 
     } = props;
 
-    const [bookStatuses, setBookStatuses] = useState({});
+  const [bookStatuses, setBookStatuses] = useState({});
 
-    useEffect(() => {
-        if (allBookStatuses) {
-            // Filter statuses for the current user
-            const userStatuses = allBookStatuses.filter(status => status.user_id === currentUser.id);
-            const statusesMap = userStatuses.reduce((acc, status) => {
-                acc[status.book_id] = status;
-                return acc;
-            }, {});
-            setBookStatuses(statusesMap);
-        }
-    }, [allBookStatuses, currentUser]);
+  useEffect(() => {
+    if (allBookStatuses) {
+      // Filter statuses for the current user
+      const userStatuses = allBookStatuses.filter(
+        (status) => status.user_id === currentUser.id
+      );
+      const statusesMap = userStatuses.reduce((acc, status) => {
+        acc[status.book_id] = status;
+        return acc;
+      }, {});
+      setBookStatuses(statusesMap);
+    }
+  }, [allBookStatuses, currentUser]);
 
     const updateBookStatusHandler = useCallback(async (bookId, statusData) => {
         const bookStatus = bookStatuses[bookId];

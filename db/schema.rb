@@ -62,6 +62,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_07_194455) do
     t.integer "following", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "profile_pic"
+    t.string "cover_pic"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

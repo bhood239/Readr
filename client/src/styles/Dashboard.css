@@ -42,7 +42,7 @@
     flex: 1;
     padding: 1rem;
     background-color: #ffffff; /* White background for Right Sidebar */
-    border-left: 1px solid #f7d7aa; /* Warm, soft border for separation */
+    border-left: 1px solid #A92929;
     height: 100%; /* Full height */
 }
 
@@ -50,16 +50,19 @@
     margin-top: 1rem;
 }
 
-.btn {
+.dashboard-btn {
     margin: 0.5rem;
-    background-color: #e07b39; /* Darker warm orange color for buttons */
-    color: #ffffff; /* White text on buttons */
     border: none;
-    border-radius: 4px; /* Rounded corners for buttons */
+    border-radius: 4px;
+    background-color: #A92929;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 20px;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
 }
 
-.btn:hover {
-    background-color: #d65a29; /* Even darker orange for hover effect */
+.dashboard-btn:hover {
+    background-color: #d65a29;
 }

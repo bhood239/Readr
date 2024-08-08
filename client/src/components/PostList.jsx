@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 // import PropTypes from 'prop-types';
-import Post from './Post';
-import { useAllPosts } from '../helpers/hooks/apiData/usePostData';
+import Post from "./Post";
+import { useAllPosts } from "../helpers/hooks/apiData/usePostData";
 
-const PostList = () => {
-  const {posts, loading, error} = useAllPosts();
+const PostList = ({ currentUser }) => {
+  const { posts, loading, error } = useAllPosts(currentUser);
 
   if (loading) {
     return <div> Posts Loading...</div>;
@@ -19,7 +19,9 @@ const PostList = () => {
   }
 
   // Sort posts by creation date (assuming each post has a `created_at` field)
-  const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const sortedPosts = [...posts].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
 
   return (
     <div className="post-list">
@@ -29,6 +31,5 @@ const PostList = () => {
     </div>
   );
 };
-
 
 export default PostList;
