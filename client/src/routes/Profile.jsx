@@ -13,6 +13,16 @@ const Profile = (props) => {
         read,
         favBooks,
         popularBooks,
+        toReadLoading,
+        readingLoading,
+        readLoading,
+        favBookLoading,
+        popularBookLoading,
+        toReadError,
+        readingError,
+        readError,
+        favBookError,
+        popularBookError,
         handleCreateFriend,
         handleDeleteFriend,
         handleCreateBookStatus,
@@ -47,6 +57,8 @@ const Profile = (props) => {
                 return wantToRead.length > 0 ? (
                     <BookList
                         books={wantToRead}
+                        loading={toReadLoading}
+                        error={toReadError}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
                         reading={reading}
@@ -63,6 +75,8 @@ const Profile = (props) => {
                 return reading.length > 0 ? (
                     <BookList
                         books={reading}
+                        loading={readingLoading}
+                        error={readingLoading}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
                         reading={reading}
@@ -79,6 +93,8 @@ const Profile = (props) => {
                 return read.length > 0 ? (
                     <BookList
                         books={read}
+                        loading={readLoading}
+                        error={readError}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
                         reading={reading}
@@ -92,9 +108,12 @@ const Profile = (props) => {
                     <div>No books read</div>
                 );
             case 'My Books':
+                console.log('favbooks details:', favBooks);
                 return favBooks.length > 0 ? (
                     <BookList
                         books={favBooks}
+                        loading={favBookLoading}
+                        error={favBookError}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
                         reading={reading}
@@ -125,6 +144,8 @@ const Profile = (props) => {
                 return popularBooks.length > 0 ? (
                     <BookList
                         books={popularBooks}
+                        loading={popularBookLoading}
+                        error={popularBookError}
                         currentUser={currentUser}
                         wantToRead={wantToRead}
                         reading={reading}
@@ -139,7 +160,11 @@ const Profile = (props) => {
                 );
             case 'Search Users':
                 return (
-                    <SearchUsers currentUser={currentUser} handleCreateFriend={handleCreateFriend} handleDeleteFriend={handleDeleteFriend} addPost={addPost} />
+                    <SearchUsers
+                        currentUser={currentUser}
+                        handleCreateFriend={handleCreateFriend}
+                        handleDeleteFriend={handleDeleteFriend}
+                        addPost={addPost} />
                 );
             default:
                 return null;

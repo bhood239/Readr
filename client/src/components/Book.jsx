@@ -1,55 +1,90 @@
 import { useEffect, useState } from "react";
 import '../styles/Book.css'
+import { useBookStatusByUserAndBook } from "../helpers/hooks/apiData/useBookStatusdata";
 
 // individual book view
 const Book = (props) => {
-    const { book, favBooks, wantToRead, reading, read, addWantToRead, addReading, addRead, removeStatus, addFav, removeFav, addPost } = props;
+    const {
+        book,
+        currentUser,
+        favBooks,
+        wantToRead,
+        reading,
+        read,
+        addWantToRead,
+        addReading,
+        addRead,
+        removeStatus,
+        addFav,
+        removeFav,
+        addPost
+    } = props;
     // addWantToRead, addReading, addRead, addFav etc are functions to add, update or remove data
     // avgTimeSpent and avgRating are the functions that take book_id and return data
-
-    const isFavourite = favBooks.includes(book.id);
-    
+    const { bookStatus, loading, error } = useBookStatusByUserAndBook(currentUser, currentUser.id, book.id);
     const [status, setStatus] = useState('select');
-
-    const isPresent = (bookStatus, bookId) => {
-        switch (bookStatus) {
-            case 'wantToRead':
-                return wantToRead.includes(bookId);
-            case 'reading':
-                return reading.includes(bookId);
-            case 'read':
-                return read.includes(bookId);
-            default:
-                return false;
-        }
-    };
+    const [buttonStates, setButtonStates] = useState({
+        fav: null,
+        status: 'select'
+    });
 
     useEffect(() => {
-        if (isPresent('wantToRead', book.id)) {
-            setStatus('wantToRead');
-        } else if (isPresent('reading', book.id)) {
-            setStatus('reading');
-        } else if (isPresent('read', book.id)) {
-            setStatus('read');
-        } else {
-            setStatus('select');
+        if (bookStatus) {
+            setStatus(bookStatus.status || 'select');
+            updateButtonState('status', bookStatus.status || 'select');
         }
-    }, [book.id, wantToRead, reading, read]);
+    }, [bookStatus]);
+
+    useEffect(() => {
+        const isFavourite = favBooks.some(favBook => favBook?.id === book.id);
+        updateButtonState('fav', isFavourite ? 'Remove From My Books' : 'Add To My Books');
+    }, [favBooks, book.id]);
+
+    const updateButtonState = (type, action) => {
+        setButtonStates(prevState => ({
+            ...prevState,
+            [type]: action
+        }));
+    };
 
     const handleChange = (e) => {
-        setStatus(e.target.value);
-    }
+        updateButtonState('status', e.target.value);
+    };
+
     const handleClick = () => {
-        if (status === 'wantToRead') {
-            addWantToRead(book);
-        } else if (status === 'reading') {
-            addReading(book);
-        } else if (status === 'read') {
-            addRead(book);
-        } else if (status === 'select') {
-            removeStatus(book);
+        switch (bookStatusText) {
+            case 'to_read':
+                addWantToRead(book);
+                break;
+            case 'reading':
+                addReading(book);
+                break;
+            case 'read':
+                addRead(book);
+                break;
+            case 'select':
+                removeStatus(book);
+                break;
+            default:
+                break;
         }
     };
+
+    const handleFavClick = () => {
+        if (buttonStates.fav === 'Add To My Books') {
+            addFav(book.id);
+            updateButtonState('fav', 'Remove From My Books');
+        } else {
+            removeFav(book.id);
+            updateButtonState('fav', 'Add To My Books');
+        }
+    };
+
+    const favButtonText = buttonStates.fav;
+    const bookStatusText = buttonStates.status;
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
 
     return (
         <div className="book-container">
@@ -57,20 +92,21 @@ const Book = (props) => {
             <img className="book_cover" src={book.cover} alt={book.title} />
             <div className="book-details">
                 <div className="book-info">
-                    <div className="book-title">{book.title}</div>  {/* Book Name */}
-                    <div className="book-author">{book.author}</div>  {/* Author Name */}
+                    <div className="book-title">{book.title}</div>
+                    <div className="book-author">{book.author}</div>
                 </div>
                 {/* <div>
                         <span>{avgRating(book.id)}</span>
                         <span>{avgTimeSpent(book.id)}</span> 
                     </div> */}
                 <div className="book-actions">
-                    {isFavourite ? <button onClick={() => removeFav(book.id)}>Remove From My Books</button>
-                        : <button onClick={() => addFav(book.id)}>Add To My Books</button>}
+                    <button onClick={handleFavClick}>
+                        {favButtonText}
+                    </button>
                     <div>
-                        <select value={status} onChange={handleChange}>
+                        <select value={bookStatusText} onChange={handleChange}>
                             <option value="select">Select</option>
-                            <option value="wantToRead">Want To Read</option>
+                            <option value="to_read">Want To Read</option>
                             <option value="reading">Reading</option>
                             <option value="read">Read</option>
                         </select>

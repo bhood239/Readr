@@ -21,6 +21,7 @@ import {
     useAllBookStatuses,
     useCreateBookStatus,
     useUpdateBookStatusByUserAndBook,
+    useBookStatusByUserAndBook
 } from "./helpers/hooks/apiData/useBookStatusdata";
 import {
     usePostByUserIdAndBookId,
@@ -38,6 +39,16 @@ const App = () => {
         read,
         favBooks,
         popularBooks,
+        toReadLoading,
+        readingLoading,
+        readLoading,
+        favBookLoading,
+        popularBookLoading,
+        toReadError,
+        readingError,
+        readError,
+        favBookError,
+        popularBookError
     } = useUserBooks();
     const { handleCreateFriend } = useCreateFriend();
     const { handleDeleteFriend } = useDeleteFriend();
@@ -45,10 +56,10 @@ const App = () => {
     const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
     const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
     const {
-        bookStatuses: allBookStatuses,
+        bookStatuses,
         loading,
         error,
-    } = useAllBookStatuses();
+    } = useAllBookStatuses(currentUser);
     const [loginSelected, setLoginSelected] = useState(false);
     const [registerSelected, setRegisterSelected] = useState(false);
     const {
@@ -123,7 +134,7 @@ const App = () => {
                                 handleDeleteFriend={handleDeleteFriend}
                                 handleCreateBookStatus={handleCreateBookStatus}
                                 updateBookStatus={updateBookStatus}
-                                allBookStatuses={allBookStatuses}
+                                allBookStatuses={bookStatuses}
                                 addPost={addPost}
                                 postFormSelected={postFormSelected}
                                 setPostFormSelected={setPostFormSelected}
@@ -153,11 +164,21 @@ const App = () => {
                                 read={read}
                                 favBooks={favBooks}
                                 popularBooks={popularBooks}
+                                toReadLoading={toReadLoading}
+                                readingLoading={readingLoading}
+                                readLoading={readLoading}
+                                favBookLoading={favBookLoading}
+                                popularBookLoading={popularBookLoading}
+                                toReadError={toReadError}
+                                readingError={readingError}
+                                readError={readError}
+                                favBookError={favBookError}
+                                popularBookError={popularBookError}
                                 handleCreateFriend={handleCreateFriend}
                                 handleDeleteFriend={handleDeleteFriend}
                                 handleCreateBookStatus={handleCreateBookStatus}
                                 updateBookStatus={updateBookStatus}
-                                allBookStatuses={allBookStatuses}
+                                allBookStatuses={bookStatuses}
                                 addPost={addPost}
                                 postFormSelected={postFormSelected}
                                 setPostFormSelected={setPostFormSelected}
@@ -181,7 +202,7 @@ const App = () => {
                                 favBooks={favBooks}
                                 handleCreateBookStatus={handleCreateBookStatus}
                                 updateBookStatus={updateBookStatus}
-                                allBookStatuses={allBookStatuses}
+                                allBookStatuses={bookStatuses}
                                 addPost={addPost}
                             />
                         ) : (

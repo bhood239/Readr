@@ -21,7 +21,7 @@ export const getBookStatusByUserAndBook = async (userId, bookId) => {
         console.log("Response received:", res.data);
         return res.data;
     } catch (err) {
-        console.error("Error getting book status:", err.message);
+        console.log("Error getting book status:", err.message);
         return null;
     }
 };
