@@ -86,6 +86,7 @@ const Book = (props) => {
       removeFav(book);
       updateButtonState("fav", "Add To My Books");
     }
+    window.location.reload();
   };
 
   const favButtonText = buttonStates.fav;
