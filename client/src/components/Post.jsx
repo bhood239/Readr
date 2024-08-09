@@ -8,6 +8,7 @@ const Post = ({ post }) => {
   const [bookDetails, setBookDetails] = useState(null);
   const { book, loading, error } = useBookById(post.book_id); // Corrected to post.book_id
 
+
   useEffect(() => {
     if (book) {
       setBookDetails(book);

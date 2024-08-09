@@ -7,8 +7,7 @@ import {
 import { getBookById } from "../../apiRequests/bookApi/bookApiRequests";
 
 //   states for bookStates
-const useUserBooks = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+const useUserBooks = (currentUser) => {
   const [wantToRead, setWantToRead] = useState([]);
   const [reading, setReading] = useState([]);
   const [read, setRead] = useState([]);
@@ -110,8 +109,6 @@ const useUserBooks = () => {
   ]);
 
   return {
-    currentUser,
-    setCurrentUser,
     wantToRead,
     setWantToRead,
     reading,
