@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { getBookById, getBooksByName, getAuthorName } from "../apiRequests/bookApi/bookApiRequests";
+import {
+  getBookById,
+  getBooksByName,
+  getAuthorName,
+} from "../apiRequests/bookApi/bookApiRequests";
 
 const useBookById = (id) => {
   const [book, setBook] = useState(null);
@@ -10,7 +14,6 @@ const useBookById = (id) => {
     const fetchBook = async () => {
       try {
         const bookData = await getBookById(id);
-        console.log('Fetched book data:', bookData); // Add log here
 
         setBook(bookData);
       } catch (err) {

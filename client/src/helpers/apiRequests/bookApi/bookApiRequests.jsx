@@ -5,7 +5,7 @@ const getBookById = async (id) => {
   try {
     let res;
     // Determine which endpoint to use based on ID length or format
-    if (id.length > 9) {
+    if (id.length >= 9) {
       // Fetch book data from the "books" endpoint
       res = await axios.get(`https://openlibrary.org/books/${id}.json`);
     } else if (id.length === 8) {
@@ -14,7 +14,6 @@ const getBookById = async (id) => {
     } else {
       throw new Error("Invalid ID length");
     }
-    console.log('API response:', res.data); // Debugging log
 
     const bookData = res.data;
     let author = "Unknown Author";
