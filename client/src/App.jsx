@@ -31,55 +31,64 @@ import {
 const App = () => {
   const navigate = useNavigate();
 
-  const {
-    currentUser,
-    setCurrentUser,
-    wantToRead,
-    setWantToRead,
-    reading,
-    setReading,
-    read,
-    setRead,
-    favBooks,
-    setFavBooks,
-    popularBooks,
-    setPopularBooks,
-    toReadLoading,
-    readingLoading,
-    readLoading,
-    favBookLoading,
-    popularBookLoading,
-    toReadError,
-    readingError,
-    readError,
-    favBookError,
-    popularBookError,
-    fetchAllBooksDetails,
-  } = useUserBooks();
-  const { handleCreateFriend } = useCreateFriend();
-  const { handleDeleteFriend } = useDeleteFriend();
-  const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
-  const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
-  const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
-  const { bookStatuses, loading, error } = useAllBookStatuses(currentUser);
-  const [loginSelected, setLoginSelected] = useState(false);
-  const [registerSelected, setRegisterSelected] = useState(false);
-  const {
-    posts: initialPosts,
-    loading: postsLoading,
-    error: postsError,
-  } = useAllPosts(); // Fetch initial posts
-  const [posts, setPosts] = useState([]);
-  const [postFormBookId, setPostFormBookId] = useState();
-  const [postFormSelected, setPostFormSelected] = useState(false);
-  const [editPostSelected, setEditPostSelected] = useState(false);
-  const [viewPostList, setViewPostList] = useState(false);
-  useEffect(() => {
-    // Redirect to homepage if not logged in
-    if (!currentUser) {
-      navigate("/");
-    }
-  }, [currentUser, navigate]);
+    // Load currentUser from localStorage on app load
+    const [currentUser, setCurrentUser] = useState(() => {
+        const storedUser = localStorage.getItem("currentUser");
+        return storedUser ? JSON.parse(storedUser) : null;
+      });
+
+    const {
+        wantToRead,
+        setWantToRead,
+        reading,
+        setReading,
+        read,
+        setRead,
+        favBooks,
+        setFavBooks,
+        popularBooks,
+        setPopularBooks,
+        toReadLoading,
+        readingLoading,
+        readLoading,
+        favBookLoading,
+        popularBookLoading,
+        toReadError,
+        readingError,
+        readError,
+        favBookError,
+        popularBookError,
+        fetchAllBooksDetails,
+    } = useUserBooks(currentUser);
+    const { handleCreateFriend } = useCreateFriend();
+    const { handleDeleteFriend } = useDeleteFriend();
+    const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
+    const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
+    const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
+    const {
+        bookStatuses,
+        loading,
+        error,
+    } = useAllBookStatuses(currentUser);
+    const [loginSelected, setLoginSelected] = useState(false);
+    const [registerSelected, setRegisterSelected] = useState(false);
+    const {
+        posts: initialPosts,
+        loading: postsLoading,
+        error: postsError,
+    } = useAllPosts(); // Fetch initial posts
+    const [posts, setPosts] = useState([]);
+    const [postFormBookId, setPostFormBookId] = useState();
+    const [postFormSelected, setPostFormSelected] = useState(false);
+    const [editPostSelected, setEditPostSelected] = useState(false);
+    const [viewPostList, setViewPostList] = useState(false);
+
+    useEffect(() => {
+        // Redirect to homepage if not logged in
+        if (!currentUser) {
+            navigate("/");
+        }
+    }, [currentUser, navigate]);
 
   const addPost = (bookId) => {
     if (currentUser) {
@@ -93,6 +102,7 @@ const App = () => {
   const handleLogout = () => {
     // Simulate a user logging out
     setCurrentUser(null);
+    localStorage.removeItem("currentUser");
     navigate("/");
   };
 
@@ -107,6 +117,13 @@ const App = () => {
       setPosts(initialPosts || []); // Update local posts state with initial data
     }
   }, [initialPosts, postsLoading, postsError]);
+
+  useEffect(() => {
+    if (currentUser) {
+      // Store the currentUser in localStorage whenever it changes
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    }
+  }, [currentUser]);
 
   return (
     <div className="App">
@@ -236,4 +253,5 @@ const App = () => {
     </div>
   );
 };
+
 export default App;
