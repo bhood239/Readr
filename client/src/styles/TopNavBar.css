@@ -1,7 +1,6 @@
-nav .container {
+/* nav, .container {
   display: flex;
   flex-direction: row;
-  padding: 8px 30px 8px 20px;
   align-items: center;
   box-shadow: 0 4px 6px -6px #222;
   height: 72px;
@@ -9,18 +8,15 @@ nav .container {
   font-size: 20px;
 }
 
-
+/* 
 .navbar-brand img {
   height: 50px;
-}
-
+} */
+/* 
 .middle-nav .nav-link,
-.homepage-nav .nav-link {
+.nav-item {
   padding-left: 20px;
-}
-
-.nav-link {
-  color: #5a2a1d;
+  color: black;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
@@ -59,4 +55,4 @@ nav .container {
   .homepage-nav {
     margin-bottom: 15px;
   }
-}
+} */ 

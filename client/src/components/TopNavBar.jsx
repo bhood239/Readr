@@ -1,5 +1,7 @@
 import React from "react";
-import { LinkContainer } from "react-router-bootstrap";
+import { LinkContainer} from "react-router-bootstrap";
+import { Nav, Navbar, Container } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
 import "../styles/TopNavBar.scss";
 import logo from "../assets/logo.png";
 
@@ -11,17 +13,18 @@ const TopNavBar = ({
   navigate,
 }) => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
+    <Navbar expand="lg" className="bg-body-tertiary TopNavBar">
+      <Container fluid>
         <Navbar.Brand onClick={() => navigate("/")}>
           <img
             src={logo}
             alt="Readr"
+            width={200}
               className="d-inline-block align-left"
             />
         </Navbar.Brand>
         <Navbar.Collapse id="responsive-navbar-nav">
-          {user ? (
+          {currentUser ? (
             <>
               <Nav className="me-auto middle-nav">
                 <LinkContainer to="/">
@@ -52,7 +55,7 @@ const TopNavBar = ({
                       setRegisterSelected(false);
                     }}
                   >
-                    Login
+                    Log in
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>

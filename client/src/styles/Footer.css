@@ -3,14 +3,14 @@
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   width:  100%;
-
+}
   .row{
     display: flex;
     align-items: center;
     justify-content: center;
     height: 72px;
     width: 100%;
-    
+     }   
     
     .left-nav{
       display: flex;
@@ -19,22 +19,22 @@
       
       height: 72px;
       padding-right: 50px;
-    }
+}
     
     .center-nav{
       display: flex;
       justify-content: center;
       padding-right: 50px;
       height: 72px;
-      
+  }    
       
       .nav{
         display: flex;
         align-items: center;
         gap: 50px;
-        
+    }    
         a:hover {
-         color: #d36344;
+         color: #d65a29;
          text-decoration: underline;   
        }
 
@@ -42,8 +42,8 @@
       text-decoration: none;
       color: #5a2a1d;  
       }
-    }
-  }
+    
+  
 
   .right-nav{
     display: flex;
@@ -51,23 +51,22 @@
 
     gap: 100px;
     height: 72px;
-
+ }
    .nav{
     display: flex;
     align-items: center;
     gap: 50px;
     
-
+}
     .nav-link{
       color: #5a2a1d;
-      
+     }  
       :hover{
-        color: #d36344;
+        color: #d65a29;
       }
-    }
-   }
-  }
-}
+   
+   
+ 
 
 
-}
+
