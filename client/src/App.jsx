@@ -31,64 +31,60 @@ import {
 const App = () => {
   const navigate = useNavigate();
 
-    // Load currentUser from localStorage on app load
-    const [currentUser, setCurrentUser] = useState(() => {
-        const storedUser = localStorage.getItem("currentUser");
-        return storedUser ? JSON.parse(storedUser) : null;
-      });
+  // Load currentUser from localStorage on app load
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem("currentUser");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-    const {
-        wantToRead,
-        setWantToRead,
-        reading,
-        setReading,
-        read,
-        setRead,
-        favBooks,
-        setFavBooks,
-        popularBooks,
-        setPopularBooks,
-        toReadLoading,
-        readingLoading,
-        readLoading,
-        favBookLoading,
-        popularBookLoading,
-        toReadError,
-        readingError,
-        readError,
-        favBookError,
-        popularBookError,
-        fetchAllBooksDetails,
-    } = useUserBooks(currentUser);
-    const { handleCreateFriend } = useCreateFriend();
-    const { handleDeleteFriend } = useDeleteFriend();
-    const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
-    const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
-    const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
-    const {
-        bookStatuses,
-        loading,
-        error,
-    } = useAllBookStatuses(currentUser);
-    const [loginSelected, setLoginSelected] = useState(false);
-    const [registerSelected, setRegisterSelected] = useState(false);
-    const {
-        posts: initialPosts,
-        loading: postsLoading,
-        error: postsError,
-    } = useAllPosts(); // Fetch initial posts
-    const [posts, setPosts] = useState([]);
-    const [postFormBookId, setPostFormBookId] = useState();
-    const [postFormSelected, setPostFormSelected] = useState(false);
-    const [editPostSelected, setEditPostSelected] = useState(false);
-    const [viewPostList, setViewPostList] = useState(false);
+  const {
+    wantToRead,
+    setWantToRead,
+    reading,
+    setReading,
+    read,
+    setRead,
+    favBooks,
+    setFavBooks,
+    popularBooks,
+    setPopularBooks,
+    toReadLoading,
+    readingLoading,
+    readLoading,
+    favBookLoading,
+    popularBookLoading,
+    toReadError,
+    readingError,
+    readError,
+    favBookError,
+    popularBookError,
+    fetchAllBooksDetails,
+  } = useUserBooks(currentUser);
+  const { handleCreateFriend } = useCreateFriend();
+  const { handleDeleteFriend } = useDeleteFriend();
+  const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
+  const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
+  const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
+  const { bookStatuses, loading, error } = useAllBookStatuses(currentUser);
+  const [loginSelected, setLoginSelected] = useState(false);
+  const [registerSelected, setRegisterSelected] = useState(false);
+  const {
+    posts: initialPosts,
+    loading: postsLoading,
+    error: postsError,
+  } = useAllPosts(); // Fetch initial posts
+  const [posts, setPosts] = useState([]);
+  const [postFormBookId, setPostFormBookId] = useState();
+  const [postFormSelected, setPostFormSelected] = useState(false);
+  const [editPostSelected, setEditPostSelected] = useState(false);
+  const [viewPostList, setViewPostList] = useState(false);
 
-    useEffect(() => {
-        // Redirect to homepage if not logged in
-        if (!currentUser) {
-            navigate("/");
-        }
-    }, [currentUser, navigate]);
+  useEffect(() => {
+    // Redirect to homepage if not logged in
+    if (!currentUser) {
+      navigate("/");
+    }
+  }, [currentUser, navigate]);
 
   const addPost = (bookId) => {
     if (currentUser) {
@@ -238,6 +234,7 @@ const App = () => {
                 updateBookStatus={updateBookStatus}
                 allBookStatuses={bookStatuses}
                 addPost={addPost}
+                fetchAllBooksDetails={fetchAllBooksDetails}
               />
             ) : (
               <Navigate to="/" />

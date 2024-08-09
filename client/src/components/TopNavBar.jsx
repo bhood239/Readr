@@ -1,5 +1,5 @@
 import React from "react";
-import { LinkContainer} from "react-router-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import "../styles/TopNavBar.scss";
@@ -20,8 +20,8 @@ const TopNavBar = ({
             src={logo}
             alt="Readr"
             width={200}
-              className="d-inline-block align-left"
-            />
+            className="d-inline-block align-left"
+          />
         </Navbar.Brand>
         <Navbar.Collapse id="responsive-navbar-nav">
           {currentUser ? (
