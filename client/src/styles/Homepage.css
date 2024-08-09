@@ -47,11 +47,10 @@
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s;
   border: none;
-  background-color: #A92929;
-  color: white;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .homepage .nav-link:hover {
-  background-color: #d65a29;
+  color: #d65a29;
 }
