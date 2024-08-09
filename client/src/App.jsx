@@ -31,9 +31,13 @@ import {
 const App = () => {
   const navigate = useNavigate();
 
+    // Load currentUser from localStorage on app load
+    const [currentUser, setCurrentUser] = useState(() => {
+        const storedUser = localStorage.getItem("currentUser");
+        return storedUser ? JSON.parse(storedUser) : null;
+      });
+
     const {
-        currentUser,
-        setCurrentUser,
         wantToRead,
         setWantToRead,
         reading,
