@@ -104,7 +104,7 @@ export const useAllPosts = (currentUser) => {
     return { posts, loading, error };
 };
 
-// Update Post by Id
+// Update Post by Id Hook
 export const useUpdatePostById = (currentUser) => {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -113,10 +113,13 @@ export const useUpdatePostById = (currentUser) => {
     const updatePost = async (id, updatedData) => {
         if (!currentUser) return;
         setLoading(true);
+        console.log("Attempting to update post:", id, updatedData);
         try {
             const postData = await updatePostById(id, updatedData);
+            console.log("Post updated successfully:", postData);
             setPost(postData);
         } catch (err) {
+            console.error("Error updating post:", err);
             setError(err);
         } finally {
             setLoading(false);
@@ -126,7 +129,7 @@ export const useUpdatePostById = (currentUser) => {
     return { post, loading, error, updatePost };
 };
 
-// Delete Post by Id
+// Delete Post by Id Hook
 export const useDeletePostById = (currentUser) => {
     const [deleted, setDeleted] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -135,10 +138,13 @@ export const useDeletePostById = (currentUser) => {
     const deletePost = async (id) => {
         if (!currentUser) return;
         setLoading(true);
+        console.log("Attempting to delete post:", id);
         try {
             await deletePostById(id);
+            console.log("Post deleted successfully:", id);
             setDeleted(true); // Indicate that the post has been deleted
         } catch (err) {
+            console.error("Error deleting post:", err);
             setError(err);
         } finally {
             setLoading(false);
