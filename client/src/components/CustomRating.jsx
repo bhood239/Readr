@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
-import './CustomRating.scss'; 
+import React, { useState } from "react";
+import "./CustomRating.scss";
 
 const CustomRating = ({ totalStars = 5, rating, setRating }) => {
-
   const handleRating = (rate) => {
     if (setRating) {
       setRating(rate);
-      console.log(rate);
-
     }
-
   };
 
   return (
@@ -19,9 +15,8 @@ const CustomRating = ({ totalStars = 5, rating, setRating }) => {
         return (
           <span
             key={index}
-            className={`star ${index <= rating ? 'on' : 'off'}`}
+            className={`star ${index <= rating ? "on" : "off"}`}
             onClick={() => setRating && handleRating(index)} // Only handle click if setRating is provided
-            
           >
             &#9733;
           </span>

@@ -13,6 +13,11 @@ const Dashboard = (props) => {
   const {
     currentUser,
     wantToRead,
+    setWantToRead,
+    setReading,
+    setRead,
+    setFavBooks,
+    setPopularBooks,
     reading,
     read,
     favBooks,
@@ -27,6 +32,7 @@ const Dashboard = (props) => {
     setPostFormSelected,
     postFormBookId,
     onPostCreation,
+    fetchAllBooksDetails,
   } = props;
 
   const renderContent = () => {
@@ -49,6 +55,10 @@ const Dashboard = (props) => {
           <SearchResult
             currentUser={currentUser}
             wantToRead={wantToRead}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
             reading={reading}
             read={read}
             favBooks={favBooks}
@@ -56,6 +66,7 @@ const Dashboard = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
           />
         );
       case "postForm":
@@ -74,6 +85,10 @@ const Dashboard = (props) => {
             books={popularBooks}
             currentUser={currentUser}
             wantToRead={wantToRead}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
             reading={reading}
             read={read}
             favBooks={favBooks}
@@ -81,6 +96,7 @@ const Dashboard = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
           />
         );
       default:
