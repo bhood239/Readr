@@ -10,6 +10,8 @@ const useBookById = (id) => {
     const fetchBook = async () => {
       try {
         const bookData = await getBookById(id);
+        console.log('Fetched book data:', bookData); // Add log here
+
         setBook(bookData);
       } catch (err) {
         setError(err);

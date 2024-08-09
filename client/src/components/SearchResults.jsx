@@ -40,6 +40,8 @@ const SearchResult = (props) => {
             {searchData.length > 0 &&
                 <BookList
                     books={searchData}
+                    loading={loading}
+                    error={error}
                     currentUser={currentUser}
                     wantToRead={wantToRead}
                     reading={reading}

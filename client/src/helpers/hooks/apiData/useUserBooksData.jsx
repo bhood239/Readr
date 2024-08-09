@@ -46,6 +46,8 @@ const useUserBooks = () => {
     useEffect(() => {
         if (!currentUser) return;
 
+        let isMounted = true;
+
         const fetchBooksDetails = async (bookIds, setter) => {
             try {
                 const booksDetails = await Promise.all(
@@ -54,19 +56,31 @@ const useUserBooks = () => {
                         return book;
                     })
                 );
-                setter(booksDetails);
+                if (isMounted) setter(booksDetails);
             } catch (err) {
                 console.error(err);
             }
         };
 
-        setLoading(true);
-        if (toReadBookIds.length) fetchBooksDetails(toReadBookIds, setWantToRead);
-        if (readingBookIds.length) fetchBooksDetails(readingBookIds, setReading);
-        if (readBookIds.length) fetchBooksDetails(readBookIds, setRead);
-        if (favBookIds.length) fetchBooksDetails(favBookIds, setFavBooks);
-        if (popularBookIds.length) fetchBooksDetails(popularBookIds, setPopularBooks);
-        setLoading(false);
+        const fetchAllBooksDetails = async () => {
+            setLoading(true);
+
+            // Fetch data in parallel
+            await Promise.all([
+                toReadBookIds.length ? fetchBooksDetails(toReadBookIds, setWantToRead) : Promise.resolve(),
+                readingBookIds.length ? fetchBooksDetails(readingBookIds, setReading) : Promise.resolve(),
+                readBookIds.length ? fetchBooksDetails(readBookIds, setRead) : Promise.resolve(),
+                favBookIds.length ? fetchBooksDetails(favBookIds, setFavBooks) : Promise.resolve(),
+                popularBookIds.length ? fetchBooksDetails(popularBookIds, setPopularBooks) : Promise.resolve(),
+            ]);
+
+            setLoading(false);
+        };
+        fetchAllBooksDetails();
+
+        return () => {
+            isMounted = false; // Cleanup flag when component unmounts
+        };
     }, [currentUser, toReadBookIds, readingBookIds, readBookIds, favBookIds, popularBookIds]);
 
 

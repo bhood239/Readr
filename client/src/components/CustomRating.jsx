@@ -4,9 +4,12 @@ import './CustomRating.scss';
 const CustomRating = ({ totalStars = 5, rating, setRating }) => {
 
   const handleRating = (rate) => {
-    setRating(rate);
+    if (setRating) {
+      setRating(rate);
+      console.log(rate);
 
-    console.log(rate);
+    }
+
   };
 
   return (
@@ -17,7 +20,7 @@ const CustomRating = ({ totalStars = 5, rating, setRating }) => {
           <span
             key={index}
             className={`star ${index <= rating ? 'on' : 'off'}`}
-            onClick={() => handleRating(index)}
+            onClick={() => setRating && handleRating(index)} // Only handle click if setRating is provided
             
           >
             &#9733;

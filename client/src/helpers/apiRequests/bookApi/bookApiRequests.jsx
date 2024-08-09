@@ -14,6 +14,8 @@ const getBookById = async (id) => {
     } else {
       throw new Error("Invalid ID length");
     }
+    console.log('API response:', res.data); // Debugging log
+
     const bookData = res.data;
     let author = "Unknown Author";
     if (bookData.authors && bookData.authors.length > 0) {

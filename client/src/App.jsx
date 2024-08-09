@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles/App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -8,19 +9,19 @@ import Profile from "./routes/Profile";
 import Homepage from "./routes/Homepage";
 import SearchResult from "./components/SearchResults";
 import useUserBooks from "./helpers/hooks/apiData/useUserBooksData";
-
+import './styles/main.scss'
 import {
   useCreateFriend,
   useDeleteFriend,
 } from "./helpers/hooks/apiData/useFriends";
-import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/main.scss";
 import {
-  useAllBookStatuses,
-  useCreateBookStatus,
-  useUpdateBookStatusByUserAndBook,
+    useAllBookStatuses,
+    useCreateBookStatus,
+    useUpdateBookStatusByUserAndBook,
+    useBookStatusByUserAndBook
 } from "./helpers/hooks/apiData/useBookStatusdata";
 import {
   usePostByUserIdAndBookId,
@@ -42,6 +43,16 @@ const App = () => {
     read,
     favBooks,
     popularBooks,
+        toReadLoading,
+        readingLoading,
+        readLoading,
+        favBookLoading,
+        popularBookLoading,
+        toReadError,
+        readingError,
+        readError,
+        favBookError,
+        popularBookError
   } = useUserBooks(currentUser); // Pass currentUser to useUserBooks
   const { handleCreateFriend } = useCreateFriend();
   const { handleDeleteFriend } = useDeleteFriend();
@@ -49,10 +60,10 @@ const App = () => {
   const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
   const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
   const {
-    bookStatuses: allBookStatuses,
+    bookStatuses,
     loading,
     error,
-  } = useAllBookStatuses();
+  } = useAllBookStatuses(currentUser);
   const [loginSelected, setLoginSelected] = useState(false);
   const [registerSelected, setRegisterSelected] = useState(false);
   const {
@@ -77,7 +88,7 @@ const App = () => {
     if (currentUser) {
       setPostFormBookId(bookId);
       setPostFormSelected(true);
-      const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
+      // const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
       // post ? setEditPostSelected(true) : setPostFormSelected(true);
     }
   };
@@ -89,17 +100,15 @@ const App = () => {
     navigate("/");
   };
 
-  const handlePostCreation = (newPost) => {
-    console.log("New post created: ", newPost);
-    setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
-
-    setPostFormSelected(false); // Hide PostForm
-    setViewPostList(true); // Show PostList
-  };
+    const handlePostCreation = (newPost) => {
+      setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
+      setPostFormSelected(false); // Hide PostForm
+      setViewPostList(true); // Show PostList
+    };
 
   useEffect(() => {
     if (!postsLoading && !postsError) {
-      setPosts(initialPosts); // Update local posts state with initial data
+      setPosts(initialPosts || []); // Update local posts state with initial data
     }
   }, [initialPosts, postsLoading, postsError]);
 
@@ -110,103 +119,118 @@ const App = () => {
     }
   }, [currentUser]);
 
-  return (
-    <div className="App">
-      <TopNavBar
-        currentUser={currentUser}
-        handleLogout={handleLogout}
-        setLoginSelected={setLoginSelected}
-        setRegisterSelected={setRegisterSelected}
-        navigate={navigate}
-      />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            currentUser ? (
-              <Dashboard
+    return (
+        <div className="App">
+            <TopNavBar
                 currentUser={currentUser}
-                wantToRead={wantToRead}
-                reading={reading}
-                read={read}
-                favBooks={favBooks}
-                popularBooks={popularBooks}
-                handleCreateFriend={handleCreateFriend}
-                handleDeleteFriend={handleDeleteFriend}
-                handleCreateBookStatus={handleCreateBookStatus}
-                updateBookStatus={updateBookStatus}
-                allBookStatuses={allBookStatuses}
-                addPost={addPost}
-                postFormSelected={postFormSelected}
-                setPostFormSelected={setPostFormSelected}
-                postFormBookId={postFormBookId}
-                onPostCreation={handlePostCreation}
-              />
-            ) : (
-              <Homepage
-                setCurrentUser={setCurrentUser}
-                loginSelected={loginSelected}
-                registerSelected={registerSelected}
+                handleLogout={handleLogout}
                 setLoginSelected={setLoginSelected}
                 setRegisterSelected={setRegisterSelected}
                 navigate={navigate}
-              />
-            )
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            currentUser ? (
-              <Profile
-                currentUser={currentUser}
-                wantToRead={wantToRead}
-                reading={reading}
-                read={read}
-                favBooks={favBooks}
-                popularBooks={popularBooks}
-                handleCreateFriend={handleCreateFriend}
-                handleDeleteFriend={handleDeleteFriend}
-                handleCreateBookStatus={handleCreateBookStatus}
-                updateBookStatus={updateBookStatus}
-                allBookStatuses={allBookStatuses}
-                addPost={addPost}
-                postFormSelected={postFormSelected}
-                setPostFormSelected={setPostFormSelected}
-                postFormBookId={postFormBookId}
-                onPostCreation={handlePostCreation}
-              />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            currentUser ? (
-              <SearchResult
-                currentUser={currentUser}
-                wantToRead={wantToRead}
-                reading={reading}
-                read={read}
-                favBooks={favBooks}
-                handleCreateBookStatus={handleCreateBookStatus}
-                updateBookStatus={updateBookStatus}
-                allBookStatuses={allBookStatuses}
-                addPost={addPost}
-              />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
-      </Routes>
-      {viewPostList && <PostList posts={posts} />}{" "}
-      {/* Render PostList when state is set */}
-      <Footer navigate={navigate} />
-    </div>
-  );
+            />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        currentUser ? (
+                            <Dashboard
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                popularBooks={popularBooks}
+                                handleCreateFriend={handleCreateFriend}
+                                handleDeleteFriend={handleDeleteFriend}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={bookStatuses}
+                                addPost={addPost}
+                                postFormSelected={postFormSelected}
+                                setPostFormSelected={setPostFormSelected}
+                                postFormBookId={postFormBookId}
+                                onPostCreation={handlePostCreation}
+                                posts={posts}
+                            />
+                        ) : (
+                            <Homepage
+                                setCurrentUser={setCurrentUser}
+                                loginSelected={loginSelected}
+                                registerSelected={registerSelected}
+                                setLoginSelected={setLoginSelected}
+                                setRegisterSelected={setRegisterSelected}
+                                navigate={navigate}
+                            />
+                        )
+                    }
+                />
+                <Route
+                    path="/profile"
+                    element={
+                        currentUser ? (
+                            <Profile
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                popularBooks={popularBooks}
+                                toReadLoading={toReadLoading}
+                                readingLoading={readingLoading}
+                                readLoading={readLoading}
+                                favBookLoading={favBookLoading}
+                                popularBookLoading={popularBookLoading}
+                                toReadError={toReadError}
+                                readingError={readingError}
+                                readError={readError}
+                                favBookError={favBookError}
+                                popularBookError={popularBookError}
+                                handleCreateFriend={handleCreateFriend}
+                                handleDeleteFriend={handleDeleteFriend}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={bookStatuses}
+                                addPost={addPost}
+                                postFormSelected={postFormSelected}
+                                setPostFormSelected={setPostFormSelected}
+                                postFormBookId={postFormBookId}
+                                onPostCreation={handlePostCreation}
+                                posts={posts}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
+                />
+                <Route
+                    path="/search"
+                    element={
+                        currentUser ? (
+                            <SearchResult
+                                currentUser={currentUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                handleCreateBookStatus={handleCreateBookStatus}
+                                updateBookStatus={updateBookStatus}
+                                allBookStatuses={bookStatuses}
+                                addPost={addPost}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
+                />
+            </Routes>
+
+
+          {viewPostList && <PostList posts={posts} loading={postsLoading} error={postsError} />} {/* Render PostList when state is set */}
+
+            
+            <Footer navigate={navigate} />
+        </div>
+    );
 };
 
 export default App;
