@@ -31,6 +31,8 @@ import {
 const App = () => {
     const navigate = useNavigate();
 
+    const [selectedUser, setSelectedUser] = useState(null);
+
     const {
         currentUser,
         setCurrentUser,
@@ -49,7 +51,8 @@ const App = () => {
         readError,
         favBookError,
         popularBookError
-    } = useUserBooks();
+    } = useUserBooks(selectedUser);
+
     const { handleCreateFriend } = useCreateFriend();
     const { handleDeleteFriend } = useDeleteFriend();
     const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
@@ -92,6 +95,7 @@ const App = () => {
     const handleLogout = () => {
         // Simulate a user logging out
         setCurrentUser(null);
+        setSelectedUser(null);
         navigate("/");
     };
 
@@ -123,6 +127,8 @@ const App = () => {
                         currentUser ? (
                             <Dashboard
                                 currentUser={currentUser}
+                                selectedUser={selectedUser}
+                                setSelectedUser={setSelectedUser}
                                 wantToRead={wantToRead}
                                 reading={reading}
                                 read={read}
@@ -153,11 +159,13 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/profile"
+                    path="/profile/*"
                     element={
                         currentUser ? (
                             <Profile
                                 currentUser={currentUser}
+                                selectedUser={selectedUser}
+                                setSelectedUser={setSelectedUser}
                                 wantToRead={wantToRead}
                                 reading={reading}
                                 read={read}
@@ -196,6 +204,7 @@ const App = () => {
                         currentUser ? (
                             <SearchResult
                                 currentUser={currentUser}
+                                selectedUser={selectedUser}
                                 wantToRead={wantToRead}
                                 reading={reading}
                                 read={read}

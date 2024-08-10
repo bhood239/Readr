@@ -135,9 +135,11 @@ export const useBooksByUserAndStatus = (currentUser, userId, status) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     useEffect(() => {
         const fetchBooks = async () => {
-            if (!currentUser) return;
+            if (!currentUser || !userId) return;
+            setLoading(true);
             try {
                 const booksData = await getBooksByUserAndStatus(userId, status);
                 setBooks(booksData);
@@ -148,7 +150,7 @@ export const useBooksByUserAndStatus = (currentUser, userId, status) => {
             }
         };
         fetchBooks();
-    }, [userId, status]);
+    }, [currentUser, userId, status]);
 
     return { books, loading, error };
 };

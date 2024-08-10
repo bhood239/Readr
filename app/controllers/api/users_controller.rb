@@ -1,19 +1,44 @@
 module Api
   class UsersController < ApplicationController
     def index
-      @users = User.includes(:posts).all
-      render json: @users.to_json(include: :posts)
+        @users = User.includes(:posts, :followers_list, :following_list).all
+        render json: @users.to_json(include: [:posts, :followers_list, :following_list])
     end
-
+  
     def show
-      @user = User.includes(:posts).find(params[:id])
-      render json: @user.to_json(include: :posts)
+        @user = User.includes(:posts, :followers_list, :following_list).find(params[:id])
+        # render json: @user.to_json(include: [:posts, :followers_list, :following_list])
+        render json: { 
+                id: @user.id,
+                name: @user.name,
+                email: @user.email,
+                awards: @user.awards,
+                followers: @user.followers,
+                following: @user.following,
+                followers_list: @user.followers_list,
+                following_list: @user.following_list,
+                profile_pic: @user.profile_pic,
+                posts: @user.posts
+            }, status: :ok
     end
 
     def search
         if params[:name].present?
-          @users = User.where("name ILIKE ?", "%#{params[:name]}%")
-          render json: @users
+          @users = User.includes(:followers_list, :following_list).where("name ILIKE ?", "%#{params[:name]}%")
+          render json: @users.map { |user|
+            {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                awards: user.awards,
+                followers: user.followers,
+                following: user.following,
+                followers_list: user.followers_list.as_json(only: [:id, :name, :email, :followers, :following, :followers_list, :following_list, :profile_pic]),  # Adjust to include relevant details
+                following_list: user.following_list.as_json(only: [:id, :name, :email, :followers, :following, :followers_list, :following_list, :profile_pic]),  # Adjust to include relevant details
+                profile_pic: user.profile_pic,
+                posts: user.posts
+            }
+          }, status: :ok
         else
           render json: { error: "Name parameter is missing" }, status: :bad_request
         end
