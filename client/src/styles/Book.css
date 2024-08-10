@@ -51,7 +51,7 @@
 
 .book-actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
     margin-top: auto; /* Pushes actions to the bottom */
 }
@@ -69,6 +69,17 @@
     text-align: center; /* Center text inside button */
 }
 
+.review-btn {
+  background-color: #A92929;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  min-width: 150px;
+  text-align: center;
+}
+
 .book-bottom {
   display: flex;
   flex-direction: row;
@@ -76,7 +87,7 @@
 }
 
 .book-actions button:hover {
-    background-color: #691919;
+    background-color: #d65a29;
 }
 
 .book-actions select {
