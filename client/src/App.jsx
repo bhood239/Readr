@@ -99,12 +99,15 @@ const App = () => {
   };
 
   
-  const handlePostCreation = (newPost) => {
-    console.log("new posts");
-
-    fetchPosts();
-    setPostFormSelected(false); // Hide PostForm
-    setViewPostList(true); // Show PostList
+  const handlePostCreation = (updatedPost) => {
+    setPosts((prevPosts) =>
+        prevPosts.map((post) => 
+            post.id === updatedPost.id ? updatedPost : post
+        )
+      );
+    // fetchPosts();
+    // setPostFormSelected(false); // Hide PostForm
+    // setViewPostList(true); // Show PostList
   };
 
   const handlePostUpdate = async (id, updatedData) => {

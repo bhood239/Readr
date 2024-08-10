@@ -26,7 +26,7 @@ const Post = ({ post, currentUser, onEdit, onDelete }) => {
   if (error) return <p>Error fetching book details.</p>;
   if (!bookDetails) {
     // console.log('Book data is null');
-    return <p>No book data available</p>;
+    return <p>No book data available for this post at this time!</p>;
   }
 
   const handleEdit = () => {
@@ -41,6 +41,18 @@ const Post = ({ post, currentUser, onEdit, onDelete }) => {
 
   if (editMode) {
   return (
+    <div className="post row">
+
+    <div class="col-auto">
+    <img src={bookDetails.cover} alt={`Cover of ${bookDetails.title}`} style={{ maxWidth: '128px' }}/>
+    </div>
+    <div class="col">
+
+    <h4>Book: {bookDetails.title} </h4>
+    <h4>Author: {bookDetails.author}</h4>
+
+    </div > 
+    <div>
     <PostForm
       currentUser={currentUser.id}
       post={post}
@@ -48,22 +60,11 @@ const Post = ({ post, currentUser, onEdit, onDelete }) => {
       onPostCreation={handleExitEditMode}
       setPostFormSelected={handleExitEditMode} // Use the wrapped function
     />
+    </div>
+    </div>
   );
 }
-  
-  // Use handleExitEditMode in place of setPostFormSelected(false)
-  // if (editMode) {
-  //   return (
-  //     <PostForm
-  //       currentUser={currentUser.id}
-  //       postFormBookId={post.book_id}
-  //       onPostCreation={bookDetails}
-  //       setPostFormSelected={setEditMode}
-  //     />
-  //   );
-  // }
 
-  //if editMode is false, then render the create form, if editMode is true, render edit
   return (
     <div className="post row">
         <div class="col-auto">

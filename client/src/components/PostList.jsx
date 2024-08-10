@@ -41,7 +41,8 @@ const PostList = ({currentUser, onEdit, onDelete }) => {
               />
             </div>
           </div>
-        ))}
+        )) 
+        }
       </div>
     </div>
  

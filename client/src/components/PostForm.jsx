@@ -55,23 +55,6 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
       book_id: bookId,
     };
 
-  //   if (post) {
-  //     updatePost(post.id, postData)
-  //       .then(() => {
-  //         setPostFormSelected(false); // Hide the form after updating
-  //         onPostCreation(postData);
-  //       })
-  //       .catch((error) => console.error("Error updating post:", error));
-  //   } else {
-  //     handleCreatePost(postData)
-  //       .then(() => {
-  //         setPostFormSelected(false); // Hide the form after creation
-  //         onPostCreation(postData);
-  //       })
-  //       .catch((error) => console.error("Error creating post:", error));
-  //   }
-  // };
-
   const action = post ? updatePost(post.id, postData) : handleCreatePost(postData);
     action
       .then((postResponse) => {
@@ -108,18 +91,6 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
   return (
     <div className='post-form-container'>
       <div className='post-form-card card'>
-
-        {/* Display book title and author */}
-        {/* {bookLoading ? (
-          <p>Loading book details...</p>
-        ) : bookError ? (
-          <p className='text-danger'>Error loading book details: {bookError.message}</p>
-        ) : (
-          <div className='book-details'>
-            <h3>{book.title}</h3>
-            <p>by {book.author}</p>
-          </div>
-        // )} */} 
 
         <h2>{post ? 'Edit Post:' : 'Create a Post:'}</h2>
 
