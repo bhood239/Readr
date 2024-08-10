@@ -22,11 +22,15 @@ const PostList = ({currentUser, onEdit, onDelete }) => {
     return <div className="text-center"> No posts to show at this time.</div>;
   }
 
+  // Sort posts by created_at in descending order
+  const sortedPosts = posts?.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+
   return (
 
     <div className="container-fluid post-list"> {/* Change to container-fluid if needed */}
       <div className="card-body">
-        {posts.map((post) => (
+        {sortedPosts.map((post) => (
           <div key={post.id} className="mb-3">
             <div className="card post-item">
               <Post 

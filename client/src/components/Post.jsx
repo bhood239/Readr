@@ -28,16 +28,40 @@ const Post = ({ post, currentUser, onEdit, onDelete }) => {
     // console.log('Book data is null');
     return <p>No book data available</p>;
   }
+
+  const handleEdit = () => {
+    console.log('Entering edit mode');
+    setEditMode(true);
+  };
+  
+  const handleExitEditMode = () => {
+    console.log('Exiting edit mode');
+    setEditMode(false);
+  };
+
   if (editMode) {
-    return (
-      <PostForm
-        currentUser={currentUser.id}
-        postFormBookId={post.book_id}
-        onPostCreation={bookDetails}
-        setPostFormSelected={setEditMode}
-      />
-    );
-  }
+  return (
+    <PostForm
+      currentUser={currentUser.id}
+      post={post}
+      bookId={post.book_id}
+      onPostCreation={handleExitEditMode}
+      setPostFormSelected={handleExitEditMode} // Use the wrapped function
+    />
+  );
+}
+  
+  // Use handleExitEditMode in place of setPostFormSelected(false)
+  // if (editMode) {
+  //   return (
+  //     <PostForm
+  //       currentUser={currentUser.id}
+  //       postFormBookId={post.book_id}
+  //       onPostCreation={bookDetails}
+  //       setPostFormSelected={setEditMode}
+  //     />
+  //   );
+  // }
 
   //if editMode is false, then render the create form, if editMode is true, render edit
   return (
@@ -53,10 +77,11 @@ const Post = ({ post, currentUser, onEdit, onDelete }) => {
 
       <h5>Reviewed By: {post.user.name}</h5>
       <CustomRating totalStars={5} rating={post.rating} />
+      <h6>Time Spent: {post.time_spent} hours</h6>
       <h6>Comments: {post.review}</h6>
       {post.user_id === currentUser.id && (
           <div className="post-actions">
-            <button className="btn btn-warning me-2" onClick={() => setEditMode(true)}>Edit</button>
+            <button className="btn btn-warning me-2" onClick={handleEdit}>Edit</button>
             <button className="btn btn-danger" onClick={() => onDelete(post.id)}>Delete</button>
           </div>
         )}

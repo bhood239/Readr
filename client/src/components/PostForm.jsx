@@ -74,9 +74,11 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
 
   const action = post ? updatePost(post.id, postData) : handleCreatePost(postData);
     action
-      .then(() => {
+      .then((postResponse) => {
+        console.log('postResponse', postResponse);
+
         setPostFormSelected(false); // Hide the form after submission
-        onPostCreation(postData);
+        onPostCreation(postResponse);
 
         if (!post) { // Reset form fields after creating a new post
           setRating(null);
@@ -84,6 +86,10 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
           setReview('');
           setHours('');
         }
+          // Redirect to PostList on dashboard after successful creation/update
+          navigate('/');
+
+
       })
       .catch((err) => setError(err.message)); // Display error message
   };
@@ -159,7 +165,9 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
               </button>
             )}
             <button className='back-btn-primary' onClick={() => setPostFormSelected(false)}>Back</button>
+            
           </div>
+          
         </form>
       </div>
     </div>

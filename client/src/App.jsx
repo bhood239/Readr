@@ -58,11 +58,14 @@ const App = () => {
     const [loginSelected, setLoginSelected] = useState(false);
     const [registerSelected, setRegisterSelected] = useState(false);
     const {
-        posts: initialPosts,
+        // posts: initialPosts,
+        posts,
+        setPosts,
         loading: postsLoading,
         error: postsError,
+        fetchPosts
     } = useAllPosts(); // Fetch initial posts
-    const [posts, setPosts] = useState([]);
+    // const [posts, setPosts] = useState([]);
     const [postFormBookId, setPostFormBookId] = useState();
     const [postFormSelected, setPostFormSelected] = useState(false);
     const [editPostSelected, setEditPostSelected] = useState(false);
@@ -76,11 +79,11 @@ const App = () => {
     }, [currentUser, navigate]);
 
 
-    useEffect(() => {
-        if (!postsLoading && !postsError) {
-            setPosts(initialPosts || []); // Update local posts state with initial data
-        }
-    }, [initialPosts, postsLoading, postsError]);
+    // useEffect(() => {
+    //     if (!postsLoading && !postsError) {
+    //         setPosts(initialPosts || []); // Update local posts state with initial data
+    //     }
+    // }, [initialPosts, postsLoading, postsError]);
 
     const addPost = (bookId) => {
       if (currentUser) {
@@ -97,11 +100,13 @@ const App = () => {
 
   
   const handlePostCreation = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
+    console.log("new posts");
+
+    fetchPosts();
     setPostFormSelected(false); // Hide PostForm
     setViewPostList(true); // Show PostList
   };
-  
+
   const handlePostUpdate = async (id, updatedData) => {
     console.log("Initiating post update...");
     try {
@@ -172,6 +177,7 @@ const handleLogout = () => {
                                 posts={posts}
                                 onEdit={handlePostUpdate}
                                 onDelete={handlePostDeletion}
+                                post={existingPost}
                             />
                         ) : (
                             <Homepage
@@ -236,14 +242,14 @@ const handleLogout = () => {
             </Routes>
 
 
-          {viewPostList && <PostList 
+          {/* {viewPostList && <PostList 
                               posts={posts} 
                               loading={postsLoading} 
                               error={postsError} 
                               onEdit={handlePostUpdate}
                               onDelete={handlePostDeletion}
                               currentUser={currentUser} 
-                            />} {/* Render PostList when state is set */}
+                            />} Render PostList when state is set */}
 
             
             <Footer navigate={navigate} />

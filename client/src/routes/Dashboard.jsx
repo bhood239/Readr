@@ -31,7 +31,8 @@ const Dashboard = (props) => {
     loading,
     error,
     onEdit,
-    onDelete
+    onDelete,
+    existingPost
   } = props;
 
   const renderContent = () => {
@@ -39,7 +40,8 @@ const Dashboard = (props) => {
       return (
         <PostForm
           currentUser={currentUser.id}
-          postFormBookId={postFormBookId}
+          post={existingPost} // If editing, pass the existing post
+          bookId={postFormBookId} // Pass the correct bookId
           onPostCreation={onPostCreation}
           setPostFormSelected={setPostFormSelected}
         />
@@ -72,7 +74,8 @@ const Dashboard = (props) => {
       case "postForm":
         return <PostForm
         currentUser={currentUser.id}
-        postFormBookId={postFormBookId}
+        bookId={postFormBookId}
+        post={existingPost} 
         onPostCreation={onPostCreation}
         setPostFormSelected={setPostFormSelected} 
         />;
