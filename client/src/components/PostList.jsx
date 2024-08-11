@@ -27,9 +27,7 @@ const PostList = ({ currentUser, isProfilePage, onDelete }) => {
     ? posts.filter((post) => post.user_id === currentUser.id)
     : posts;
   // Sort posts by created_at in descending order
-  const sortedPosts = filteredPosts
-    ?.slice()
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const sortedPosts = filteredPosts?.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   return (
     <div className="container-fluid post-list">

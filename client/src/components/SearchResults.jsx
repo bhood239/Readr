@@ -17,6 +17,7 @@ const SearchResult = (props) => {
     setWantToRead,
     setReading,
     setRead,
+    addPost,
     setFavBooks,
   } = props;
   // searchData is the data returned from api
@@ -72,6 +73,7 @@ const SearchResult = (props) => {
             setReading={setReading}
             setRead={setRead}
             setFavBooks={setFavBooks}
+            addPost={addPost}
           />
         )}
       </div>
