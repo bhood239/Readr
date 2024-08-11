@@ -75,19 +75,19 @@ const useUserBooks = (currentUser, selectedUser) => {
     // Fetch data in parallel
     try {
       await Promise.all([
-        toReadBookIds.length
+        toReadBookIds
           ? fetchBooksDetails(toReadBookIds, setWantToRead)
           : Promise.resolve(),
-        readingBookIds.length
+        readingBookIds
           ? fetchBooksDetails(readingBookIds, setReading)
           : Promise.resolve(),
-        readBookIds.length
+        readBookIds
           ? fetchBooksDetails(readBookIds, setRead)
           : Promise.resolve(),
-        favBookIds.length
+        favBookIds
           ? fetchBooksDetails(favBookIds, setFavBooks)
           : Promise.resolve(),
-        popularBookIds.length
+        popularBookIds
           ? fetchBooksDetails(popularBookIds, setPopularBooks)
           : Promise.resolve(),
       ]);
