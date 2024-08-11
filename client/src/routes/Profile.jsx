@@ -11,6 +11,7 @@ import { useUserById } from "../helpers/hooks/apiData/useUserData";
 const Profile = (props) => {
     const {
         currentUser,
+        setCurrentUser,
         selectedUser,
         setSelectedUser,
         wantToRead,
@@ -46,6 +47,7 @@ const Profile = (props) => {
         fetchAllBooksDetails,
     } = props;
     const [selectedOption, setSelectedOption] = useState("To Be Read");
+    // console.log('currentUser:', currentUser);
 
     const { getUser } = useUserById();
 
@@ -100,6 +102,8 @@ const Profile = (props) => {
             fetchFollowing();
         }
     }, [selectedOption, user.following_list]);
+
+    
 
     const handleSelectOption = (option) => {
         setSelectedOption(option);
@@ -223,6 +227,7 @@ const Profile = (props) => {
                     <UserList
                         users={followersList}
                         currentUser={currentUser}
+                        setCurrentUser={setCurrentUser}
                         user={user}
                         setSelectedUser={setSelectedUser}
                         handleCreateFriend={handleCreateFriend}
@@ -236,6 +241,7 @@ const Profile = (props) => {
                     <UserList
                         users={followingList}
                         currentUser={currentUser}
+                        setCurrentUser={setCurrentUser}
                         user={user}
                         setSelectedUser={setSelectedUser}
                         handleCreateFriend={handleCreateFriend}
@@ -272,6 +278,7 @@ const Profile = (props) => {
                 return (
                     <SearchUsers
                         currentUser={currentUser}
+                        setCurrentUser={setCurrentUser}
                         setSelectedUser={setSelectedUser}
                         handleCreateFriend={handleCreateFriend}
                         handleDeleteFriend={handleDeleteFriend}

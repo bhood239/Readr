@@ -238,6 +238,7 @@ const handlePostDeletion = async (id) => {
             currentUser ? (
               <Profile
                 currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
                 selectedUser={selectedUser}
                 setSelectedUser={setSelectedUser}
                 wantToRead={wantToRead}

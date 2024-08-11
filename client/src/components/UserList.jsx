@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import '../styles/UserList.css';
 import Profile from "../routes/Profile";
+import { useUserById } from "../helpers/hooks/apiData/useUserData";
 
 const UserList = (props) => {
-    const { users, currentUser, selectedUser, setSelectedUser, wantToRead, reading, read, favBooks, handleCreateFriend, handleDeleteFriend } = props;
+    const { users, currentUser, setCurrentUser, selectedUser, setSelectedUser, wantToRead, reading, read, favBooks, handleCreateFriend, handleDeleteFriend } = props;
 
     const [buttonStates, setButtonStates] = useState({});
+    const { getUser } = useUserById();
     const navigate = useNavigate();
 
     const isFollowing = (userId) => {
@@ -33,20 +35,23 @@ const UserList = (props) => {
 
     const follow = async (userId) => {
         await handleCreateFriend({ follower_id: currentUser.id, following_id: userId });
+        const updatedUser = await getUser(currentUser.id)
+        setCurrentUser(updatedUser);
         updateButtonState(userId, 'follow', 'Unfollow');
-        window.location.reload();
     };
 
     const unFollow = async (userId) => {
         await handleDeleteFriend({ follower_id: currentUser.id, following_id: userId });
+        const updatedUser = await getUser(currentUser.id)
+        setCurrentUser(updatedUser);
         updateButtonState(userId, 'follow', 'Follow');
-        window.location.reload();
     };
 
     const removeFollower = async (userId) => {
         await handleDeleteFriend({ follower_id: userId, following_id: currentUser.id });
+        const updatedUser = await getUser(currentUser.id)
+        setCurrentUser(updatedUser);
         updateButtonState(userId, 'removeFollower', 'Removed');
-        window.location.reload();
     };
 
     return (
