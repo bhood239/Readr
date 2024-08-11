@@ -93,18 +93,9 @@ const App = () => {
   }, [currentUser, navigate]);
 
 
-    // useEffect(() => {
-    //     if (!postsLoading && !postsError) {
-    //         setPosts(initialPosts || []); // Update local posts state with initial data
-    //     }
-    // }, [initialPosts, postsLoading, postsError]);
-
     const addPost = (bookId) => {
       if (currentUser) {
           setPostFormBookId(bookId);
-          // setPostFormSelected(true);
-          // const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
-          // post ? setEditPostSelected(true) : setPostFormSelected(true);
           handlePostByUserIdAndBookId(currentUser.id, bookId).then(() => {
             setEditPostSelected(existingPost ? true : false);
             setPostFormSelected(true);
@@ -119,33 +110,27 @@ const App = () => {
             post.id === updatedPost.id ? updatedPost : post
         )
       );
-    // fetchPosts();
     setPostFormSelected(false); // Hide PostForm
     setViewPostList(true); // Show PostList
   };
 
-  const handlePostUpdate = async (id, updatedData) => {
-    console.log("Initiating post update...");
-    try {
-        const newPostData = await updatePost(id, updatedData);
-        if (newPostData) {
-            console.log("Post updated:", newPostData);
-            setPosts((prevPosts) =>
-                prevPosts.map((post) => (post.id === id ? newPostData : post))
-            );
-        } else {
-            console.error("No post data returned from API");
-        }
-    } catch (error) {
-        console.error("Error updating post:", error);
-    }
-};
 
 const handlePostDeletion = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this post?");
+      if (!confirmed) {
+      return; // If the user cancels, don't proceed with deletion
+    }
     console.log("Initiating post deletion...");
     try {
         await deletePost(id);
         setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+        setPostFormSelected(false); // Hide the form after deletion
+
+
+      // to reload the page once a post has been deleted
+        window.location.reload();
+
+
         console.log("Post deleted:", id);
     } catch (error) {
         console.error("Error deleting post:", error);
@@ -215,10 +200,9 @@ const handlePostDeletion = async (id) => {
                 postFormBookId={postFormBookId}
                 onPostCreation={handlePostCreation}
                 posts={posts}
-                onEdit={handlePostUpdate}
-                onDelete={handlePostDeletion}
                 existingPost={existingPost}
                 fetchAllBooksDetails={fetchAllBooksDetails}
+                onDelete={handlePostDeletion}
               />
             ) : (
               <Homepage
@@ -272,7 +256,9 @@ const handlePostDeletion = async (id) => {
                 postFormBookId={postFormBookId}
                 onPostCreation={handlePostCreation}
                 posts={posts}
+                existingPost={existingPost}
                 fetchAllBooksDetails={fetchAllBooksDetails}
+                onDelete={handlePostDeletion}
               />
             ) : (
               <Navigate to="/" />
@@ -299,6 +285,12 @@ const handlePostDeletion = async (id) => {
                 allBookStatuses={bookStatuses}
                 addPost={addPost}
                 fetchAllBooksDetails={fetchAllBooksDetails}
+                postFormSelected={postFormSelected}
+                setPostFormSelected={setPostFormSelected}
+                postFormBookId={postFormBookId}
+                onPostCreation={handlePostCreation}
+                posts={posts}
+                existingPost={existingPost}
               />
             ) : (
               <Navigate to="/" />

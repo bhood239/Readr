@@ -76,22 +76,57 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
         }
           // Redirect to PostList on dashboard after successful creation/update
           navigate('/');
+        // Reload the page after successful update
+        window.location.reload();
 
 
       })
       .catch((err) => setError(err.message)); // Display error message
   };
 
+  // const handleDelete = () => {
+  //   if (post) {
+  //     const confirmed = window.confirm("Are you sure you want to delete this post?");
+    
+  //   if (confirmed) {
+  //     deletePost(post.id)
+  //       .then(() => {
+  //         console.log('Post deleted');
+
+  //         setPostFormSelected(false); // Hide the form after deletion
+  //         onPostCreation(null); // Notify parent about deletion
+
+  //         // Reload the page after successful deletion
+  //         window.location.reload();
+
+  //       })
+  //       .catch((error) => console.error("Error deleting post:", error));
+  //     }
+  //   }
+  // };
+
   const handleDelete = () => {
     if (post) {
-      deletePost(post.id)
-        .then(() => {
-          setPostFormSelected(false); // Hide the form after deletion
-          onPostCreation(null); // Notify parent about deletion
-        })
-        .catch((error) => console.error("Error deleting post:", error));
+      const confirmed = window.confirm("Are you sure you want to delete this post?");
+  
+      if (confirmed) {
+        deletePost(post.id)
+          .then(() => {
+            console.log('Post deleted');
+  
+            // update the posts list in the parent component
+            onPostCreation(null);
+  
+  
+            // Reload the page after successful deletion 
+            window.location.reload();
+          })
+          .catch((error) => console.error("Error deleting post:", error));
+      }
     }
   };
+  
+
 
   return (
     <div className='post-form-container'>
