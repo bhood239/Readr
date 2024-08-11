@@ -4,6 +4,7 @@ import UserList from "../components/UserList";
 import SearchUsers from "../components/SearchUsers";
 import "../styles/Profile.css";
 import PostForm from "../components/PostForm";
+import PostList from "../components/PostList";
 
 const Profile = (props) => {
   const {
@@ -155,6 +156,8 @@ const Profile = (props) => {
         ) : (
           <div>No favorite books</div>
         );
+      case "My Posts":
+        return <PostList currentUser={currentUser} isProfilePage={true} />;
       case "Followers List":
         const followersList = currentUser.followers_list;
         return followersList.length > 0 ? (
@@ -262,6 +265,13 @@ const Profile = (props) => {
       <div className="profile-content">
         <div className="list-group-section">
           <div className="list-group">
+            <a
+              href="#"
+              className="list-group-item list-group-item-action"
+              onClick={() => handleSelectOption("My Posts")}
+            >
+              {`${currentUser.name.split(" ")[0]}'s`} Posts
+            </a>
             <a
               href="#"
               className="list-group-item list-group-item-action"
