@@ -11,15 +11,18 @@ module Api
         if @book_status
           render json: @book_status
         else
-          render json: { error: 'Book status not found' }, status: :not_found
+          render json: {}, status: :ok
         end
       end
   
       def create
-        @book_status = BookStatus.new(book_status_params)
+        @book_status = BookStatus.find_or_initialize_by(book_status_params.slice(:book_id, :user_id))
+        @book_status.status = params[:book_status][:status] unless params[:book_status][:status].nil?
+        @book_status.fave_books = params[:book_status][:fave_books] unless params[:book_status][:fave_books].nil?
         if @book_status.save
           render json: @book_status, status: :created
         else
+            logger.debug @book_status.errors.full_messages
           render json: @book_status.errors, status: :unprocessable_entity
         end
       end
@@ -50,7 +53,7 @@ module Api
   
         book_ids = @fav_book_statuses.pluck(:book_id)
   
-        render json: book_ids
+        render json: book_ids, cache: false
       end
 
       # GET /popular_books

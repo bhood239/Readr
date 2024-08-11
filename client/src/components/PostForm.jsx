@@ -35,13 +35,18 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
     setError(null); // Reset error state on submit
 
     const numericRating = Number(rating);
-    if (rating === "" || isNaN(numericRating) || numericRating < 1 || numericRating > 5) {
-      console.error('Invalid rating value');
+    if (
+      rating === "" ||
+      isNaN(numericRating) ||
+      numericRating < 1 ||
+      numericRating > 5
+    ) {
+      console.error("Invalid rating value");
       return;
     }
 
     if (!bookId) {
-      console.error('Book ID is required');
+      console.error("Book ID is required");
       return;
     }
 

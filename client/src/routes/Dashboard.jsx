@@ -13,6 +13,11 @@ const Dashboard = (props) => {
   const {
     currentUser,
     wantToRead,
+    setWantToRead,
+    setReading,
+    setRead,
+    setFavBooks,
+    setPopularBooks,
     reading,
     read,
     favBooks,
@@ -27,6 +32,7 @@ const Dashboard = (props) => {
     setPostFormSelected,
     postFormBookId,
     onPostCreation,
+    fetchAllBooksDetails,
     posts,
     loading,
     error,
@@ -62,6 +68,10 @@ const Dashboard = (props) => {
           <SearchResult
             currentUser={currentUser}
             wantToRead={wantToRead}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
             reading={reading}
             read={read}
             favBooks={favBooks}
@@ -69,6 +79,7 @@ const Dashboard = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
           />
         );
       case "postForm":
@@ -93,6 +104,10 @@ const Dashboard = (props) => {
             books={popularBooks}
             currentUser={currentUser}
             wantToRead={wantToRead}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
             reading={reading}
             read={read}
             favBooks={favBooks}
@@ -100,6 +115,7 @@ const Dashboard = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
           />
         );
       default:
@@ -132,27 +148,18 @@ const Dashboard = (props) => {
 
         {/* Main content in the center */}
         <div className="main-content">
-          <div className="dashboard-header">
-            <h1>Hello Dashboard</h1>
-          </div>
           <div className="dashboard-buttons">
             <button
               className="dashboard-btn"
               onClick={() => setSelectedView("postList")}
             >
-              Post List
+              Posts
             </button>
             <button
               className="dashboard-btn"
               onClick={() => setSelectedView("searchResults")}
             >
               Search Books
-            </button>
-            <button
-              className="dashboard-btn"
-              onClick={() => setSelectedView("postForm")}
-            >
-              Post Form
             </button>
           </div>
           {renderContent()}

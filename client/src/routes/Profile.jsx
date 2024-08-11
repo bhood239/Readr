@@ -9,10 +9,25 @@ const Profile = (props) => {
   const {
     currentUser,
     wantToRead,
+    setWantToRead,
     reading,
+    setReading,
     read,
+    setRead,
     favBooks,
+    setFavBooks,
     popularBooks,
+    setPopularBooks,
+    toReadLoading,
+    readingLoading,
+    readLoading,
+    favBookLoading,
+    popularBookLoading,
+    toReadError,
+    readingError,
+    readError,
+    favBookError,
+    popularBookError,
     handleCreateFriend,
     handleDeleteFriend,
     handleCreateBookStatus,
@@ -23,6 +38,7 @@ const Profile = (props) => {
     setPostFormSelected,
     postFormBookId,
     onPostCreation,
+    fetchAllBooksDetails,
   } = props;
   const [selectedOption, setSelectedOption] = useState("To Be Read");
 
@@ -47,6 +63,8 @@ const Profile = (props) => {
         return wantToRead.length > 0 ? (
           <BookList
             books={wantToRead}
+            loading={toReadLoading}
+            error={toReadError}
             currentUser={currentUser}
             wantToRead={wantToRead}
             reading={reading}
@@ -56,6 +74,11 @@ const Profile = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
           />
         ) : (
           <div>No books to be read</div>
@@ -64,6 +87,8 @@ const Profile = (props) => {
         return reading.length > 0 ? (
           <BookList
             books={reading}
+            loading={readingLoading}
+            error={readingLoading}
             currentUser={currentUser}
             wantToRead={wantToRead}
             reading={reading}
@@ -73,6 +98,11 @@ const Profile = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
           />
         ) : (
           <div>No books currently being read</div>
@@ -81,6 +111,8 @@ const Profile = (props) => {
         return read.length > 0 ? (
           <BookList
             books={read}
+            loading={readLoading}
+            error={readError}
             currentUser={currentUser}
             wantToRead={wantToRead}
             reading={reading}
@@ -90,6 +122,11 @@ const Profile = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
           />
         ) : (
           <div>No books read</div>
@@ -98,6 +135,8 @@ const Profile = (props) => {
         return favBooks.length > 0 ? (
           <BookList
             books={favBooks}
+            loading={favBookLoading}
+            error={favBookError}
             currentUser={currentUser}
             wantToRead={wantToRead}
             reading={reading}
@@ -107,6 +146,11 @@ const Profile = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
           />
         ) : (
           <div>No favorite books</div>
@@ -139,6 +183,8 @@ const Profile = (props) => {
         return popularBooks.length > 0 ? (
           <BookList
             books={popularBooks}
+            loading={popularBookLoading}
+            error={popularBookError}
             currentUser={currentUser}
             wantToRead={wantToRead}
             reading={reading}
@@ -148,6 +194,11 @@ const Profile = (props) => {
             updateBookStatus={updateBookStatus}
             allBookStatuses={allBookStatuses}
             addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
           />
         ) : (
           <div>No popular books</div>
