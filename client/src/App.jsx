@@ -291,6 +291,7 @@ const handlePostDeletion = async (id) => {
                 onPostCreation={handlePostCreation}
                 posts={posts}
                 existingPost={existingPost}
+              
               />
             ) : (
               <Navigate to="/" />

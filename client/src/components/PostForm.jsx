@@ -6,6 +6,7 @@ import { useCreatePost, useUpdatePostById, useDeletePostById } from '../helpers/
 import { useBookById } from '../helpers/hooks/useBookData';
 import './PostForm.scss';
 import { useNavigate } from 'react-router-dom';
+import './PostList.scss';
 
 const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelected }) => {
   const [rating, setRating] = useState(post ? post.rating : null);
@@ -20,6 +21,14 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
   const { book, loading: bookLoading, error: bookError } = useBookById(bookId); // Fetch book details
 
   const navigate = useNavigate();
+  
+  // useEffect(() => {
+  //   if (book) {
+  //     // console.log('Setting book details:', book);
+  //     setBookDetails(book);
+  //   }
+  // }, [book]);
+
 
   useEffect(() => {
     if (post) {
@@ -42,11 +51,6 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
       numericRating > 5
     ) {
       console.error("Invalid rating value");
-      return;
-    }
-
-    if (!bookId) {
-      console.error("Book ID is required");
       return;
     }
 
@@ -84,26 +88,7 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
       .catch((err) => setError(err.message)); // Display error message
   };
 
-  // const handleDelete = () => {
-  //   if (post) {
-  //     const confirmed = window.confirm("Are you sure you want to delete this post?");
-    
-  //   if (confirmed) {
-  //     deletePost(post.id)
-  //       .then(() => {
-  //         console.log('Post deleted');
-
-  //         setPostFormSelected(false); // Hide the form after deletion
-  //         onPostCreation(null); // Notify parent about deletion
-
-  //         // Reload the page after successful deletion
-  //         window.location.reload();
-
-  //       })
-  //       .catch((error) => console.error("Error deleting post:", error));
-  //     }
-  //   }
-  // };
+ 
 
   const handleDelete = () => {
     if (post) {
@@ -126,12 +111,34 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
     }
   };
   
-
+console.log("book", book);
 
   return (
     <div className='post-form-container'>
       <div className='post-form-card card'>
+        
+      <div className="post row">
 
+      {bookLoading && <p>Loading...</p>}
+      {bookError && <p>Error: {bookError.message}</p>}
+      {book && (
+        <>
+          <div className="col-auto">
+            {book.cover ? (
+              <img src={book.cover} alt={`Cover of ${book.title}`} style={{ maxWidth: '128px' }} />
+            ) : (
+              <p>No cover image available</p>
+            )}
+          </div> 
+          <div className="col">
+            <h4>Book: {book.title}</h4>
+            <h4>Author: {book.author}</h4>
+          </div>
+        </>
+      )}
+      {!bookLoading && !bookError && !book && <p>No book details found</p>}
+      </div>
+      <div>
         <h2>{post ? 'Edit Post:' : 'Create a Post:'}</h2>
 
         <CustomRating rating={rating} setRating={setRating} />
@@ -180,6 +187,7 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
           </div>
           
         </form>
+        </div>
       </div>
     </div>
   );

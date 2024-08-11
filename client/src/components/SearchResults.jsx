@@ -17,6 +17,7 @@ const SearchResult = (props) => {
     setWantToRead,
     setReading,
     setRead,
+    addPost,
     setFavBooks,
     addPost
   } = props;
