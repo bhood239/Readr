@@ -9,14 +9,19 @@ const useBookById = (id) => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchBook = async () => {
-        setLoading(true);
+      setLoading(true);
+      console.log("Fetching book with ID:", id); // Debugging ID
       try {
         const bookData = await getBookById(id);
+        if (!bookData) {
+          throw new Error("No data received from API");
+        }
+        console.log("Received bookData:", bookData); // Debugging Data
         setBook(bookData);
       } catch (err) {
+        console.error("Fetch error:", err); // Debugging Error
         setError(err);
       } finally {
         setLoading(false);
@@ -27,6 +32,9 @@ const useBookById = (id) => {
 
   return { book, loading, error };
 };
+
+
+
 
 const useBooksByName = (name) => {
   const [books, setBooks] = useState([]);
