@@ -34,16 +34,19 @@ const UserList = (props) => {
     const follow = async (userId) => {
         await handleCreateFriend({ follower_id: currentUser.id, following_id: userId });
         updateButtonState(userId, 'follow', 'Unfollow');
+        window.location.reload();
     };
 
     const unFollow = async (userId) => {
         await handleDeleteFriend({ follower_id: currentUser.id, following_id: userId });
         updateButtonState(userId, 'follow', 'Follow');
+        window.location.reload();
     };
 
     const removeFollower = async (userId) => {
         await handleDeleteFriend({ follower_id: userId, following_id: currentUser.id });
         updateButtonState(userId, 'removeFollower', 'Removed');
+        window.location.reload();
     };
 
     return (

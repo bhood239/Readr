@@ -68,7 +68,6 @@ const Profile = (props) => {
                 try {
                     const followerPromises = user.followers_list.map((follower) => getUser(follower.id));
                     const followersList = await Promise.all(followerPromises);
-                    console.log('followers list in profile:', followersList);
                     setFollowersList(followersList);
                 } catch (error) {
                     setErrorFollowers('Error loading followers');
