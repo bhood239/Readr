@@ -92,7 +92,6 @@ const Book = (props) => {
     const favButtonText = buttonStates.fav;
     const bookStatusText = buttonStates.status;
 
-    if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
     return (
