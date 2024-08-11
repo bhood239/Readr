@@ -47,18 +47,12 @@ module Api
     def followers
         @user = User.find(params[:id])
         @followers = @user.followers
-        puts "***********"
-        puts @followers
-        puts "***********"
         render json: @followers
     end
 
     def following
         @user = User.find(params[:id])
         @following = @user.following
-        puts "***********"
-        puts @following
-        puts "***********"
         render json: @following
     end
 

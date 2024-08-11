@@ -9,39 +9,33 @@ import { useNavigate } from 'react-router-dom';
 import './PostList.scss';
 
 const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelected }) => {
-  const [rating, setRating] = useState(post ? post.rating : null);
-  const [timeSpent, setTimeSpent] = useState(post ? post.time_spent : '');
-  const [review, setReview] = useState(post ? post.review : '');
-  const [hours, setHours] = useState(post ? post.hours : '');
-  const [error, setError] = useState(null); 
+    const [rating, setRating] = useState(post ? post.rating : null);
+    const [timeSpent, setTimeSpent] = useState(post ? post.time_spent : '');
+    const [review, setReview] = useState(post ? post.review : '');
+    const [hours, setHours] = useState(post ? post.hours : '');
+    const [error, setError] = useState(null);
 
-  const { handleCreatePost, loading, error: createError } = useCreatePost(currentUser);
-  const { updatePost, loading: updateLoading, error: updateError } = useUpdatePostById(currentUser);
-  const { deletePost } = useDeletePostById(currentUser);
-  const { book, loading: bookLoading, error: bookError } = useBookById(bookId); // Fetch book details
+    const { handleCreatePost, loading, error: createError } = useCreatePost(currentUser);
+    const { updatePost, loading: updateLoading, error: updateError } = useUpdatePostById(currentUser);
+    const { deletePost } = useDeletePostById(currentUser);
+    const { book, loading: bookLoading, error: bookError } = useBookById(bookId); // Fetch book details
 
   const navigate = useNavigate();
-  
-  // useEffect(() => {
-  //   if (book) {
-  //     // console.log('Setting book details:', book);
-  //     setBookDetails(book);
-  //   }
-  // }, [book]);
 
 
-  useEffect(() => {
-    if (post) {
-      setRating(post.rating);
-      setTimeSpent(post.time_spent);
-      setReview(post.review);
-      setHours(post.hours);
-    }
-  }, [post]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setError(null); // Reset error state on submit
+    useEffect(() => {
+        if (post) {
+            setRating(post.rating);
+            setTimeSpent(post.time_spent);
+            setReview(post.review);
+            setHours(post.hours);
+        }
+    }, [post]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setError(null); // Reset error state on submit
 
     const numericRating = Number(rating);
     if (
@@ -54,39 +48,39 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
       return;
     }
 
-    const timeSpentNumber = hours ? parseFloat(hours) : null;
+        const timeSpentNumber = hours ? parseFloat(hours) : null;
 
-    const postData = {
-      rating: numericRating,
-      time_spent: timeSpentNumber,
-      review,
-      user_id: currentUser,
-      book_id: bookId,
+        const postData = {
+            rating: numericRating,
+            time_spent: timeSpentNumber,
+            review,
+            user_id: currentUser,
+            book_id: bookId,
+        };
+
+        const action = post ? updatePost(post.id, postData) : handleCreatePost(postData);
+        action
+            .then((postResponse) => {
+                console.log('postResponse', postResponse);
+
+                setPostFormSelected(false); // Hide the form after submission
+                onPostCreation(postResponse);
+
+                if (!post) { // Reset form fields after creating a new post
+                    setRating(null);
+                    setTimeSpent('');
+                    setReview('');
+                    setHours('');
+                }
+                // Redirect to PostList on dashboard after successful creation/update
+                navigate('/');
+                // Reload the page after successful update
+                window.location.reload();
+
+
+            })
+            .catch((err) => setError(err.message)); // Display error message
     };
-
-  const action = post ? updatePost(post.id, postData) : handleCreatePost(postData);
-    action
-      .then((postResponse) => {
-        console.log('postResponse', postResponse);
-
-        setPostFormSelected(false); // Hide the form after submission
-        onPostCreation(postResponse);
-
-        if (!post) { // Reset form fields after creating a new post
-          setRating(null);
-          setTimeSpent('');
-          setReview('');
-          setHours('');
-        }
-          // Redirect to PostList on dashboard after successful creation/update
-          navigate('/');
-        // Reload the page after successful update
-        window.location.reload();
-
-
-      })
-      .catch((err) => setError(err.message)); // Display error message
-  };
 
  
 
@@ -141,36 +135,36 @@ console.log("book", book);
       <div>
         <h2>{post ? 'Edit Post:' : 'Create a Post:'}</h2>
 
-        <CustomRating rating={rating} setRating={setRating} />
+                    <CustomRating rating={rating} setRating={setRating} />
 
-        <form onSubmit={handleSubmit}>
-          <div className='mb-3'>
-            <label htmlFor='review' className='form-label'>Book Review:</label>
-            <textarea
-              id="review"
-              type="text"
-              name="review"
-              rows="5"
-              placeholder="Write a post:"
-              className='form-control'
-              value={review}
-              onChange={(event) => setReview(event.target.value)}
-              required
-            />
-          </div>
+                    <form onSubmit={handleSubmit}>
+                        <div className='mb-3'>
+                            <label htmlFor='review' className='form-label'>Book Review:</label>
+                            <textarea
+                                id="review"
+                                type="text"
+                                name="review"
+                                rows="5"
+                                placeholder="Write a post:"
+                                className='form-control'
+                                value={review}
+                                onChange={(event) => setReview(event.target.value)}
+                                required
+                            />
+                        </div>
 
-          <div className='col-md-2'>
-            <label htmlFor='hours' className='form-label'>Time Spent (Hours):</label>
-            <input
-              id="hours"
-              type="number"
-              className='form-control'
-              placeholder='0'
-              value={hours}
-              onChange={(event) => setHours(event.target.value)}
-              required
-            />
-          </div>
+                        <div className='col-md-2'>
+                            <label htmlFor='hours' className='form-label'>Time Spent (Hours):</label>
+                            <input
+                                id="hours"
+                                type="number"
+                                className='form-control'
+                                placeholder='0'
+                                value={hours}
+                                onChange={(event) => setHours(event.target.value)}
+                                required
+                            />
+                        </div>
 
           <div>
             <button type="submit" className='btn btn-primary' disabled={loading || updateLoading}>
@@ -193,12 +187,12 @@ console.log("book", book);
   );
 };
 
-PostForm.propTypes = {
-  currentUser: PropTypes.string.isRequired,
-  post: PropTypes.object, // post is optional for create mode
-  bookId: PropTypes.string.isRequired,
-  onPostCreation: PropTypes.func.isRequired,
-  setPostFormSelected: PropTypes.func.isRequired,
+            PostForm.propTypes = {
+                currentUser: PropTypes.object.isRequired,
+            post: PropTypes.object, // post is optional for create mode
+            bookId: PropTypes.string.isRequired,
+            onPostCreation: PropTypes.func.isRequired,
+            setPostFormSelected: PropTypes.func.isRequired,
 };
 
-export default PostForm;
+            export default PostForm;

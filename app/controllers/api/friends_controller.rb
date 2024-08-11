@@ -13,9 +13,6 @@ module Api
     def create
       @friend = Friend.new(friend_params)
       if @friend.save
-        puts "***********"
-        puts current_user
-        puts "***********"
         render json: @friend, status: :created
       else
         render json: @friend.errors, status: :unprocessable_entity
@@ -37,9 +34,6 @@ module Api
         
         if @friend
           @friend.destroy
-          puts "***********"
-          puts current_user
-          puts "***********"
           head :no_content
         else
           render json: { error: 'Friendship not found' }, status: :not_found
