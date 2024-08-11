@@ -51,11 +51,13 @@ export const getAllPosts = async () => {
 // UPDATE
 export const updatePostById = async (postId, params) => {
   try {
+    console.log("Updating post with params:", postId, params);  // Log request params
     const res = await axios.put(`/api/posts/${postId}`, params);
+    console.log("Post updated:", res.data);
     return res.data;
   } catch (err) {
-    console.log("error updating post: ", err.message);
-    return null;
+    console.error("Error updating post:", err.response ? err.response.data : err.message);  // Improved error logging
+    throw err;  // Re-throw the error to be handled by calling code
   }
 };
 
@@ -63,10 +65,11 @@ export const updatePostById = async (postId, params) => {
 export const deletePostById = async (postId) => {
   try {
     const res = await axios.delete(`/api/posts/${postId}`);
+    console.log("Post deleted:", res.data);
     return res.data;
   } catch (err) {
-    console.log("error deleting post: ", err.message);
-    return null;
+    console.error("Error deleting post:", err.response ? err.response.data : err.message);
+    throw err;  // Re-throw the error to be handled by calling code
   }
 };
 

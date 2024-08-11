@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import BookList from "../components/BookList";
 import UserList from "../components/UserList";
 import SearchUsers from "../components/SearchUsers";
 import "../styles/Profile.css";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
+import { useUserById } from "../helpers/hooks/apiData/useUserData";
 
 const Profile = (props) => {
   const {
     currentUser,
+    selectedUser,
+    setSelectedUser,
     wantToRead,
     setWantToRead,
     reading,
@@ -42,6 +46,63 @@ const Profile = (props) => {
     fetchAllBooksDetails,
   } = props;
   const [selectedOption, setSelectedOption] = useState("To Be Read");
+
+  const { getUser } = useUserById();
+
+  const location = useLocation();
+  const { state } = location;
+  // const selectedUser = location.state?.selectedUser || currentUser;
+  const user = selectedUser || currentUser;
+
+  const [followersList, setFollowersList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
+  const [loadingFollowers, setLoadingFollowers] = useState(false);
+  const [loadingFollowing, setLoadingFollowing] = useState(false);
+  const [errorFollowers, setErrorFollowers] = useState(null);
+  const [errorFollowing, setErrorFollowing] = useState(null);
+
+  useEffect(() => {
+    if (selectedOption === "Followers List") {
+      setLoadingFollowers(true);
+      setErrorFollowers(null);
+      const fetchFollowers = async () => {
+        try {
+          const followerPromises = user.followers_list.map((follower) =>
+            getUser(follower.id)
+          );
+          const followersList = await Promise.all(followerPromises);
+          console.log("followers list in profile:", followersList);
+          setFollowersList(followersList);
+        } catch (error) {
+          setErrorFollowers("Error loading followers");
+        } finally {
+          setLoadingFollowers(false);
+        }
+      };
+      fetchFollowers();
+    }
+  }, [selectedOption, user.followers_list]);
+
+  useEffect(() => {
+    if (selectedOption === "Following List") {
+      setLoadingFollowing(true);
+      setErrorFollowing(null);
+      const fetchFollowing = async () => {
+        try {
+          const followingPromises = user.following_list.map((following) =>
+            getUser(following.id)
+          );
+          const followingList = await Promise.all(followingPromises);
+          setFollowingList(followingList);
+        } catch (error) {
+          setErrorFollowing("Error loading following");
+        } finally {
+          setLoadingFollowing(false);
+        }
+      };
+      fetchFollowing();
+    }
+  }, [selectedOption, user.following_list]);
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
@@ -159,11 +220,12 @@ const Profile = (props) => {
       case "My Posts":
         return <PostList currentUser={currentUser} isProfilePage={true} />;
       case "Followers List":
-        const followersList = currentUser.followers_list;
         return followersList.length > 0 ? (
           <UserList
             users={followersList}
             currentUser={currentUser}
+            user={user}
+            setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
             handleDeleteFriend={handleDeleteFriend}
           />
@@ -171,11 +233,12 @@ const Profile = (props) => {
           <div>No followers</div>
         );
       case "Following List":
-        const followingList = currentUser.following_list;
         return followingList.length > 0 ? (
           <UserList
             users={followingList}
             currentUser={currentUser}
+            user={user}
+            setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
             handleDeleteFriend={handleDeleteFriend}
           />
@@ -210,6 +273,7 @@ const Profile = (props) => {
         return (
           <SearchUsers
             currentUser={currentUser}
+            setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
             handleDeleteFriend={handleDeleteFriend}
             addPost={addPost}
@@ -225,11 +289,11 @@ const Profile = (props) => {
       <div className="profile-header">
         <div className="profile-image-section">
           <img
-            src={currentUser?.profile_pic}
+            src={user?.profile_pic}
             alt="Profile"
             className="profile-image"
           />
-          <h1 className="profile-name">{currentUser?.name}</h1>
+          <h1 className="profile-name">{user?.name}</h1>
         </div>
       </div>
 
@@ -245,7 +309,7 @@ const Profile = (props) => {
                 Followers
               </a>
             </h3>
-            <span>{currentUser?.followers}</span>
+            <span>{user?.followers}</span>
           </div>
           <div className="follow">
             <h3>
@@ -257,7 +321,7 @@ const Profile = (props) => {
                 Following
               </a>
             </h3>
-            <span>{currentUser?.following}</span>
+            <span>{user?.following}</span>
           </div>
         </div>
       </div>
@@ -298,7 +362,7 @@ const Profile = (props) => {
               className="list-group-item list-group-item-action"
               onClick={() => handleSelectOption("My Books")}
             >
-              My Books
+              Favorite Books
             </a>
           </div>
         </div>

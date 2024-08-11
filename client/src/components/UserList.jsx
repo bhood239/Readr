@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import '../styles/UserList.css';
+import Profile from "../routes/Profile";
 
 const UserList = (props) => {
-    const { users, currentUser, handleCreateFriend, handleDeleteFriend } = props;
+    const { users, currentUser, selectedUser, setSelectedUser, wantToRead, reading, read, favBooks, handleCreateFriend, handleDeleteFriend } = props;
 
     const [buttonStates, setButtonStates] = useState({});
+    const navigate = useNavigate();
 
     const isFollowing = (userId) => {
         return currentUser.following_list?.some(followingUser => followingUser.id === userId);
@@ -21,6 +24,11 @@ const UserList = (props) => {
                 [type]: action
             }
         }));
+    };
+
+    const handleUserClick = (user) => {
+        setSelectedUser(user);
+        navigate('/profile');
     };
 
     const follow = async (userId) => {
@@ -46,7 +54,8 @@ const UserList = (props) => {
 
                 return (
                     <li key={user.id}>
-                        <div>{user.name}</div>
+                        <img src={user.profile_pic} alt="Profile Picture" />
+                        <div onClick={() => handleUserClick(user)}>{user.name}</div>
                         {user.id !== currentUser.id && (
                             <>
                                 <button
@@ -64,9 +73,29 @@ const UserList = (props) => {
                                 )}
                             </>
                         )}
+
                     </li>
                 );
             })}
+            <Routes>
+                <Route
+                    path="/profile"
+                    element={
+                        currentUser && (
+                            <Profile
+                                currentUser={currentUser}
+                                selectedUser={selectedUser}
+                                wantToRead={wantToRead}
+                                reading={reading}
+                                read={read}
+                                favBooks={favBooks}
+                                handleCreateFriend={handleCreateFriend}
+                                handleDeleteFriend={handleDeleteFriend}
+                            />
+                        )
+                    }
+                />
+            </Routes>
         </ul>
     );
 };

@@ -50,25 +50,7 @@ export const useUserById = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
-
-    // useEffect(() => {
-    //     if (id) {
-    //         const fetchUser = async () => {
-    //             try {
-    //                 const userData = await getUser(id);
-    //                 setUser(userData);
-    //             } catch (err) {
-    //                 setError(err);
-    //             } finally {
-    //                 setLoading(false);
-    //             }
-    //         };
-    //         fetchUser();
-    //     } else {
-    //         setLoading(false); // No ID provided, skip loading
-    //     }
-    // }, [id, getUser]);
+    });
 
     return { user, loading, error, getUser };
 };
