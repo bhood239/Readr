@@ -32,7 +32,8 @@ The key features of Readr include:
 
 - Ruby 3.2.2
 - Rails 7.1.1
-- PG 1.1 or above
+- PG 12.0 or above
+- Node.js 14.0 or above
 - Bcrypt 3.1.7
 - Puma 5.0 or above
 - Bootstrap 5.3.3 or above
@@ -47,38 +48,70 @@ The key features of Readr include:
 
 ## Installation
 
-- Create the .env by using .env.example as a reference: cp .env.example .env
+Follow these steps to set up and run the Rails backend server and the React frontend.
 
-- Update the .env file with your correct local information
+1. Create the .env by using .env.example as a reference: cp .env.example .env
 
-  - DB_HOST=localhost
-  - DB_USER=YourUsername
-  - DB_PASS=YourPassword
-  - DB_NAME=YourDatabaseName
-  - DB_PORT=5432
-  - GOOGLE_MAPS_API=YourApiKey (You will need to acquire a google maps api key at: https://console.cloud.google.com/)
+2. Update the /config/database.yml file with your correct local information
 
-- Install dependencies: npm install
+3. Clone the Repository
+   ```
+   git clone https://github.com/bhood239/Readr.git
+   cd Readr
+   ```
+4. Set Up the Rails Backend
+   Install the required gems:
 
-- Fix to binaries for sass: npm rebuild node-sass
+```
+bundle install
+```
 
-- Reset database: npm run db:reset
+Set up the database:
 
-- Check the db folder to see what gets created and seeded in the DB
+```
+rails db:create
+rails db:migrate
+rails db:seed
+```
 
-- Run the server: npm run local
+Start the Rails server:
 
-  - Note: nodemon is used, so you should not have to restart your server
+```
+rails server
+```
 
-- Visit http://localhost:8080/
+The backend server will run on http://localhost:3001 by default.
 
-- Use the npm run db:reset command each time there is a change to the database schema or seeds. This will run through each of the files, in order, and executes them against the database.
+5. Set Up the React Frontend
+   Navigate to the client directory:
+
+```
+cd client
+```
+
+Install the dependencies:
+
+```
+npm install
+```
+
+Start the React development server:
+
+```
+npm start
+```
+
+The frontend will run on http://localhost:3000.
+
+6. Access the Application
+   Open your browser and navigate to http://localhost:3000 to access the application.
 
 ## Contributors
 
-- Jeremiah Chua - https://github.com/Ametrysinine
+- Holina Millington - https://github.com/Millington-Holi7
 - Vyshnavi Doulagar - https://github.com/vyshudoulagar
 - Ben Hood - https://github.com/bhood239
+- Laraib Shaikh - https://github.com/laraibsshaikh10
 
 ## Final Product Screenshots
 
@@ -88,8 +121,3 @@ The key features of Readr include:
 ![02-desktop-view-pin](./lib/screenshots/02-desktop-view-pin.gif)
 ![03-desktop-login](./lib/screenshots/03-desktop-login.gif)
 ![04-desktop-favorite](./lib/screenshots/04-desktop-favorite.gif)
-
-- Mobile views
-
-![05-mobile-dropdown](./lib/screenshots/05-mobile-dropdown.gif)
-![06-mobile-login](./lib/screenshots/06-mobile-login.gif)
