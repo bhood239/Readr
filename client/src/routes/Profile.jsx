@@ -47,6 +47,7 @@ const Profile = (props) => {
     } = props;
     const [selectedOption, setSelectedOption] = useState("To Be Read");
 
+
     const { getUser } = useUserById();
 
     const location = useLocation();
@@ -104,6 +105,7 @@ const Profile = (props) => {
     const handleSelectOption = (option) => {
         setSelectedOption(option);
     };
+
 
     const renderBookList = () => {
         // if (postFormSelected) {

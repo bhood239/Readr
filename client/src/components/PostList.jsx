@@ -43,7 +43,6 @@ const PostList = ({ currentUser, user, isProfilePage, onEdit, onDelete }) => {
                 key={post.id}
                 post={post}
                 currentUser={currentUser}
-                onEdit={onEdit}
                 onDelete={onDelete}
               />
             </div>

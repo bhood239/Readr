@@ -37,7 +37,6 @@ const Dashboard = (props) => {
     posts,
     loading,
     error,
-    onEdit,
     onDelete,
     existingPost
   } = props;
@@ -51,6 +50,7 @@ const Dashboard = (props) => {
           bookId={postFormBookId} // Pass the correct bookId
           onPostCreation={onPostCreation}
           setPostFormSelected={setPostFormSelected}
+          onDelete={onDelete}
         />
       );
     }
@@ -61,8 +61,8 @@ const Dashboard = (props) => {
         posts={posts} 
         loading={loading} 
         error={error} 
-        onEdit={onEdit}
         onDelete={onDelete}
+    
         />;
       case "searchResults":
         return (
@@ -81,6 +81,12 @@ const Dashboard = (props) => {
             allBookStatuses={allBookStatuses}
             addPost={addPost}
             fetchAllBooksDetails={fetchAllBooksDetails}
+            postFormSelected={postFormSelected}
+            setPostFormSelected={setPostFormSelected}
+            postFormBookId={postFormBookId}
+            onPostCreation={onPostCreation}
+            posts={posts}
+            existingPost={existingPost}
           />
         );
       case "postForm":
@@ -90,6 +96,7 @@ const Dashboard = (props) => {
         post={existingPost} 
         onPostCreation={onPostCreation}
         setPostFormSelected={setPostFormSelected} 
+        onDelete={onDelete}
         />;
       case "findPeople":
         return (
@@ -118,6 +125,12 @@ const Dashboard = (props) => {
             allBookStatuses={allBookStatuses}
             addPost={addPost}
             fetchAllBooksDetails={fetchAllBooksDetails}
+            postFormSelected={postFormSelected}
+            setPostFormSelected={setPostFormSelected}
+            postFormBookId={postFormBookId}
+            onPostCreation={onPostCreation}
+            posts={posts}
+            existingPost={existingPost}
           />
         );
       default:
@@ -126,8 +139,7 @@ const Dashboard = (props) => {
         posts={posts} 
         loading={loading} 
         error={error} 
-        onEdit={onEdit}
-        onDelete={onDelete}
+        
         />;
     }
   };
