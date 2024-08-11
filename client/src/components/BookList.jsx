@@ -183,10 +183,16 @@ const BookList = (props) => {
     });
   };
 
+  if (loading) {
+    return <div className="text-center"> Books Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-danger"> Error while loading books: {error.message}</div>;
+  }
+
   return (
     <div>
-      {loading && <div>Loading...</div>}
-      {error && <div className="error-message">{error}</div>}
       <ul className="book-list">
         {books &&
           books.map(

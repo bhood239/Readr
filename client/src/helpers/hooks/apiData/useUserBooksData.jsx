@@ -7,7 +7,7 @@ import {
 import { getBookById } from "../../apiRequests/bookApi/bookApiRequests";
 
 //   states for bookStates
-const useUserBooks = (currentUser) => {
+const useUserBooks = (currentUser, selectedUser) => {
   const [wantToRead, setWantToRead] = useState([]);
   const [reading, setReading] = useState([]);
   const [read, setRead] = useState([]);
@@ -16,29 +16,31 @@ const useUserBooks = (currentUser) => {
 
   const [loading, setLoading] = useState(true);
 
+  const user = selectedUser || currentUser;
+
   const {
     books: toReadBookIds,
     loading: toReadLoading,
     error: toReadError,
-  } = useBooksByUserAndStatus(currentUser, currentUser?.id, "to_read");
+  } = useBooksByUserAndStatus(currentUser, user?.id, "to_read");
 
   const {
     books: readingBookIds,
     loading: readingLoading,
     error: readingError,
-  } = useBooksByUserAndStatus(currentUser, currentUser?.id, "reading");
+  } = useBooksByUserAndStatus(currentUser, user?.id, "reading");
 
   const {
     books: readBookIds,
     loading: readLoading,
     error: readError,
-  } = useBooksByUserAndStatus(currentUser, currentUser?.id, "read");
+  } = useBooksByUserAndStatus(currentUser, user?.id, "read");
 
   const {
     books: favBookIds,
     loading: favBookLoading,
     error: favBookError,
-  } = useFavoriteBooksByUser(currentUser, currentUser?.id);
+  } = useFavoriteBooksByUser(currentUser, user?.id);
 
   const {
     books: popularBookIds,
@@ -50,6 +52,11 @@ const useUserBooks = (currentUser) => {
 
   const fetchBooksDetails = async (bookIds, setter) => {
     try {
+        if (bookIds.length === 0) {
+            if (isMounted) setter([]);
+            return;
+        }
+
       const booksDetails = await Promise.all(
         bookIds.map(async (bookId) => {
           const book = await getBookById(bookId);
@@ -68,19 +75,19 @@ const useUserBooks = (currentUser) => {
     // Fetch data in parallel
     try {
       await Promise.all([
-        toReadBookIds.length
+        toReadBookIds
           ? fetchBooksDetails(toReadBookIds, setWantToRead)
           : Promise.resolve(),
-        readingBookIds.length
+        readingBookIds
           ? fetchBooksDetails(readingBookIds, setReading)
           : Promise.resolve(),
-        readBookIds.length
+        readBookIds
           ? fetchBooksDetails(readBookIds, setRead)
           : Promise.resolve(),
-        favBookIds.length
+        favBookIds
           ? fetchBooksDetails(favBookIds, setFavBooks)
           : Promise.resolve(),
-        popularBookIds.length
+        popularBookIds
           ? fetchBooksDetails(popularBookIds, setPopularBooks)
           : Promise.resolve(),
       ]);
@@ -100,6 +107,7 @@ const useUserBooks = (currentUser) => {
       isMounted = false; // Cleanup flag when component unmounts
     };
   }, [
+    user,
     currentUser,
     toReadBookIds,
     readingBookIds,

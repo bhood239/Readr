@@ -19,11 +19,20 @@
     justify-content: space-between; /* Ensure space between name and buttons */
 }
 
+.user-list img {
+    width: 40px; /* Small size for profile image */
+    height: 50px;
+    border-radius: 50%; /* Circular image */
+    margin-right: 15px; /* Space between image and text */
+}
+
+
 .user-list li div {
     font-size: 16px;
     font-weight: bold;
     text-align: left; /* Ensure text is left aligned */
     flex: 1; /* Allows the name to take up available space */
+    cursor: pointer;
 }
 
 .user-list button {

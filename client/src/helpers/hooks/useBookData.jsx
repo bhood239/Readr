@@ -7,11 +7,12 @@ import {
 
 const useBookById = (id) => {
   const [book, setBook] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBook = async () => {
+        setLoading(true);
       try {
         const bookData = await getBookById(id);
 
@@ -30,11 +31,12 @@ const useBookById = (id) => {
 
 const useBooksByName = (name) => {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  
   useEffect(() => {
     const fetchBooks = async () => {
+        setLoading(true);
       try {
         const bookList = await getBooksByName(name);
         setBooks(bookList);

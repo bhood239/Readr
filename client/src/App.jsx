@@ -37,6 +37,8 @@ const App = () => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const {
     wantToRead,
     setWantToRead,
@@ -59,7 +61,7 @@ const App = () => {
     favBookError,
     popularBookError,
     fetchAllBooksDetails,
-  } = useUserBooks(currentUser);
+  } = useUserBooks(currentUser, selectedUser);
   const { handleCreateFriend } = useCreateFriend();
   const { handleDeleteFriend } = useDeleteFriend();
   const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
@@ -98,6 +100,7 @@ const App = () => {
   const handleLogout = () => {
     // Simulate a user logging out
     setCurrentUser(null);
+    setSelectedUser(null);
     localStorage.removeItem("currentUser");
     navigate("/");
   };
@@ -137,6 +140,8 @@ const App = () => {
             currentUser ? (
               <Dashboard
                 currentUser={currentUser}
+                selectedUser={selectedUser}
+                setSelectedUser={setSelectedUser}
                 wantToRead={wantToRead}
                 setWantToRead={setWantToRead}
                 reading={reading}
@@ -178,6 +183,8 @@ const App = () => {
             currentUser ? (
               <Profile
                 currentUser={currentUser}
+                selectedUser={selectedUser}
+                setSelectedUser={setSelectedUser}
                 wantToRead={wantToRead}
                 setWantToRead={setWantToRead}
                 reading={reading}
@@ -222,6 +229,7 @@ const App = () => {
             currentUser ? (
               <SearchResult
                 currentUser={currentUser}
+                selectedUser={selectedUser}
                 wantToRead={wantToRead}
                 setWantToRead={setWantToRead}
                 reading={reading}

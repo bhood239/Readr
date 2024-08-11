@@ -12,6 +12,7 @@ const Dashboard = (props) => {
   const [selectedView, setSelectedView] = useState("postList");
   const {
     currentUser,
+    setSelectedUser,
     wantToRead,
     setWantToRead,
     setReading,
@@ -75,6 +76,7 @@ const Dashboard = (props) => {
         return (
           <SearchUsers
             currentUser={currentUser}
+            setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
             handleDeleteFriend={handleDeleteFriend}
           />
