@@ -114,14 +114,11 @@ const PostForm = ({ currentUser, post, bookId, onPostCreation, setPostFormSelect
           .then(() => {
             console.log('Post deleted');
   
-            // Optionally update the posts list in the parent component
+            // update the posts list in the parent component
             onPostCreation(null);
   
-            // Option 1: Update the state to remove the post from the UI without reloading
-            // setPosts((prevPosts) => prevPosts.filter((p) => p.id !== post.id));
-            // setPostFormSelected(false); // Hide the form after deletion
   
-            // Option 2: Reload the page after successful deletion (use only one option)
+            // Reload the page after successful deletion 
             window.location.reload();
           })
           .catch((error) => console.error("Error deleting post:", error));
