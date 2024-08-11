@@ -13,7 +13,6 @@ import {
   useCreateFriend,
   useDeleteFriend,
 } from "./helpers/hooks/apiData/useFriends";
-import PostList from "./components/PostList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   useAllBookStatuses,
@@ -65,7 +64,11 @@ const App = () => {
   const { handleDeleteFriend } = useDeleteFriend();
   const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
   const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
-  const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
+  const { post: existingPost, handlePostByUserIdAndBookId } = usePostByUserIdAndBookId(currentUser);
+  const { handleCreatePost, post: createdPost, loading: createLoading, error: createError } = useCreatePost(currentUser);
+  const { updatePost, loading: updateLoading, error: updateError } = useUpdatePostById(currentUser);
+  const { deletePost, loading: deleteLoading, error: deleteError } = useDeletePostById(currentUser);
+
   const { bookStatuses, loading, error } = useAllBookStatuses(currentUser);
   const [loginSelected, setLoginSelected] = useState(false);
   const [registerSelected, setRegisterSelected] = useState(false);
