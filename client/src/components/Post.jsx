@@ -65,31 +65,6 @@ const Post = ({ post, currentUser, onDelete }) => {
   );
 }
 
-// const handleDelete = () => {
-//   if (post) {
-//     const confirmed = window.confirm("Are you sure you want to delete this post?");
-
-//     if (confirmed) {
-//       deletePost(post.id)
-//         .then(() => {
-//           console.log('Post deleted');
-
-//           // Optionally update the posts list in the parent component
-//           onPostCreation(null);
-
-//           // Option 1: Update the state to remove the post from the UI without reloading
-//           // setPosts((prevPosts) => prevPosts.filter((p) => p.id !== post.id));
-//           // setPostFormSelected(false); // Hide the form after deletion
-
-//           // Option 2: Reload the page after successful deletion (use only one option)
-//           window.location.reload();
-//         })
-//         .catch((error) => console.error("Error deleting post:", error));
-//     }
-//   }
-// };
-
-
   return (
     <div className="post row">
         <div class="col-auto">

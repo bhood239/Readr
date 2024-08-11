@@ -11,11 +11,14 @@ const TopNavBar = ({
   setLoginSelected,
   setRegisterSelected,
   navigate,
+  setSelectedUser
 }) => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary TopNavBar">
       <Container fluid>
-        <Navbar.Brand onClick={() => navigate("/")}>
+        <Navbar.Brand onClick={() => {
+            setSelectedUser(null);
+            navigate("/")}}>
           <img
             src={logo}
             alt="Readr"
@@ -28,13 +31,13 @@ const TopNavBar = ({
             <>
               <Nav className="me-auto middle-nav">
                 <LinkContainer to="/">
-                  <Nav.Link>Dashboard</Nav.Link>
+                  <Nav.Link onClick={() => setSelectedUser(null)}>Dashboard</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/Profile">
-                  <Nav.Link>Profile</Nav.Link>
+                  <Nav.Link onClick={() => setSelectedUser(null)}>Profile</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/search">
-                  <Nav.Link>
+                  <Nav.Link onClick={() => setSelectedUser(null)}>
                     Search <FaSearch />
                   </Nav.Link>
                 </LinkContainer>

@@ -42,7 +42,6 @@ Post.create!(rating: 4, review: "A powerful narrative with themes of loyalty and
 Post.create!(rating: 5, review: "A profound and emotional story with intricate character development. The series continues to impress.", time_spent: 180, book_id: "OL82565W", user_id: user1.id)
 Post.create!(rating: 5, review: "A fitting conclusion to an epic series. The resolution is satisfying and leaves a lasting impact.", time_spent: 200, book_id: "OL39794425M", user_id: user2.id)
 
-Post.create!(rating: 4, review: "A touching and heartwarming story that highlights the bond between humans and animals. A beautiful read.", time_spent: 110, book_id: "OL15854658W", user_id: user3.id)
 Post.create!(rating: 5, review: "A charming tale of friendship and loyalty. The simplicity of the story is its strength, making it a beloved classic.", time_spent: 90, book_id: "OL7885696M", user_id: user4.id)
 
 # Create friends
