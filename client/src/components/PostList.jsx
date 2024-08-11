@@ -3,7 +3,7 @@ import React from "react";
 import Post from "./Post";
 import { useAllPosts } from "../helpers/hooks/apiData/usePostData";
 
-const PostList = ({ currentUser, isProfilePage, onEdit, onDelete }) => {
+const PostList = ({ currentUser, isProfilePage, onDelete }) => {
   const { posts, loading, error } = useAllPosts(currentUser);
 
   if (loading) {
@@ -43,7 +43,6 @@ const PostList = ({ currentUser, isProfilePage, onEdit, onDelete }) => {
                 key={post.id}
                 post={post}
                 currentUser={currentUser}
-                onEdit={onEdit}
                 onDelete={onDelete}
               />
             </div>
