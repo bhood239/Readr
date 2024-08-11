@@ -44,6 +44,8 @@ const Profile = (props) => {
     postFormBookId,
     onPostCreation,
     fetchAllBooksDetails,
+    existingPost,
+    onDelete
   } = props;
   const [selectedOption, setSelectedOption] = useState("To Be Read");
 
@@ -112,10 +114,12 @@ const Profile = (props) => {
     if (postFormSelected) {
       return (
         <PostForm
-          currentUser={currentUser.id}
-          postFormBookId={postFormBookId}
-          onPostCreation={onPostCreation}
-          setPostFormSelected={setPostFormSelected}
+        currentUser={currentUser.id}
+        bookId={postFormBookId}
+        post={existingPost} 
+        onPostCreation={onPostCreation}
+        setPostFormSelected={setPostFormSelected} 
+        onDelete={onDelete}
         />
       );
     }
