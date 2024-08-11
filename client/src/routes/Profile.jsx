@@ -142,6 +142,7 @@ const Profile = (props) => {
                         setReading={setReading}
                         setRead={setRead}
                         setFavBooks={setFavBooks}
+                        postFormSelected={postFormSelected}
                     />
                 ) : (
                     <div>No books to be read</div>

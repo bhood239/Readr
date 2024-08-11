@@ -30,30 +30,30 @@ const Dashboard = (props) => {
     allBookStatuses,
     addPost,
     postFormSelected,
-    setPostFormSelected,
-    postFormBookId,
-    onPostCreation,
     fetchAllBooksDetails,
     posts,
     loading,
     error,
     onDelete,
+    onPostCreation,
+    setPostFormSelected,
+    postFormBookId,
     existingPost
   } = props;
 
   const renderContent = () => {
-    if (postFormSelected) {
-      return (
-        <PostForm
-          currentUser={currentUser.id}
-          post={existingPost} // If editing, pass the existing post
-          bookId={postFormBookId} // Pass the correct bookId
-          onPostCreation={onPostCreation}
-          setPostFormSelected={setPostFormSelected}
-          onDelete={onDelete}
-        />
-      );
-    }
+    // if (postFormSelected) {
+    //   return (
+    //     <PostForm
+    //       currentUser={currentUser.id}
+    //       post={existingPost} // If editing, pass the existing post
+    //       bookId={postFormBookId} // Pass the correct bookId
+    //       onPostCreation={onPostCreation}
+    //       setPostFormSelected={setPostFormSelected}
+    //       onDelete={onDelete}
+    //     />
+    //   );
+    // }
 
     switch (selectedView) {
       case "postList":
@@ -89,16 +89,7 @@ const Dashboard = (props) => {
             existingPost={existingPost}
           />
         );
-      case "postForm":
-        return <PostForm
-        currentUser={currentUser.id}
-        bookId={postFormBookId}
-        post={existingPost} 
-        onPostCreation={onPostCreation}
-        setPostFormSelected={setPostFormSelected} 
-        onDelete={onDelete}
-        />;
-     
+
       case "popularBooks":
         return (
           <BookList
