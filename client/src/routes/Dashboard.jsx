@@ -34,6 +34,12 @@ const Dashboard = (props) => {
     postFormBookId,
     onPostCreation,
     fetchAllBooksDetails,
+    posts,
+    loading,
+    error,
+    onEdit,
+    onDelete,
+    existingPost
   } = props;
 
   const renderContent = () => {
@@ -41,7 +47,8 @@ const Dashboard = (props) => {
       return (
         <PostForm
           currentUser={currentUser.id}
-          postFormBookId={postFormBookId}
+          post={existingPost} // If editing, pass the existing post
+          bookId={postFormBookId} // Pass the correct bookId
           onPostCreation={onPostCreation}
           setPostFormSelected={setPostFormSelected}
         />
@@ -50,7 +57,13 @@ const Dashboard = (props) => {
 
     switch (selectedView) {
       case "postList":
-        return <PostList currentUser={currentUser} />;
+        return <PostList currentUser={currentUser} 
+        posts={posts} 
+        loading={loading} 
+        error={error} 
+        onEdit={onEdit}
+        onDelete={onDelete}
+        />;
       case "searchResults":
         return (
           <SearchResult
@@ -71,7 +84,13 @@ const Dashboard = (props) => {
           />
         );
       case "postForm":
-        return <PostForm />;
+        return <PostForm
+        currentUser={currentUser.id}
+        bookId={postFormBookId}
+        post={existingPost} 
+        onPostCreation={onPostCreation}
+        setPostFormSelected={setPostFormSelected} 
+        />;
       case "findPeople":
         return (
           <SearchUsers
@@ -102,7 +121,14 @@ const Dashboard = (props) => {
           />
         );
       default:
-        return <PostList />;
+        return <PostList 
+        currentUser={currentUser} 
+        posts={posts} 
+        loading={loading} 
+        error={error} 
+        onEdit={onEdit}
+        onDelete={onDelete}
+        />;
     }
   };
 
