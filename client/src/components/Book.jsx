@@ -117,11 +117,13 @@ const Book = (props) => {
               <option value="reading">Reading</option>
               <option value="read">Read</option>
             </select>
-            <button onClick={handleClick}>Add</button>
+            <button onClick={handleClick}>Add to list</button>
           </div>
-        </div>
-        <div>
-          <button onClick={() => addPost(book.id)}>Review</button>
+          <div>
+            <button className="review-btn" onClick={() => addPost(book.id)}>
+              Review
+            </button>
+          </div>
         </div>
       </div>
     </div>
