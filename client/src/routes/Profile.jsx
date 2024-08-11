@@ -45,8 +45,10 @@ const Profile = (props) => {
         postFormBookId,
         onPostCreation,
         fetchAllBooksDetails,
+        existingPost,
+        onDelete
     } = props;
-    const [selectedOption, setSelectedOption] = useState("To Be Read");
+    const [selectedOption, setSelectedOption] = useState("My Posts");
     // console.log('currentUser:', currentUser);
 
 
@@ -72,6 +74,7 @@ const Profile = (props) => {
                 try {
                     const followerPromises = user.followers_list.map((follower) => getUser(follower.id));
                     const followersList = await Promise.all(followerPromises);
+                    console.log('followers list:', followersList);
                     setFollowersList(followersList);
                 } catch (error) {
                     setErrorFollowers('Error loading followers');
@@ -112,18 +115,18 @@ const Profile = (props) => {
 
 
     const renderBookList = () => {
-        // if (postFormSelected) {
-        //     return (
-        //         <PostForm
-        //             currentUser={currentUser.id}
-        //             bookId={postFormBookId}
-        //             post={existingPost}
-        //             onPostCreation={onPostCreation}
-        //             setPostFormSelected={setPostFormSelected}
-        //             onDelete={onDelete}
-        //         />
-        //     );
-        // }
+        if (postFormSelected) {
+            return (
+                <PostForm
+                    currentUser={currentUser}
+                    bookId={postFormBookId}
+                    post={existingPost}
+                    onPostCreation={onPostCreation}
+                    setPostFormSelected={setPostFormSelected}
+                    onDelete={onDelete}
+                />
+            );
+        }
 
         switch (selectedOption) {
             case "To Be Read":

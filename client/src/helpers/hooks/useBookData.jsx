@@ -15,7 +15,6 @@ const useBookById = (id) => {
         setLoading(true);
       try {
         const bookData = await getBookById(id);
-
         setBook(bookData);
       } catch (err) {
         setError(err);

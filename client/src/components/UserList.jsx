@@ -32,6 +32,7 @@ const UserList = (props) => {
         setSelectedUser(user);
         navigate('/profile');
     };
+    console.log('users:', users);
 
     const follow = async (userId) => {
         await handleCreateFriend({ follower_id: currentUser.id, following_id: userId });

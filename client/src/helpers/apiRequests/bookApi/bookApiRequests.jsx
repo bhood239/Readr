@@ -2,6 +2,7 @@
 import axios from "axios";
 
 const getBookById = async (id) => {
+    console.log('book id in api', id);
   try {
     let res;
     // Determine which endpoint to use based on ID length or format

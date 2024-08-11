@@ -169,6 +169,7 @@ const handlePostDeletion = async (id) => {
         setLoginSelected={setLoginSelected}
         setRegisterSelected={setRegisterSelected}
         navigate={navigate}
+        setSelectedUser={setSelectedUser}
       />
       <Routes>
         <Route
@@ -291,6 +292,7 @@ const handlePostDeletion = async (id) => {
                 onPostCreation={handlePostCreation}
                 posts={posts}
                 existingPost={existingPost}
+                onDelete={handlePostDeletion}
               />
             ) : (
               <Navigate to="/" />
