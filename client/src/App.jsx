@@ -106,8 +106,8 @@ const App = () => {
         )
       );
     // fetchPosts();
-    // setPostFormSelected(false); // Hide PostForm
-    // setViewPostList(true); // Show PostList
+    setPostFormSelected(false); // Hide PostForm
+    setViewPostList(true); // Show PostList
   };
 
   const handlePostUpdate = async (id, updatedData) => {
@@ -180,7 +180,7 @@ const handleLogout = () => {
                                 posts={posts}
                                 onEdit={handlePostUpdate}
                                 onDelete={handlePostDeletion}
-                                post={existingPost}
+                                existingPost={existingPost}
                             />
                         ) : (
                             <Homepage

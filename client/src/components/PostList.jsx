@@ -34,6 +34,7 @@ const PostList = ({currentUser, onEdit, onDelete }) => {
           <div key={post.id} className="mb-3">
             <div className="card post-item">
               <Post 
+                key={post.id}
                 post={post}   
                 currentUser={currentUser}
                 onEdit={onEdit}

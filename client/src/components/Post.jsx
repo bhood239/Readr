@@ -26,7 +26,7 @@ const Post = ({ post, currentUser, onEdit, onDelete }) => {
   if (error) return <p>Error fetching book details.</p>;
   if (!bookDetails) {
     // console.log('Book data is null');
-    return <p>No book data available for this post at this time!</p>;
+    return <p>No book data available for this post at this time</p>;
   }
 
   const handleEdit = () => {
