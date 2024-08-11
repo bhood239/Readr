@@ -51,28 +51,30 @@ const SearchResult = (props) => {
         </button>{" "}
         {/* Apply the CSS class */}
       </div>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
-      {searchData.length > 0 && (
-        <BookList
-          books={searchData}
-          loading={loading}
-          error={error}
-          currentUser={currentUser}
-          wantToRead={wantToRead}
-          reading={reading}
-          read={read}
-          favBooks={favBooks}
-          handleCreateBookStatus={handleCreateBookStatus}
-          updateBookStatus={updateBookStatus}
-          allBookStatuses={allBookStatuses}
-          fetchAllBooksDetails={fetchAllBooksDetails}
-          setWantToRead={setWantToRead}
-          setReading={setReading}
-          setRead={setRead}
-          setFavBooks={setFavBooks}
-        />
-      )}
+      <div className="search-results">
+        {loading && <div>Loading...</div>}
+        {error && <div>Error: {error}</div>}
+        {searchData.length > 0 && (
+          <BookList
+            books={searchData}
+            loading={loading}
+            error={error}
+            currentUser={currentUser}
+            wantToRead={wantToRead}
+            reading={reading}
+            read={read}
+            favBooks={favBooks}
+            handleCreateBookStatus={handleCreateBookStatus}
+            updateBookStatus={updateBookStatus}
+            allBookStatuses={allBookStatuses}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
+          />
+        )}
+      </div>
     </div>
   );
 };
