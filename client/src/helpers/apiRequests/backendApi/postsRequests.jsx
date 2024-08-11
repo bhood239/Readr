@@ -6,10 +6,12 @@ import axios from "axios";
 export const createPost = async (params) => {
   try {
     const res = await axios.post(`/api/posts`, params);
-    console.log("post created:", res.data);
     return res.data;
   } catch (err) {
-    console.log("error creating post: ", err.response ? err.response.data : err.message);    
+    console.log(
+      "error creating post: ",
+      err.response ? err.response.data : err.message
+    );
     return null;
   }
 };
@@ -18,7 +20,6 @@ export const createPost = async (params) => {
 export const getPostById = async (postId) => {
   try {
     const res = await axios.get(`/api/posts/${postId}`);
-    console.log("response received: ", res.data);
     return res.data;
   } catch (err) {
     console.log("error getting post: ", err.message);
@@ -27,21 +28,19 @@ export const getPostById = async (postId) => {
 };
 
 export const getPostByUserIdAndBookId = async (userId, bookId) => {
-    try {
-      const res = await axios.get(`/api/posts/${userId}/${bookId}`);
-      console.log("response received: ", res.data);
-      return res.data;
-    } catch (err) {
-      console.log("error getting post: ", err.message);
-      return null;
-    }
+  try {
+    const res = await axios.get(`/api/posts/${userId}/${bookId}`);
+    return res.data;
+  } catch (err) {
+    console.log("error getting post: ", err.message);
+    return null;
+  }
 };
 
 // READ ALL
 export const getAllPosts = async () => {
   try {
     const res = await axios.get("/api/posts");
-    console.log("response received: ", res.data);
     return res.data;
   } catch (err) {
     console.log("error getting posts: ", err.message);
@@ -53,7 +52,6 @@ export const getAllPosts = async () => {
 export const updatePostById = async (postId, params) => {
   try {
     const res = await axios.put(`/api/posts/${postId}`, params);
-    console.log("post updated: ", res.data);
     return res.data;
   } catch (err) {
     console.log("error updating post: ", err.message);
@@ -65,7 +63,6 @@ export const updatePostById = async (postId, params) => {
 export const deletePostById = async (postId) => {
   try {
     const res = await axios.delete(`/api/posts/${postId}`);
-    console.log("post deleted: ", res.data);
     return res.data;
   } catch (err) {
     console.log("error deleting post: ", err.message);

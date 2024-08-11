@@ -8,36 +8,43 @@ import PostForm from "../components/PostForm";
 import { useUserById } from "../helpers/hooks/apiData/useUserData";
 
 const Profile = (props) => {
-    const {
-        selectedUser,
-        currentUser,
-        setSelectedUser,
-        wantToRead,
-        reading,
-        read,
-        favBooks,
-        popularBooks,
-        toReadLoading,
-        readingLoading,
-        readLoading,
-        favBookLoading,
-        popularBookLoading,
-        toReadError,
-        readingError,
-        readError,
-        favBookError,
-        popularBookError,
-        handleCreateFriend,
-        handleDeleteFriend,
-        handleCreateBookStatus,
-        updateBookStatus,
-        allBookStatuses,
-        addPost,
-        postFormSelected,
-        setPostFormSelected,
-        postFormBookId,
-        onPostCreation
-    } = props;
+  const {
+    currentUser,
+    selectedUser,
+    setSelectedUser,
+    wantToRead,
+    setWantToRead,
+    reading,
+    setReading,
+    read,
+    setRead,
+    favBooks,
+    setFavBooks,
+    popularBooks,
+    setPopularBooks,
+    toReadLoading,
+    readingLoading,
+    readLoading,
+    favBookLoading,
+    popularBookLoading,
+    toReadError,
+    readingError,
+    readError,
+    favBookError,
+    popularBookError,
+    handleCreateFriend,
+    handleDeleteFriend,
+    handleCreateBookStatus,
+    updateBookStatus,
+    allBookStatuses,
+    addPost,
+    postFormSelected,
+    setPostFormSelected,
+    postFormBookId,
+    onPostCreation,
+    fetchAllBooksDetails,
+  } = props;
+  const [selectedOption, setSelectedOption] = useState("To Be Read");
 
     const { getUser } = useUserById();
 
@@ -46,22 +53,12 @@ const Profile = (props) => {
     // const selectedUser = location.state?.selectedUser || currentUser;
     const user = selectedUser || currentUser;
 
-    const [selectedOption, setSelectedOption] = useState('Posts');
-
     const [followersList, setFollowersList] = useState([]);
     const [followingList, setFollowingList] = useState([]);
     const [loadingFollowers, setLoadingFollowers] = useState(false);
     const [loadingFollowing, setLoadingFollowing] = useState(false);
     const [errorFollowers, setErrorFollowers] = useState(null);
-    const [errorFollowing, setErrorFollowing] = useState(null);
-
-    // useEffect(() => {
-    //     console.log('Current location:', location.pathname);
-    //     if (location.pathname === '/') {
-    //         // Reset selected user when navigating away from a specific user
-    //         setSelectedUser(null);
-    //     }
-    // }, [location, state, setSelectedUser]);   
+    const [errorFollowing, setErrorFollowing] = useState(null); 
 
     useEffect(() => {
         if (selectedOption === 'Followers List') {
@@ -118,142 +115,167 @@ const Profile = (props) => {
             );
         }
 
-        switch (selectedOption) {
-            case 'To Be Read':
-                return wantToRead.length > 0 ? (
-                    <BookList
-                        books={wantToRead}
-                        loading={toReadLoading}
-                        error={toReadError}
-                        currentUser={currentUser}
-                        wantToRead={wantToRead}
-                        reading={reading}
-                        read={read}
-                        favBooks={favBooks}
-                        handleCreateBookStatus={handleCreateBookStatus}
-                        updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses}
-                        addPost={addPost} />
-                ) : (
-                    <div>No books to be read</div>
-                );
-            case 'Reading':
-                return reading.length > 0 ? (
-                    <BookList
-                        books={reading}
-                        loading={readingLoading}
-                        error={readingLoading}
-                        currentUser={currentUser}
-                        wantToRead={wantToRead}
-                        reading={reading}
-                        read={read}
-                        favBooks={favBooks}
-                        handleCreateBookStatus={handleCreateBookStatus}
-                        updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses}
-                        addPost={addPost} />
-                ) : (
-                    <div>No books currently being read</div>
-                );
-            case 'Read':
-                console.log('user read books:', user, read);
-                return read.length > 0 ? (
-                    <BookList
-                        books={read}
-                        loading={readLoading}
-                        error={readError}
-                        currentUser={currentUser}
-                        wantToRead={wantToRead}
-                        reading={reading}
-                        read={read}
-                        favBooks={favBooks}
-                        handleCreateBookStatus={handleCreateBookStatus}
-                        updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses}
-                        addPost={addPost} />
-                ) : (
-                    <div>No books read</div>
-                );
-            case 'My Books':
-                console.log('user favbooks details:', user, favBooks);
-                return favBooks.length > 0 ? (
-                    <BookList
-                        books={favBooks}
-                        loading={favBookLoading}
-                        error={favBookError}
-                        currentUser={currentUser}
-                        wantToRead={wantToRead}
-                        reading={reading}
-                        read={read}
-                        favBooks={favBooks}
-                        handleCreateBookStatus={handleCreateBookStatus}
-                        updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses}
-                        addPost={addPost} />
-                ) : (
-                    <div>No favorite books</div>
-                );
-            case 'Followers List':
-                if (loadingFollowers) return <div>Loading followers...</div>;
-                if (errorFollowers) return <div>{errorFollowers}</div>;
-                return followersList.length > 0 ? (
-                    <UserList
-                        users={followersList}
-                        currentUser={currentUser}
-                        user={user}
-                        setSelectedUser={setSelectedUser}
-                        handleCreateFriend={handleCreateFriend}
-                        handleDeleteFriend={handleDeleteFriend}
-                    />
-                ) : (
-                    <div>No followers</div>
-                );
-            case 'Following List':
-                if (loadingFollowing) return <div>Loading following...</div>;
-                if (errorFollowing) return <div>{errorFollowing}</div>;
-                return followingList.length > 0 ? (
-                    <UserList
-                        users={followingList}
-                        currentUser={currentUser}
-                        user={user}
-                        setSelectedUser={setSelectedUser}
-                        handleCreateFriend={handleCreateFriend}
-                        handleDeleteFriend={handleDeleteFriend}
-                    />
-                ) : (
-                    <div>No following</div>
-                );
-            case 'Popular Books':
-                return popularBooks.length > 0 ? (
-                    <BookList
-                        books={popularBooks}
-                        loading={popularBookLoading}
-                        error={popularBookError}
-                        currentUser={currentUser}
-                        wantToRead={wantToRead}
-                        reading={reading}
-                        read={read}
-                        favBooks={favBooks}
-                        handleCreateBookStatus={handleCreateBookStatus}
-                        updateBookStatus={updateBookStatus}
-                        allBookStatuses={allBookStatuses}
-                        addPost={addPost} />
-                ) : (
-                    <div>No popular books</div>
-                );
-            case 'Search Users':
-                return (
-                    <SearchUsers
-                        currentUser={currentUser}
-                        setSelectedUser={setSelectedUser}
-                        handleCreateFriend={handleCreateFriend}
-                        handleDeleteFriend={handleDeleteFriend}
-                        addPost={addPost} />
-                );
-            default:
-                return null;
-        }
-    };
+    switch (selectedOption) {
+      case "To Be Read":
+        return wantToRead.length > 0 ? (
+          <BookList
+            books={wantToRead}
+            loading={toReadLoading}
+            error={toReadError}
+            currentUser={currentUser}
+            wantToRead={wantToRead}
+            reading={reading}
+            read={read}
+            favBooks={favBooks}
+            handleCreateBookStatus={handleCreateBookStatus}
+            updateBookStatus={updateBookStatus}
+            allBookStatuses={allBookStatuses}
+            addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
+          />
+        ) : (
+          <div>No books to be read</div>
+        );
+      case "Reading":
+        return reading.length > 0 ? (
+          <BookList
+            books={reading}
+            loading={readingLoading}
+            error={readingLoading}
+            currentUser={currentUser}
+            wantToRead={wantToRead}
+            reading={reading}
+            read={read}
+            favBooks={favBooks}
+            handleCreateBookStatus={handleCreateBookStatus}
+            updateBookStatus={updateBookStatus}
+            allBookStatuses={allBookStatuses}
+            addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
+          />
+        ) : (
+          <div>No books currently being read</div>
+        );
+      case "Read":
+        return read.length > 0 ? (
+          <BookList
+            books={read}
+            loading={readLoading}
+            error={readError}
+            currentUser={currentUser}
+            wantToRead={wantToRead}
+            reading={reading}
+            read={read}
+            favBooks={favBooks}
+            handleCreateBookStatus={handleCreateBookStatus}
+            updateBookStatus={updateBookStatus}
+            allBookStatuses={allBookStatuses}
+            addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
+          />
+        ) : (
+          <div>No books read</div>
+        );
+      case "My Books":
+        return favBooks.length > 0 ? (
+          <BookList
+            books={favBooks}
+            loading={favBookLoading}
+            error={favBookError}
+            currentUser={currentUser}
+            wantToRead={wantToRead}
+            reading={reading}
+            read={read}
+            favBooks={favBooks}
+            handleCreateBookStatus={handleCreateBookStatus}
+            updateBookStatus={updateBookStatus}
+            allBookStatuses={allBookStatuses}
+            addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
+          />
+        ) : (
+          <div>No favorite books</div>
+        );
+      case "Followers List":
+        return followersList.length > 0 ? (
+          <UserList
+            users={followersList}
+            currentUser={currentUser}
+            user={user}
+            setSelectedUser={setSelectedUser}
+            handleCreateFriend={handleCreateFriend}
+            handleDeleteFriend={handleDeleteFriend}
+          />
+        ) : (
+          <div>No followers</div>
+        );
+      case "Following List":
+        return followingList.length > 0 ? (
+          <UserList
+            users={followingList}
+            currentUser={currentUser}
+            user={user}
+            setSelectedUser={setSelectedUser}
+            handleCreateFriend={handleCreateFriend}
+            handleDeleteFriend={handleDeleteFriend}
+          />
+        ) : (
+          <div>No following</div>
+        );
+      case "Popular Books":
+        return popularBooks.length > 0 ? (
+          <BookList
+            books={popularBooks}
+            loading={popularBookLoading}
+            error={popularBookError}
+            currentUser={currentUser}
+            wantToRead={wantToRead}
+            reading={reading}
+            read={read}
+            favBooks={favBooks}
+            handleCreateBookStatus={handleCreateBookStatus}
+            updateBookStatus={updateBookStatus}
+            allBookStatuses={allBookStatuses}
+            addPost={addPost}
+            fetchAllBooksDetails={fetchAllBooksDetails}
+            setWantToRead={setWantToRead}
+            setReading={setReading}
+            setRead={setRead}
+            setFavBooks={setFavBooks}
+          />
+        ) : (
+          <div>No popular books</div>
+        );
+      case "Search Users":
+        return (
+          <SearchUsers
+            currentUser={currentUser}
+            setSelectedUser={setSelectedUser}
+            handleCreateFriend={handleCreateFriend}
+            handleDeleteFriend={handleDeleteFriend}
+            addPost={addPost}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
     return (
         <div className="container">
