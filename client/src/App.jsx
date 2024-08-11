@@ -156,11 +156,6 @@ const handlePostDeletion = async (id) => {
     navigate("/");
   };
 
-  const handlePostCreation = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
-    setPostFormSelected(false); // Hide PostForm
-    setViewPostList(true); // Show PostList
-  };
 
   useEffect(() => {
     if (!postsLoading && !postsError) {
