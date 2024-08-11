@@ -98,15 +98,7 @@ const Dashboard = (props) => {
         setPostFormSelected={setPostFormSelected} 
         onDelete={onDelete}
         />;
-      case "findPeople":
-        return (
-          <SearchUsers
-            currentUser={currentUser}
-            setSelectedUser={setSelectedUser}
-            handleCreateFriend={handleCreateFriend}
-            handleDeleteFriend={handleDeleteFriend}
-          />
-        );
+     
       case "popularBooks":
         return (
           <BookList
@@ -175,24 +167,29 @@ const Dashboard = (props) => {
             >
               Search Books
             </button>
-          </div>
-          {renderContent()}
-        </div>
-
-        {/* FindPeople and PopularBooks on the right */}
-        <div className="right-sidebar">
           <button
             className="dashboard-btn"
             onClick={() => setSelectedView("popularBooks")}
           >
             Popular Books
           </button>
-          <button
-            className="dashboard-btn"
-            onClick={() => setSelectedView("findPeople")}
+          </div>
+          {renderContent()}
+        </div>
+
+        {/* FindPeople and PopularBooks on the right */}
+        <div className="right-sidebar">
+          <div
+            className="card-title"
           >
             Find People
-          </button>
+          <SearchUsers
+            currentUser={currentUser}
+            setSelectedUser={setSelectedUser}
+            handleCreateFriend={handleCreateFriend}
+            handleDeleteFriend={handleDeleteFriend}
+          />
+          </div>
         </div>
       </div>
     </div>
