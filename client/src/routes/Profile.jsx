@@ -46,7 +46,7 @@ const Profile = (props) => {
     // const selectedUser = location.state?.selectedUser || currentUser;
     const user = selectedUser || currentUser;
 
-    const [selectedOption, setSelectedOption] = useState('To Be Read');
+    const [selectedOption, setSelectedOption] = useState('Posts');
 
     const [followersList, setFollowersList] = useState([]);
     const [followingList, setFollowingList] = useState([]);
