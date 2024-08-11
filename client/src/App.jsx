@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import "./styles/App.css";
 import TopNavBar from "./components/TopNavBar";
 import Footer from "./components/Footer";
@@ -14,9 +13,7 @@ import {
   useCreateFriend,
   useDeleteFriend,
 } from "./helpers/hooks/apiData/useFriends";
-import PostList from "./components/PostList";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles/main.scss";
 import {
   useAllBookStatuses,
   useCreateBookStatus,
@@ -24,8 +21,11 @@ import {
   useBookStatusByUserAndBook,
 } from "./helpers/hooks/apiData/useBookStatusdata";
 import {
-  usePostByUserIdAndBookId,
-  useAllPosts,
+    useCreatePost,
+    usePostByUserIdAndBookId,
+    useAllPosts,
+    useUpdatePostById,
+    useDeletePostById
 } from "./helpers/hooks/apiData/usePostData";
 
 const App = () => {
@@ -66,7 +66,11 @@ const App = () => {
   const { handleDeleteFriend } = useDeleteFriend();
   const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
   const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
-  const { handlePostByUserIdAndBookId } = usePostByUserIdAndBookId();
+  const { post: existingPost, handlePostByUserIdAndBookId } = usePostByUserIdAndBookId(currentUser);
+  const { handleCreatePost, post: createdPost, loading: createLoading, error: createError } = useCreatePost(currentUser);
+  const { updatePost, loading: updateLoading, error: updateError } = useUpdatePostById(currentUser);
+  const { deletePost, loading: deleteLoading, error: deleteError } = useDeletePostById(currentUser);
+
   const { bookStatuses, loading, error } = useAllBookStatuses(currentUser);
   const [loginSelected, setLoginSelected] = useState(false);
   const [registerSelected, setRegisterSelected] = useState(false);
@@ -88,14 +92,67 @@ const App = () => {
     }
   }, [currentUser, navigate]);
 
-  const addPost = (bookId) => {
-    if (currentUser) {
-      setPostFormBookId(bookId);
-      setPostFormSelected(true);
-      // const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
-      // post ? setEditPostSelected(true) : setPostFormSelected(true);
-    }
+
+    // useEffect(() => {
+    //     if (!postsLoading && !postsError) {
+    //         setPosts(initialPosts || []); // Update local posts state with initial data
+    //     }
+    // }, [initialPosts, postsLoading, postsError]);
+
+    const addPost = (bookId) => {
+      if (currentUser) {
+          setPostFormBookId(bookId);
+          // setPostFormSelected(true);
+          // const post = handlePostByUserIdAndBookId(currentUser.id, bookId);
+          // post ? setEditPostSelected(true) : setPostFormSelected(true);
+          handlePostByUserIdAndBookId(currentUser.id, bookId).then(() => {
+            setEditPostSelected(existingPost ? true : false);
+            setPostFormSelected(true);
+        });
+      }
   };
+
+  
+  const handlePostCreation = (updatedPost) => {
+    setPosts((prevPosts) =>
+        prevPosts.map((post) => 
+            post.id === updatedPost.id ? updatedPost : post
+        )
+      );
+    // fetchPosts();
+    setPostFormSelected(false); // Hide PostForm
+    setViewPostList(true); // Show PostList
+  };
+
+  const handlePostUpdate = async (id, updatedData) => {
+    console.log("Initiating post update...");
+    try {
+        const newPostData = await updatePost(id, updatedData);
+        if (newPostData) {
+            console.log("Post updated:", newPostData);
+            setPosts((prevPosts) =>
+                prevPosts.map((post) => (post.id === id ? newPostData : post))
+            );
+        } else {
+            console.error("No post data returned from API");
+        }
+    } catch (error) {
+        console.error("Error updating post:", error);
+    }
+};
+
+const handlePostDeletion = async (id) => {
+    console.log("Initiating post deletion...");
+    try {
+        await deletePost(id);
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+        console.log("Post deleted:", id);
+    } catch (error) {
+        console.error("Error deleting post:", error);
+    }
+};
+
+
 
   const handleLogout = () => {
     // Simulate a user logging out
@@ -105,11 +162,6 @@ const App = () => {
     navigate("/");
   };
 
-  const handlePostCreation = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts]); // Update posts state with the new post
-    setPostFormSelected(false); // Hide PostForm
-    setViewPostList(true); // Show PostList
-  };
 
   useEffect(() => {
     if (!postsLoading && !postsError) {
@@ -163,6 +215,9 @@ const App = () => {
                 postFormBookId={postFormBookId}
                 onPostCreation={handlePostCreation}
                 posts={posts}
+                onEdit={handlePostUpdate}
+                onDelete={handlePostDeletion}
+                existingPost={existingPost}
                 fetchAllBooksDetails={fetchAllBooksDetails}
               />
             ) : (
@@ -250,10 +305,7 @@ const App = () => {
           }
         />
       </Routes>
-      {viewPostList && (
-        <PostList posts={posts} loading={postsLoading} error={postsError} />
-      )}{" "}
-      {/* Render PostList when state is set */}
+      
       <Footer navigate={navigate} />
     </div>
   );
