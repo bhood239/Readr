@@ -37,7 +37,7 @@ const MiniProfile = (props) => {
               <span>{currentUser.followers}</span>
             </li>
             <li>
-              <span>To Read:</span>
+              <span>Want to Read:</span>
               <span>{numOfToRead}</span>
             </li>
             <li>

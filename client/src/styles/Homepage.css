@@ -45,12 +45,15 @@
   width: 200px;
   height: 50px;
   border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: 0.3s, color 0.3s;
+  color: rgb(243, 243, 243);
+  background-color: #A92929;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+
 }
 
 .homepage .nav-link:hover {
-  color: #d65a29;
+  background-color: #d65a29;
+  color: rgb(243, 243, 243);
 }

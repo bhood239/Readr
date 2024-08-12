@@ -2,7 +2,7 @@
 
 .dashboard-container {
     display: flex;
-    height: 100vh; /* Full viewport height */
+    height: auto; /* Full viewport height */
     overflow: hidden;
     background-color: #fbeec1; /* Warm, light beige background */
 }

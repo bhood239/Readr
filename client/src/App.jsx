@@ -21,11 +21,11 @@ import {
   useBookStatusByUserAndBook,
 } from "./helpers/hooks/apiData/useBookStatusdata";
 import {
-    useCreatePost,
-    usePostByUserIdAndBookId,
-    useAllPosts,
-    useUpdatePostById,
-    useDeletePostById
+  useCreatePost,
+  usePostByUserIdAndBookId,
+  useAllPosts,
+  useUpdatePostById,
+  useDeletePostById,
 } from "./helpers/hooks/apiData/usePostData";
 
 const App = () => {
@@ -66,10 +66,24 @@ const App = () => {
   const { handleDeleteFriend } = useDeleteFriend();
   const { handleCreateBookStatus } = useCreateBookStatus(currentUser);
   const { updateBookStatus } = useUpdateBookStatusByUserAndBook(currentUser);
-  const { post: existingPost, handlePostByUserIdAndBookId } = usePostByUserIdAndBookId(currentUser);
-  const { handleCreatePost, post: createdPost, loading: createLoading, error: createError } = useCreatePost(currentUser);
-  const { updatePost, loading: updateLoading, error: updateError } = useUpdatePostById(currentUser);
-  const { deletePost, loading: deleteLoading, error: deleteError } = useDeletePostById(currentUser);
+  const { post: existingPost, handlePostByUserIdAndBookId } =
+    usePostByUserIdAndBookId(currentUser);
+  const {
+    handleCreatePost,
+    post: createdPost,
+    loading: createLoading,
+    error: createError,
+  } = useCreatePost(currentUser);
+  const {
+    updatePost,
+    loading: updateLoading,
+    error: updateError,
+  } = useUpdatePostById(currentUser);
+  const {
+    deletePost,
+    loading: deleteLoading,
+    error: deleteError,
+  } = useDeletePostById(currentUser);
 
   const { bookStatuses, loading, error } = useAllBookStatuses(currentUser);
   const [loginSelected, setLoginSelected] = useState(false);
@@ -92,52 +106,45 @@ const App = () => {
     }
   }, [currentUser, navigate]);
 
-
-    const addPost = (bookId) => {
-      if (currentUser) {
-          setPostFormBookId(bookId);
-          handlePostByUserIdAndBookId(currentUser.id, bookId).then(() => {
-            setEditPostSelected(existingPost ? true : false);
-            setPostFormSelected(true);
-        });
-      }
+  const addPost = (bookId) => {
+    if (currentUser) {
+      setPostFormBookId(bookId);
+      handlePostByUserIdAndBookId(currentUser.id, bookId).then(() => {
+        setEditPostSelected(existingPost ? true : false);
+        setPostFormSelected(true);
+      });
+    }
   };
 
-  
   const handlePostCreation = (updatedPost) => {
     setPosts((prevPosts) =>
-        prevPosts.map((post) => 
-            post.id === updatedPost.id ? updatedPost : post
-        )
-      );
+      prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+    );
     setPostFormSelected(false); // Hide PostForm
     setViewPostList(true); // Show PostList
   };
 
-
-const handlePostDeletion = async (id) => {
-    const confirmed = window.confirm("Are you sure you want to delete this post?");
-      if (!confirmed) {
+  const handlePostDeletion = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (!confirmed) {
       return; // If the user cancels, don't proceed with deletion
     }
     console.log("Initiating post deletion...");
     try {
-        await deletePost(id);
-        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
-        setPostFormSelected(false); // Hide the form after deletion
-
+      await deletePost(id);
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+      setPostFormSelected(false); // Hide the form after deletion
 
       // to reload the page once a post has been deleted
-        window.location.reload();
+      window.location.reload();
 
-
-        console.log("Post deleted:", id);
+      console.log("Post deleted:", id);
     } catch (error) {
-        console.error("Error deleting post:", error);
+      console.error("Error deleting post:", error);
     }
-};
-
-
+  };
 
   const handleLogout = () => {
     // Simulate a user logging out
@@ -146,7 +153,6 @@ const handlePostDeletion = async (id) => {
     localStorage.removeItem("currentUser");
     navigate("/");
   };
-
 
   useEffect(() => {
     if (!postsLoading && !postsError) {
@@ -169,6 +175,7 @@ const handlePostDeletion = async (id) => {
         setLoginSelected={setLoginSelected}
         setRegisterSelected={setRegisterSelected}
         navigate={navigate}
+        setSelectedUser={setSelectedUser}
       />
       <Routes>
         <Route
@@ -203,6 +210,7 @@ const handlePostDeletion = async (id) => {
                 existingPost={existingPost}
                 fetchAllBooksDetails={fetchAllBooksDetails}
                 onDelete={handlePostDeletion}
+                setCurrentUser={setCurrentUser}
               />
             ) : (
               <Homepage
@@ -222,6 +230,7 @@ const handlePostDeletion = async (id) => {
             currentUser ? (
               <Profile
                 currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
                 selectedUser={selectedUser}
                 setSelectedUser={setSelectedUser}
                 wantToRead={wantToRead}
@@ -291,7 +300,6 @@ const handlePostDeletion = async (id) => {
                 posts={posts}
                 existingPost={existingPost}
                 onDelete={handlePostDeletion}
-              
               />
             ) : (
               <Navigate to="/" />
@@ -299,7 +307,7 @@ const handlePostDeletion = async (id) => {
           }
         />
       </Routes>
-      
+
       <Footer navigate={navigate} />
     </div>
   );

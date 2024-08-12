@@ -3,7 +3,7 @@ import React from "react";
 import Post from "./Post";
 import { useAllPosts } from "../helpers/hooks/apiData/usePostData";
 
-const PostList = ({ currentUser, isProfilePage, onDelete }) => {
+const PostList = ({ currentUser, user, isProfilePage, onEdit, onDelete }) => {
   const { posts, loading, error } = useAllPosts(currentUser);
 
   if (loading) {
@@ -24,7 +24,7 @@ const PostList = ({ currentUser, isProfilePage, onDelete }) => {
   }
 
   const filteredPosts = isProfilePage
-    ? posts.filter((post) => post.user_id === currentUser.id)
+    ? posts.filter((post) => post.user_id === user.id)
     : posts;
   // Sort posts by created_at in descending order
   const sortedPosts = filteredPosts?.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));

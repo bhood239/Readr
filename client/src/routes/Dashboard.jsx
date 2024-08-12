@@ -30,44 +30,48 @@ const Dashboard = (props) => {
     allBookStatuses,
     addPost,
     postFormSelected,
-    setPostFormSelected,
-    postFormBookId,
-    onPostCreation,
     fetchAllBooksDetails,
     posts,
     loading,
     error,
     onDelete,
-    existingPost
+    onPostCreation,
+    setPostFormSelected,
+    postFormBookId,
+    existingPost,
+    setCurrentUser,
   } = props;
 
   const renderContent = () => {
-    if (postFormSelected) {
-      return (
-        <PostForm
-          currentUser={currentUser.id}
-          post={existingPost} // If editing, pass the existing post
-          bookId={postFormBookId} // Pass the correct bookId
-          onPostCreation={onPostCreation}
-          setPostFormSelected={setPostFormSelected}
-          onDelete={onDelete}
-        />
-      );
-    }
+    // if (postFormSelected) {
+    //   return (
+    //     <PostForm
+    //       currentUser={currentUser.id}
+    //       post={existingPost} // If editing, pass the existing post
+    //       bookId={postFormBookId} // Pass the correct bookId
+    //       onPostCreation={onPostCreation}
+    //       setPostFormSelected={setPostFormSelected}
+    //       onDelete={onDelete}
+    //     />
+    //   );
+    // }
 
     switch (selectedView) {
       case "postList":
-        return <PostList currentUser={currentUser} 
-        posts={posts} 
-        loading={loading} 
-        error={error} 
-        onDelete={onDelete}
-    
-        />;
+        return (
+          <PostList
+            currentUser={currentUser}
+            posts={posts}
+            loading={loading}
+            error={error}
+            onDelete={onDelete}
+          />
+        );
       case "searchResults":
         return (
           <SearchResult
             currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
             wantToRead={wantToRead}
             setWantToRead={setWantToRead}
             setReading={setReading}
@@ -89,15 +93,18 @@ const Dashboard = (props) => {
             existingPost={existingPost}
           />
         );
+
       case "postForm":
-        return <PostForm
-        currentUser={currentUser.id}
-        bookId={postFormBookId}
-        post={existingPost} 
-        onPostCreation={onPostCreation}
-        setPostFormSelected={setPostFormSelected} 
-        onDelete={onDelete}
-        />;
+        return (
+          <PostForm
+            currentUser={currentUser.id}
+            bookId={postFormBookId}
+            post={existingPost}
+            onPostCreation={onPostCreation}
+            setPostFormSelected={setPostFormSelected}
+            onDelete={onDelete}
+          />
+        );
       case "findPeople":
         return (
           <SearchUsers
@@ -105,6 +112,7 @@ const Dashboard = (props) => {
             setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
             handleDeleteFriend={handleDeleteFriend}
+            setCurrentUser={setCurrentUser}
           />
         );
       case "popularBooks":
@@ -134,13 +142,14 @@ const Dashboard = (props) => {
           />
         );
       default:
-        return <PostList 
-        currentUser={currentUser} 
-        posts={posts} 
-        loading={loading} 
-        error={error} 
-        
-        />;
+        return (
+          <PostList
+            currentUser={currentUser}
+            posts={posts}
+            loading={loading}
+            error={error}
+          />
+        );
     }
   };
 
@@ -175,24 +184,28 @@ const Dashboard = (props) => {
             >
               Search Books
             </button>
+            <button
+              className="dashboard-btn"
+              onClick={() => setSelectedView("popularBooks")}
+            >
+              Popular Books
+            </button>
           </div>
           {renderContent()}
         </div>
 
         {/* FindPeople and PopularBooks on the right */}
         <div className="right-sidebar">
-          <button
-            className="dashboard-btn"
-            onClick={() => setSelectedView("popularBooks")}
-          >
-            Popular Books
-          </button>
-          <button
-            className="dashboard-btn"
-            onClick={() => setSelectedView("findPeople")}
-          >
+          <div className="card-title">
             Find People
-          </button>
+            <SearchUsers
+              currentUser={currentUser}
+              setSelectedUser={setSelectedUser}
+              handleCreateFriend={handleCreateFriend}
+              handleDeleteFriend={handleDeleteFriend}
+              setCurrentUser={setCurrentUser}
+            />
+          </div>
         </div>
       </div>
     </div>

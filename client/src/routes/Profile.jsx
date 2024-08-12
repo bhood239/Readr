@@ -11,6 +11,7 @@ import { useUserById } from "../helpers/hooks/apiData/useUserData";
 const Profile = (props) => {
   const {
     currentUser,
+    setCurrentUser,
     selectedUser,
     setSelectedUser,
     wantToRead,
@@ -45,9 +46,10 @@ const Profile = (props) => {
     onPostCreation,
     fetchAllBooksDetails,
     existingPost,
-    onDelete
+    onDelete,
   } = props;
-  const [selectedOption, setSelectedOption] = useState("To Be Read");
+  const [selectedOption, setSelectedOption] = useState("My Posts");
+  // console.log('currentUser:', currentUser);
 
   const { getUser } = useUserById();
 
@@ -73,7 +75,7 @@ const Profile = (props) => {
             getUser(follower.id)
           );
           const followersList = await Promise.all(followerPromises);
-          console.log("followers list in profile:", followersList);
+          console.log("followers list:", followersList);
           setFollowersList(followersList);
         } catch (error) {
           setErrorFollowers("Error loading followers");
@@ -114,12 +116,12 @@ const Profile = (props) => {
     if (postFormSelected) {
       return (
         <PostForm
-        currentUser={currentUser.id}
-        bookId={postFormBookId}
-        post={existingPost} 
-        onPostCreation={onPostCreation}
-        setPostFormSelected={setPostFormSelected} 
-        onDelete={onDelete}
+          currentUser={currentUser}
+          bookId={postFormBookId}
+          post={existingPost}
+          onPostCreation={onPostCreation}
+          setPostFormSelected={setPostFormSelected}
+          onDelete={onDelete}
         />
       );
     }
@@ -145,6 +147,7 @@ const Profile = (props) => {
             setReading={setReading}
             setRead={setRead}
             setFavBooks={setFavBooks}
+            postFormSelected={postFormSelected}
           />
         ) : (
           <div>No books to be read</div>
@@ -222,12 +225,19 @@ const Profile = (props) => {
           <div>No favorite books</div>
         );
       case "My Posts":
-        return <PostList currentUser={currentUser} isProfilePage={true} />;
+        return (
+          <PostList
+            currentUser={currentUser}
+            user={user}
+            isProfilePage={true}
+          />
+        );
       case "Followers List":
         return followersList.length > 0 ? (
           <UserList
             users={followersList}
             currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
             user={user}
             setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
@@ -241,6 +251,7 @@ const Profile = (props) => {
           <UserList
             users={followingList}
             currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
             user={user}
             setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
@@ -277,6 +288,7 @@ const Profile = (props) => {
         return (
           <SearchUsers
             currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
             setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
             handleDeleteFriend={handleDeleteFriend}
@@ -284,7 +296,13 @@ const Profile = (props) => {
           />
         );
       default:
-        return null;
+        return (
+          <PostList
+            currentUser={currentUser}
+            user={user}
+            isProfilePage={true}
+          />
+        );
     }
   };
 
@@ -338,14 +356,14 @@ const Profile = (props) => {
               className="list-group-item list-group-item-action"
               onClick={() => handleSelectOption("My Posts")}
             >
-              {`${currentUser.name.split(" ")[0]}'s`} Posts
+              {`${user.name.split(" ")[0]}'s`} Posts
             </a>
             <a
               href="#"
               className="list-group-item list-group-item-action"
               onClick={() => handleSelectOption("To Be Read")}
             >
-              To Be Read
+              Want to Read
             </a>
             <a
               href="#"

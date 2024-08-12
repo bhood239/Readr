@@ -23,6 +23,7 @@ const BookList = (props) => {
     setReading,
     setRead,
     setFavBooks,
+    postFormSelected
   } = props;
 
   const [bookStatuses, setBookStatuses] = useState({});
@@ -214,6 +215,7 @@ const BookList = (props) => {
                     addFav={addFav}
                     removeFav={removeFav}
                     addPost={addPost}
+                    postFormSelected={postFormSelected}
                   />
                 </li>
               )
