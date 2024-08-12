@@ -19,6 +19,13 @@ const SearchResult = (props) => {
     setRead,
     addPost,
     setFavBooks,
+    postFormSelected,
+    setPostFormSelected,
+    postFormBookId,
+    onPostCreation,
+    posts,
+    existingPost,
+    onDelete
   } = props;
   // searchData is the data returned from api
   const [searchText, setSearchText] = useState("");

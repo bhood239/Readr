@@ -42,16 +42,7 @@ const Post = ({ post, currentUser, onDelete }) => {
   if (editMode) {
   return (
     <div className="post row">
-
-    <div class="col-auto">
-    <img src={bookDetails.cover} alt={`Cover of ${bookDetails.title}`} style={{ maxWidth: '128px' }}/>
-    </div>
-    <div class="col">
-
-    <h4>Book: {bookDetails.title} </h4>
-    <h4>Author: {bookDetails.author}</h4>
-
-    </div > 
+    
     <div>
     <PostForm
       currentUser={currentUser.id}
