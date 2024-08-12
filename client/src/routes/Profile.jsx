@@ -147,6 +147,7 @@ const Profile = (props) => {
             setReading={setReading}
             setRead={setRead}
             setFavBooks={setFavBooks}
+            postFormSelected={postFormSelected}
           />
         ) : (
           <div>No books to be read</div>
@@ -229,7 +230,6 @@ const Profile = (props) => {
             currentUser={currentUser}
             user={user}
             isProfilePage={true}
-            onDelete={onDelete}
           />
         );
       case "Followers List":
@@ -295,14 +295,14 @@ const Profile = (props) => {
             addPost={addPost}
           />
         );
-      // default:
-      //   return (
-      //     <PostList
-      //       currentUser={currentUser}
-      //       user={user}
-      //       isProfilePage={true}
-      //     />
-      //   );
+      default:
+        return (
+          <PostList
+            currentUser={currentUser}
+            user={user}
+            isProfilePage={true}
+          />
+        );
     }
   };
 

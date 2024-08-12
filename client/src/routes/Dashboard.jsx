@@ -30,31 +30,31 @@ const Dashboard = (props) => {
     allBookStatuses,
     addPost,
     postFormSelected,
-    setPostFormSelected,
-    postFormBookId,
-    onPostCreation,
     fetchAllBooksDetails,
     posts,
     loading,
     error,
     onDelete,
+    onPostCreation,
+    setPostFormSelected,
+    postFormBookId,
     existingPost,
     setCurrentUser,
   } = props;
 
   const renderContent = () => {
-    if (postFormSelected) {
-      return (
-        <PostForm
-          currentUser={currentUser.id}
-          post={existingPost} // If editing, pass the existing post
-          bookId={postFormBookId} // Pass the correct bookId
-          onPostCreation={onPostCreation}
-          setPostFormSelected={setPostFormSelected}
-          onDelete={onDelete}
-        />
-      );
-    }
+    // if (postFormSelected) {
+    //   return (
+    //     <PostForm
+    //       currentUser={currentUser.id}
+    //       post={existingPost} // If editing, pass the existing post
+    //       bookId={postFormBookId} // Pass the correct bookId
+    //       onPostCreation={onPostCreation}
+    //       setPostFormSelected={setPostFormSelected}
+    //       onDelete={onDelete}
+    //     />
+    //   );
+    // }
 
     switch (selectedView) {
       case "postList":
@@ -92,6 +92,7 @@ const Dashboard = (props) => {
             existingPost={existingPost}
           />
         );
+
       case "postForm":
         return (
           <PostForm
@@ -182,24 +183,27 @@ const Dashboard = (props) => {
             >
               Search Books
             </button>
+            <button
+              className="dashboard-btn"
+              onClick={() => setSelectedView("popularBooks")}
+            >
+              Popular Books
+            </button>
           </div>
           {renderContent()}
         </div>
 
         {/* FindPeople and PopularBooks on the right */}
         <div className="right-sidebar">
-          <button
-            className="dashboard-btn"
-            onClick={() => setSelectedView("popularBooks")}
-          >
-            Popular Books
-          </button>
-          <button
-            className="dashboard-btn"
-            onClick={() => setSelectedView("findPeople")}
-          >
+          <div className="card-title">
             Find People
-          </button>
+            <SearchUsers
+              currentUser={currentUser}
+              setSelectedUser={setSelectedUser}
+              handleCreateFriend={handleCreateFriend}
+              handleDeleteFriend={handleDeleteFriend}
+            />
+          </div>
         </div>
       </div>
     </div>
