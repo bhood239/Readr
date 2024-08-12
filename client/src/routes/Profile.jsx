@@ -363,7 +363,7 @@ const Profile = (props) => {
               className="list-group-item list-group-item-action"
               onClick={() => handleSelectOption("To Be Read")}
             >
-              To Be Read
+              Want to Read
             </a>
             <a
               href="#"
