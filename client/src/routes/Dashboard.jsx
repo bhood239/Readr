@@ -71,6 +71,7 @@ const Dashboard = (props) => {
         return (
           <SearchResult
             currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
             wantToRead={wantToRead}
             setWantToRead={setWantToRead}
             setReading={setReading}
@@ -202,6 +203,7 @@ const Dashboard = (props) => {
               setSelectedUser={setSelectedUser}
               handleCreateFriend={handleCreateFriend}
               handleDeleteFriend={handleDeleteFriend}
+              setCurrentUser={setCurrentUser}
             />
           </div>
         </div>
