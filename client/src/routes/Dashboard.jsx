@@ -38,7 +38,8 @@ const Dashboard = (props) => {
     loading,
     error,
     onDelete,
-    existingPost
+    existingPost,
+    setCurrentUser,
   } = props;
 
   const renderContent = () => {
@@ -57,13 +58,15 @@ const Dashboard = (props) => {
 
     switch (selectedView) {
       case "postList":
-        return <PostList currentUser={currentUser} 
-        posts={posts} 
-        loading={loading} 
-        error={error} 
-        onDelete={onDelete}
-    
-        />;
+        return (
+          <PostList
+            currentUser={currentUser}
+            posts={posts}
+            loading={loading}
+            error={error}
+            onDelete={onDelete}
+          />
+        );
       case "searchResults":
         return (
           <SearchResult
@@ -90,14 +93,16 @@ const Dashboard = (props) => {
           />
         );
       case "postForm":
-        return <PostForm
-        currentUser={currentUser.id}
-        bookId={postFormBookId}
-        post={existingPost} 
-        onPostCreation={onPostCreation}
-        setPostFormSelected={setPostFormSelected} 
-        onDelete={onDelete}
-        />;
+        return (
+          <PostForm
+            currentUser={currentUser.id}
+            bookId={postFormBookId}
+            post={existingPost}
+            onPostCreation={onPostCreation}
+            setPostFormSelected={setPostFormSelected}
+            onDelete={onDelete}
+          />
+        );
       case "findPeople":
         return (
           <SearchUsers
@@ -105,6 +110,7 @@ const Dashboard = (props) => {
             setSelectedUser={setSelectedUser}
             handleCreateFriend={handleCreateFriend}
             handleDeleteFriend={handleDeleteFriend}
+            setCurrentUser={setCurrentUser}
           />
         );
       case "popularBooks":
@@ -134,13 +140,14 @@ const Dashboard = (props) => {
           />
         );
       default:
-        return <PostList 
-        currentUser={currentUser} 
-        posts={posts} 
-        loading={loading} 
-        error={error} 
-        
-        />;
+        return (
+          <PostList
+            currentUser={currentUser}
+            posts={posts}
+            loading={loading}
+            error={error}
+          />
+        );
     }
   };
 
