@@ -43,18 +43,18 @@ const Dashboard = (props) => {
   } = props;
 
   const renderContent = () => {
-    // if (postFormSelected) {
-    //   return (
-    //     <PostForm
-    //       currentUser={currentUser.id}
-    //       post={existingPost} // If editing, pass the existing post
-    //       bookId={postFormBookId} // Pass the correct bookId
-    //       onPostCreation={onPostCreation}
-    //       setPostFormSelected={setPostFormSelected}
-    //       onDelete={onDelete}
-    //     />
-    //   );
-    // }
+    if (postFormSelected) {
+      return (
+        <PostForm
+          currentUser={currentUser.id}
+          post={existingPost} // If editing, pass the existing post
+          bookId={postFormBookId} // Pass the correct bookId
+          onPostCreation={onPostCreation}
+          setPostFormSelected={setPostFormSelected}
+          onDelete={onDelete}
+        />
+      );
+    }
 
     switch (selectedView) {
       case "postList":
