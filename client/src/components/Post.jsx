@@ -1,15 +1,13 @@
-
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useBookById } from '../helpers/hooks/useBookData';
-import CustomRating from './CustomRating';
-import './PostList.scss';
-import PostForm from './PostForm';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useBookById } from "../helpers/hooks/useBookData";
+import CustomRating from "./CustomRating";
+import "./PostList.scss";
+import PostForm from "./PostForm";
 const Post = ({ post, currentUser, onDelete }) => {
   const [bookDetails, setBookDetails] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const { book, loading, error } = useBookById(post.book_id); // Corrected to post.book_id
-
 
   useEffect(() => {
     if (book) {
@@ -30,20 +28,19 @@ const Post = ({ post, currentUser, onDelete }) => {
   }
 
   const handleEdit = () => {
-    console.log('Entering edit mode');
+    console.log("Entering edit mode");
     setEditMode(true);
   };
-  
+
   const handleExitEditMode = () => {
-    console.log('Exiting edit mode');
+    console.log("Exiting edit mode");
     setEditMode(false);
   };
 
   if (editMode) {
-  return (
-    <div className="post row">
-
-    <div class="col-auto">
+    return (
+      <div className="post row">
+        {/* <div class="col-auto">
     <img src={bookDetails.cover} alt={`Cover of ${bookDetails.title}`} style={{ maxWidth: '128px' }}/>
     </div>
     <div class="col">
@@ -51,39 +48,48 @@ const Post = ({ post, currentUser, onDelete }) => {
     <h4>Book: {bookDetails.title} </h4>
     <h4>Author: {bookDetails.author}</h4>
 
-    </div > 
-    <div>
-    <PostForm
-      currentUser={currentUser.id}
-      post={post}
-      bookId={post.book_id}
-      onPostCreation={handleExitEditMode}
-      setPostFormSelected={handleExitEditMode} // Use the wrapped function
-    />
-    </div>
-    </div>
-  );
-}
+    </div >  */}
+        <div>
+          <PostForm
+            currentUser={currentUser.id}
+            post={post}
+            bookId={post.book_id}
+            onPostCreation={handleExitEditMode}
+            setPostFormSelected={handleExitEditMode} // Use the wrapped function
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="post row">
-        <div class="col-auto">
-      <img src={bookDetails.cover} alt={`Cover of ${bookDetails.title}`} style={{ maxWidth: '128px' }}/>
+      <div className="col-auto">
+        <img
+          src={bookDetails.cover}
+          alt={`Cover of ${bookDetails.title}`}
+          style={{ maxWidth: "128px" }}
+        />
       </div>
-      <div class="col">
+      <div className="col">
+        <h4>Book: {bookDetails.title} </h4>
+        <h4>Author: {bookDetails.author}</h4>
 
-      <h4>Book: {bookDetails.title} </h4>
-      <h4>Author: {bookDetails.author}</h4>
-
-
-      <h5>Reviewed By: {post.user.name}</h5>
-      <CustomRating totalStars={5} rating={post.rating} />
-      <h6>Time Spent: {post.time_spent} hours</h6>
-      <h6>Comments: {post.review}</h6>
-      {post.user_id === currentUser.id && (
+        <h5>Reviewed By: {post.user.name}</h5>
+        <CustomRating totalStars={5} rating={post.rating} />
+        <h6>Time Spent: {post.time_spent} hours</h6>
+        <h6>Comments: {post.review}</h6>
+        {post.user_id === currentUser.id && (
           <div className="post-actions">
-            <button className="btn btn-warning me-2" onClick={handleEdit}>Edit</button>
-            <button className="btn btn-danger" onClick={() => onDelete(post.id)}>Delete</button>
+            <button className="btn btn-warning me-2" onClick={handleEdit}>
+              Edit
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => onDelete(post.id)}
+            >
+              Delete
+            </button>
           </div>
         )}
       </div>
