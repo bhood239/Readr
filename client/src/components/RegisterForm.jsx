@@ -16,7 +16,7 @@ const RegisterForm = (props) => {
     try {
       // sending request to backend with existing data to login route
       const response = await axios.post(
-        "http://localhost:3001/api/login",
+        "/api/login",
         {
           email,
           password,
