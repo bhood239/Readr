@@ -19,6 +19,8 @@ gem 'rack-cors'
 
 gem 'activerecord-session_store'
 
+gem 'dotenv-rails'
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 # gem "importmap-rails"
 
@@ -71,4 +73,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'dotenv-rails', groups: [:development, :test]
+
