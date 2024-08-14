@@ -19,4 +19,4 @@ test:
   database: <%= "#{ENV['DB_DATABASE']}_test" %>
 
 production:
-url: <%= ENV['DATABASE_URL'] %>
+  <<: *connection
