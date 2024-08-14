@@ -3,15 +3,21 @@
 connection: &connection
   adapter: postgresql
   encoding: unicode
-  pool: 5
-  username: labber
-  password: labber
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_DATABASE'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  port: <%= ENV['DB_PORT'] %>
   timeout: 5000
 
 development:
   <<: *connection
-  database: readr_database
 
 test:
   <<: *connection
-  database: rails_test
+  database: <%= "#{ENV['DB_DATABASE']}_test" %>
+
+production:
+<<: *default
+url: <%= ENV['DATABASE_URL'] %>
