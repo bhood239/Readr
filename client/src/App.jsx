@@ -27,6 +27,7 @@ import {
   useUpdatePostById,
   useDeletePostById,
 } from "./helpers/hooks/apiData/usePostData";
+import AboutPage from "./components/AboutPage";
 
 const App = () => {
   const navigate = useNavigate();
@@ -306,6 +307,7 @@ const App = () => {
             )
           }
         />
+        <Route path="/About" element={<AboutPage />} />
       </Routes>
 
       <Footer navigate={navigate} />
