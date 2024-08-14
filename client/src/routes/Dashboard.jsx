@@ -46,7 +46,7 @@ const Dashboard = (props) => {
     if (postFormSelected) {
       return (
         <PostForm
-          currentUser={currentUser.id}
+          currentUser={currentUser}
           post={existingPost} // If editing, pass the existing post
           bookId={postFormBookId} // Pass the correct bookId
           onPostCreation={onPostCreation}
