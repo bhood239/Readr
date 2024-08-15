@@ -36,9 +36,9 @@ const root = createRoot(container);
 console.log(process.env.REACT_APP_PRODUCTION_API_URL);
 
 axios.defaults.baseURL =
-  process.env.REACT_APP_PRODUCTION_API_URL || "http://localhost:3001";
-
-console.log(axios.defaults.baseURL);
+  "http://localhost:3001" ||
+  process.env.REACT_APP_PRODUCTION_API_URL ||
+  console.log(axios.defaults.baseURL);
 
 // Initial render
 root.render(
