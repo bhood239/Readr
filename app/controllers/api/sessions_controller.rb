@@ -1,4 +1,6 @@
 class Api::SessionsController < ApplicationController
+    before_action :handle_options
+    
     def create
       user = User.find_by(email: params[:email])
     
@@ -27,5 +29,9 @@ class Api::SessionsController < ApplicationController
     def destroy
       session[:user_id] = nil
       render json: { notice: 'Logged out successfully' }, status: :ok
+    end
+
+    def handle_options
+      head :ok if request.method == 'OPTIONS'
     end
 end
