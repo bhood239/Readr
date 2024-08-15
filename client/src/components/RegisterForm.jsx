@@ -15,14 +15,10 @@ const RegisterForm = (props) => {
     e.preventDefault();
     try {
       // sending request to backend with existing data to login route
-      const response = await axios.post(
-        "/api/login",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
+      const response = await axios.post("/api/login", {
+        email,
+        password,
+      });
 
       setMessage(response.data.notice);
       setCurrentUser(response.data.user);

@@ -12,14 +12,10 @@ const LoginForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "/api/login",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
+      const response = await axios.post("/api/login", {
+        email,
+        password,
+      });
 
       setMessage("Logged in Successfully");
       setCurrentUser(response.data.user);
