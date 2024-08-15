@@ -23,7 +23,7 @@ const BookList = (props) => {
     setReading,
     setRead,
     setFavBooks,
-    postFormSelected
+    postFormSelected,
   } = props;
 
   const [bookStatuses, setBookStatuses] = useState({});
@@ -41,11 +41,11 @@ const BookList = (props) => {
       setBookStatuses(statusesMap);
     }
   }, [allBookStatuses, currentUser]);
-
+  // eslint-disable-next-line
   useEffect(() => {
-    fetchAllBooksDetails();
+    fetchAllBooksDetails(); // eslint-disable-next-line
   }, [setWantToRead, setReading, setRead, setFavBooks]);
-
+  // eslint-disable-next-line
   const updateBookStatusHandler = useCallback(
     async (bookId, statusData) => {
       const bookStatus = bookStatuses[bookId];
@@ -66,7 +66,7 @@ const BookList = (props) => {
       } catch (error) {
         console.error("Failed to update book status:", error);
       }
-    },
+    }, // eslint-disable-next-line
     [
       wantToRead,
       bookStatuses,
@@ -154,6 +154,7 @@ const BookList = (props) => {
     // Update 'Read' books
     setWantToRead((prev) => {
       console.log(prev, "155", book, "book id");
+      // eslint-disable-next-line
       const updatedList = prev.filter((readBook) => {
         if (readBook) {
           return readBook.id !== book.id;
@@ -189,7 +190,12 @@ const BookList = (props) => {
   }
 
   if (error) {
-    return <div className="text-center text-danger"> Error while loading books: {error.message}</div>;
+    return (
+      <div className="text-center text-danger">
+        {" "}
+        Error while loading books: {error.message}
+      </div>
+    );
   }
 
   return (

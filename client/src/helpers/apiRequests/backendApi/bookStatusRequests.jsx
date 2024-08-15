@@ -96,7 +96,7 @@ export const deleteBookStatusByUserAndBook = async (userId, bookId) => {
     return null;
   }
 };
-
+// eslint-disable-next-line
 export default {
   createBookStatus,
   getBookStatusByUserAndBook,

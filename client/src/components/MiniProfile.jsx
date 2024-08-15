@@ -23,7 +23,7 @@ const MiniProfile = (props) => {
         <img
           className="profile-picture"
           src={currentUser.profile_pic}
-          alt="user image"
+          alt="user"
         />
         <div className="card-body">
           <h5 className="card-title">{currentUser.name}</h5>

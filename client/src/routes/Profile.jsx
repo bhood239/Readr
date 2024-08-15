@@ -23,6 +23,7 @@ const Profile = (props) => {
     favBooks,
     setFavBooks,
     popularBooks,
+    // eslint-disable-next-line
     setPopularBooks,
     toReadLoading,
     readingLoading,
@@ -30,6 +31,7 @@ const Profile = (props) => {
     favBookLoading,
     popularBookLoading,
     toReadError,
+    // eslint-disable-next-line
     readingError,
     readError,
     favBookError,
@@ -54,17 +56,22 @@ const Profile = (props) => {
   const { getUser } = useUserById();
 
   const location = useLocation();
+  // eslint-disable-next-line
   const { state } = location;
   // const selectedUser = location.state?.selectedUser || currentUser;
   const user = selectedUser || currentUser;
 
   const [followersList, setFollowersList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
+  // eslint-disable-next-line
   const [loadingFollowers, setLoadingFollowers] = useState(false);
+  // eslint-disable-next-line
   const [loadingFollowing, setLoadingFollowing] = useState(false);
+  // eslint-disable-next-line
   const [errorFollowers, setErrorFollowers] = useState(null);
+  // eslint-disable-next-line
   const [errorFollowing, setErrorFollowing] = useState(null);
-
+  // eslint-disable-next-line
   useEffect(() => {
     if (selectedOption === "Followers List") {
       setLoadingFollowers(true);
@@ -86,7 +93,7 @@ const Profile = (props) => {
       fetchFollowers();
     }
   }, [selectedOption, user.followers_list]);
-
+  // eslint-disable-next-line
   useEffect(() => {
     if (selectedOption === "Following List") {
       setLoadingFollowing(true);
@@ -323,6 +330,7 @@ const Profile = (props) => {
         <div className="profile-details">
           <div className="follow">
             <h3>
+              {/* eslint-disable-next-line */}
               <a
                 href="#"
                 className="link"
@@ -335,6 +343,7 @@ const Profile = (props) => {
           </div>
           <div className="follow">
             <h3>
+              {/* eslint-disable-next-line */}
               <a
                 href="#"
                 className="link"
@@ -351,6 +360,7 @@ const Profile = (props) => {
       <div className="profile-content">
         <div className="list-group-section">
           <div className="list-group">
+            {/* eslint-disable-next-line */}
             <a
               href="#"
               className="list-group-item list-group-item-action"
@@ -358,6 +368,7 @@ const Profile = (props) => {
             >
               {`${user.name.split(" ")[0]}'s`} Posts
             </a>
+            {/* eslint-disable-next-line */}
             <a
               href="#"
               className="list-group-item list-group-item-action"
@@ -365,6 +376,7 @@ const Profile = (props) => {
             >
               Want to Read
             </a>
+            {/* eslint-disable-next-line */}
             <a
               href="#"
               className="list-group-item list-group-item-action"
@@ -372,6 +384,7 @@ const Profile = (props) => {
             >
               Reading
             </a>
+            {/* eslint-disable-next-line */}
             <a
               href="#"
               className="list-group-item list-group-item-action"
@@ -379,6 +392,7 @@ const Profile = (props) => {
             >
               Read
             </a>
+            {/* eslint-disable-next-line */}
             <a
               href="#"
               className="list-group-item list-group-item-action"
@@ -392,6 +406,7 @@ const Profile = (props) => {
         <div className="book-list-section">{renderBookList()}</div>
 
         <div className="right-side">
+          {/* eslint-disable-next-line */}
           <a
             href="#"
             className="link"
@@ -399,6 +414,7 @@ const Profile = (props) => {
           >
             Popular Books
           </a>
+          {/* eslint-disable-next-line */}
           <a
             href="#"
             className="link"

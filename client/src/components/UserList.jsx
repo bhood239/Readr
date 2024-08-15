@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "../styles/UserList.css";
 import Profile from "../routes/Profile";
@@ -93,7 +93,7 @@ const UserList = (props) => {
 
           return (
             <li key={user.id}>
-              <img src={user.profile_pic} alt="Profile Picture" />
+              <img src={user.profile_pic} alt="Profile" />
               <div onClick={() => handleUserClick(user)}>{user.name}</div>
               {user.id !== currentUser.id && (
                 <>

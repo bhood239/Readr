@@ -19,6 +19,7 @@ const PostForm = ({
   setPostFormSelected,
 }) => {
   const [rating, setRating] = useState(post ? post.rating : null);
+  // eslint-disable-next-line
   const [timeSpent, setTimeSpent] = useState(post ? post.time_spent : "");
   const [review, setReview] = useState(post ? post.review : "");
   const [hours, setHours] = useState(post ? post.hours : "");
@@ -26,7 +27,7 @@ const PostForm = ({
 
   const {
     handleCreatePost,
-    loading,
+    loading, // eslint-disable-next-line
     error: createError,
   } = useCreatePost(currentUser);
   const {

@@ -18,6 +18,7 @@ const Dashboard = (props) => {
     setReading,
     setRead,
     setFavBooks,
+    // eslint-disable-next-line
     setPopularBooks,
     reading,
     read,

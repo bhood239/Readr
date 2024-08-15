@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./CustomRating.scss";
 
 const CustomRating = ({ totalStars = 5, rating, setRating }) => {

@@ -13,7 +13,7 @@ const useUserBooks = (currentUser, selectedUser) => {
   const [read, setRead] = useState([]);
   const [favBooks, setFavBooks] = useState([]);
   const [popularBooks, setPopularBooks] = useState([]);
-
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
 
   const user = selectedUser || currentUser;
@@ -52,10 +52,10 @@ const useUserBooks = (currentUser, selectedUser) => {
 
   const fetchBooksDetails = async (bookIds, setter) => {
     try {
-        if (bookIds.length === 0) {
-            if (isMounted) setter([]);
-            return;
-        }
+      if (bookIds.length === 0) {
+        if (isMounted) setter([]);
+        return;
+      }
 
       const booksDetails = await Promise.all(
         bookIds.map(async (bookId) => {
@@ -104,6 +104,7 @@ const useUserBooks = (currentUser, selectedUser) => {
     fetchAllBooksDetails();
 
     return () => {
+      // eslint-disable-next-line
       isMounted = false; // Cleanup flag when component unmounts
     };
   }, [

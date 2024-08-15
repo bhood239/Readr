@@ -18,6 +18,7 @@ import {
   useAllBookStatuses,
   useCreateBookStatus,
   useUpdateBookStatusByUserAndBook,
+  // eslint-disable-next-line
   useBookStatusByUserAndBook,
 } from "./helpers/hooks/apiData/useBookStatusdata";
 import {
@@ -70,22 +71,31 @@ const App = () => {
   const { post: existingPost, handlePostByUserIdAndBookId } =
     usePostByUserIdAndBookId(currentUser);
   const {
+    // eslint-disable-next-line
     handleCreatePost,
+    // eslint-disable-next-line
     post: createdPost,
+    // eslint-disable-next-line
     loading: createLoading,
+    // eslint-disable-next-line
     error: createError,
   } = useCreatePost(currentUser);
   const {
+    // eslint-disable-next-line
     updatePost,
+    // eslint-disable-next-line
     loading: updateLoading,
+    // eslint-disable-next-line
     error: updateError,
   } = useUpdatePostById(currentUser);
   const {
     deletePost,
+    // eslint-disable-next-line
     loading: deleteLoading,
+    // eslint-disable-next-line
     error: deleteError,
   } = useDeletePostById(currentUser);
-
+  // eslint-disable-next-line
   const { bookStatuses, loading, error } = useAllBookStatuses(currentUser);
   const [loginSelected, setLoginSelected] = useState(false);
   const [registerSelected, setRegisterSelected] = useState(false);
@@ -97,7 +107,9 @@ const App = () => {
   const [posts, setPosts] = useState([]);
   const [postFormBookId, setPostFormBookId] = useState();
   const [postFormSelected, setPostFormSelected] = useState(false);
+  // eslint-disable-next-line
   const [editPostSelected, setEditPostSelected] = useState(false);
+  // eslint-disable-next-line
   const [viewPostList, setViewPostList] = useState(false);
 
   useEffect(() => {

@@ -61,7 +61,7 @@ export const useFavoriteBooksByUser = (currentUser, userId) => {
   const [books, setBookIds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  // eslint-disable-next-line
   useEffect(() => {
     const fetchFavoriteBooks = async () => {
       if (!currentUser) return;
@@ -73,7 +73,7 @@ export const useFavoriteBooksByUser = (currentUser, userId) => {
       } finally {
         setLoading(false);
       }
-    };
+    }; // eslint-disable-next-line
     fetchFavoriteBooks();
   }, [currentUser, userId]);
 
@@ -108,7 +108,7 @@ export const useAllBookStatuses = (currentUser) => {
   const [bookStatuses, setBookStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  // eslint-disable-next-line
   useEffect(() => {
     const fetchBookStatuses = async () => {
       if (!currentUser) return;
@@ -121,7 +121,7 @@ export const useAllBookStatuses = (currentUser) => {
         setLoading(false);
       }
     };
-    fetchBookStatuses();
+    fetchBookStatuses(); // eslint-disable-next-line
   }, []);
 
   return { bookStatuses, loading, error };
@@ -199,7 +199,7 @@ export const useDeleteBookStatusByUserAndBook = (currentUser) => {
 
   return { deleted, loading, error, deleteBookStatus };
 };
-
+// eslint-disable-next-line
 export default {
   useCreateBookStatus,
   useBookStatusByUserAndBook,

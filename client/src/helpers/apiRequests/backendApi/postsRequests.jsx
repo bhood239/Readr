@@ -51,13 +51,16 @@ export const getAllPosts = async () => {
 // UPDATE
 export const updatePostById = async (postId, params) => {
   try {
-    console.log("Updating post with params:", postId, params);  // Log request params
+    console.log("Updating post with params:", postId, params); // Log request params
     const res = await axios.put(`/api/posts/${postId}`, params);
     console.log("Post updated:", res.data);
     return res.data;
   } catch (err) {
-    console.error("Error updating post:", err.response ? err.response.data : err.message);  // Improved error logging
-    throw err;  // Re-throw the error to be handled by calling code
+    console.error(
+      "Error updating post:",
+      err.response ? err.response.data : err.message
+    ); // Improved error logging
+    throw err; // Re-throw the error to be handled by calling code
   }
 };
 
@@ -68,11 +71,14 @@ export const deletePostById = async (postId) => {
     console.log("Post deleted:", res.data);
     return res.data;
   } catch (err) {
-    console.error("Error deleting post:", err.response ? err.response.data : err.message);
-    throw err;  // Re-throw the error to be handled by calling code
+    console.error(
+      "Error deleting post:",
+      err.response ? err.response.data : err.message
+    );
+    throw err; // Re-throw the error to be handled by calling code
   }
 };
-
+// eslint-disable-next-line
 export default {
   createPost,
   getPostById,

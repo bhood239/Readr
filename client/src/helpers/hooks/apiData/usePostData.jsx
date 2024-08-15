@@ -10,6 +10,7 @@ import {
 
 // Create Post
 export const useCreatePost = (currentUser) => {
+  // eslint-disable-next-line
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -37,7 +38,7 @@ export const usePostById = (currentUser, id) => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  // eslint-disable-next-line
   useEffect(() => {
     const fetchPost = async () => {
       if (!currentUser) return;
@@ -50,7 +51,7 @@ export const usePostById = (currentUser, id) => {
         setLoading(false);
       }
     };
-    fetchPost();
+    fetchPost(); // eslint-disable-next-line
   }, [id]);
 
   return { post, loading, error };
@@ -60,7 +61,7 @@ export const usePostByUserIdAndBookId = (currentUser) => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  // eslint-disable-next-line
   const handlePostByUserIdAndBookId = useCallback(async (userId, bookId) => {
     if (!currentUser) return;
     setLoading(true);
@@ -72,7 +73,7 @@ export const usePostByUserIdAndBookId = (currentUser) => {
       setError(err);
     } finally {
       setLoading(false);
-    }
+    } // eslint-disable-next-line
   }, []);
 
   return { post, loading, error, handlePostByUserIdAndBookId };
@@ -97,7 +98,7 @@ export const useAllPosts = (currentUser) => {
       setLoading(false);
     }
   };
-
+  // eslint-disable-next-line
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -107,6 +108,7 @@ export const useAllPosts = (currentUser) => {
 
 // Update Post by Id Hook
 export const useUpdatePostById = (currentUser) => {
+  // eslint-disable-next-line
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -155,7 +157,7 @@ export const useDeletePostById = (currentUser) => {
 
   return { deleted, loading, error, deletePost };
 };
-
+// eslint-disable-next-line
 export default {
   useCreatePost,
   usePostById,

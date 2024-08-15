@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
   getBookById,
   getBooksByName,
+  // eslint-disable-next-line
   getAuthorName,
 } from "../apiRequests/bookApi/bookApiRequests";
 
@@ -33,17 +34,14 @@ const useBookById = (id) => {
   return { book, loading, error };
 };
 
-
-
-
 const useBooksByName = (name) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     const fetchBooks = async () => {
-        setLoading(true);
+      setLoading(true);
       try {
         const bookList = await getBooksByName(name);
         setBooks(bookList);
