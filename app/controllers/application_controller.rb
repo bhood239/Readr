@@ -7,7 +7,5 @@ class ApplicationController < ActionController::API
         puts "***********"
     end
 
-    def corstest
-      render json:{message: 'cors is working'}
-    end
+
 end

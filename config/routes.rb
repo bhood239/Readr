@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     post '/login', to: 'sessions#create'
     delete '/logout', to: 'sessions#destroy'
 
-    get '/corstest', to: 'application#corstest'
+    get '/corstest', to: 'users#corstest'
 
     # update friends
     post '/friends', to: 'friends#create'

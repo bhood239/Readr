@@ -85,6 +85,10 @@ module Api
       head :no_content
     end
 
+    def corstest
+      render json:{message: 'cors is working'}
+    end
+
     private
 
     def user_params
