@@ -91,7 +91,7 @@ const Profile = (props) => {
         }
       };
       fetchFollowers();
-    }
+    } // eslint-disable-next-line
   }, [selectedOption, user.followers_list]);
   // eslint-disable-next-line
   useEffect(() => {
@@ -112,7 +112,7 @@ const Profile = (props) => {
         }
       };
       fetchFollowing();
-    }
+    } // eslint-disable-next-line
   }, [selectedOption, user.following_list]);
 
   const handleSelectOption = (option) => {

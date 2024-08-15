@@ -100,7 +100,7 @@ export const useAllPosts = (currentUser) => {
   };
   // eslint-disable-next-line
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(); // eslint-disable-next-line
   }, []);
 
   return { posts, loading, error, fetchPosts, setPosts };
